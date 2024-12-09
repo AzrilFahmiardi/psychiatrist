@@ -9,13 +9,13 @@
 </head>
 <body>
     <div class="bg-login-gradient font-poppins px-10">
-        <div class="min-h-screen w-full grid lg:grid-cols-2 md:grid-cols-1 py-6 px-4">
+        <div class="min-h-screen w-full grid grid-cols-2 py-6 px-4">
             <div class="flex my-auto mt-[10rem] p-10">
-                <h1 class="text-white font-bold text-[2rem] md:text-[4.5rem] text-shadow">Fasilitas Konseling Sekolah Vokasi UGM</h1>
+                <h1 class="text-white font-bold text-[4.5rem] text-shadow">Fasilitas Konseling Sekolah Vokasi UGM</h1>
             </div> 
-            <div class=" lg:w-[50vw] md:w-[90vw]  flex justify-center items-center">  
+            <div class=" w-[50vw] flex justify-center items-center">  
             <div class="md:w-[70%] md:h-[800px] px-10 md:px-16 py-16 rounded-3xl bg-white shadow">
-              <h2 class="text-[#155458] text-center text-[2.5rem] font-bold">Login</h2>
+              <h2 class="text-[#155458] text-center text-[2.5rem] font-bold">Register</h2>
               <p class="text-xs my-5 text-center">Login untuk mulai melakukan pendaftaran konseling</p>
               <form class="mt-16 space-y-4">
                 <div>
@@ -48,7 +48,7 @@
   
                 <div class="!mt-16">
                   <button type="button" class="w-full py-5 px-4 font-bold  text-sm tracking-wide rounded-2xl text-white bg-[#155458] hover:bg-[#155458da] focus:outline-none">
-                    Login
+                    Register
                   </button>
                 </div>
                 <p class="text-gray-800 text-sm !mt-8 text-center">Don't have an account? <a href="javascript:void(0);" class="text-[#155458] hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>

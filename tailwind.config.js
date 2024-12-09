@@ -16,7 +16,31 @@ export default {
                 poppins: ["Poppins", "sans-serif"],
 
             },
+            backgroundImage: {
+                "login-gradient":
+                  "linear-gradient(to bottom right, #FAFAFA 0%, #51B2B8 50%, #155458 100%)",
+                
+            },
+            textShadow: {
+                sm: '1px 1px 2px rgba(0, 0, 0, 0.5)',
+                DEFAULT: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                lg: '3px 3px 6px rgba(0, 0, 0, 0.5)',
+            },
         },
     },
-    plugins: [],
+    plugins: [
+        function ({ addUtilities }) {
+            addUtilities({
+                '.text-shadow-sm': {
+                    textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)',
+                },
+                '.text-shadow': {
+                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+                },
+                '.text-shadow-lg': {
+                    textShadow: '3px 3px 6px rgba(0, 0, 0, 0.5)',
+                },
+            });
+        },
+    ],
 };
