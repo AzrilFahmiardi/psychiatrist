@@ -23,4 +23,8 @@ class FormController extends Controller
         return view('form.ketentuan_submit');
     }
 
+    function pembayaran(){
+        return view('form.pembayaran');
+    }
+
 }

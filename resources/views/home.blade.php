@@ -12,9 +12,9 @@
         <div class="min-h-screen w-full flex flex-col items-center">
             <x-navbar></x-navbar>
 
-            <div class="flex flex-col gap-16 items-center justify-center w-[85vw] md:h-[400px] border-2 border-white rounded-[2rem] bg-[#fafafa99] my-10">
+            <div class="flex flex-col gap-16 items-center justify-center w-[85vw] md:h-[400px] border-2 border-white rounded-[2rem] bg-[#fafafa99] mt-5 mb-10">
                 <h1 class="text-[3rem] text-center font-bold bg-title-gradient text-transparent bg-clip-text">Fasilitas Konseling<br>Sekolah Vokasi UGM</h1>
-                <a href="/form/persetujuan" class="text-[#51B2B8] font-semibold bg-[#FAFAFA] py-3 px-4 rounded-xl">Daftar sekarang</a>
+                <a href="/form/persetujuan" class="text-[#51B2B8] font-semibold bg-[#FAFAFA] py-3 px-4 rounded-xl hover:scale-110 transition duration-300 ease-in-out">Daftar sekarang</a>
             </div>
             <div class="w-[85vw] h-[300px] grid grid-cols-3 gap-4">
                 <div class="col-span-1 space-y-7">
@@ -29,13 +29,13 @@
                             <p class="text-[#4F4F4F] font-semibold">dr. Azril Fahmiardi, Sp.Kj.</p>
                             <div class="flex justify-between">
                                 <p class="text-[#4F4F4F] text-[0.8rem]">Senin, 09 December 2024</p>
-                                <a href="" class="text-[#155458] text-[0.8rem] flex items-center gap-2">Lihat hasil <span><img src="images/right_arrow.png" alt=""></span></a>
+                                <a href="" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Lihat hasil <span><img src="images/right_arrow.png" alt=""></span></a>
                             </div>
                             <hr class="my-3">
                             <p class="text-[#4F4F4F] font-semibold">dr. Azril Fahmiardi, Sp.Kj.</p>
                             <div class="flex justify-between">
                                 <p class="text-[#4F4F4F] text-[0.8rem]">Senin, 09 December 2024</p>
-                                <a href="" class="text-[#155458] text-[0.8rem] flex items-center gap-2">Lihat hasil <span><img src="images/right_arrow.png" alt=""></span></a>
+                                <a href="" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Lihat hasil <span><img src="images/right_arrow.png" alt=""></span></a>
                             </div>
                         
                        
