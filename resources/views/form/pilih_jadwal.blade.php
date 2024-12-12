@@ -39,7 +39,7 @@
         </a>
     </div>
     <div class="flex h-[1.5rem] items-center gap-4">
-        <a href="{{ route('form.ketentuan_submit') }}" class="flex items-center gap-4">
+        <a id="next-button" href="{{ route('form.ketentuan_submit') }}" class="flex items-center gap-4">
             <span class="text-[1.5rem] text-[#155458] font-bold">Next</span>
             <img src="{{ asset('images/next.png') }}" alt="Next">
         </a>

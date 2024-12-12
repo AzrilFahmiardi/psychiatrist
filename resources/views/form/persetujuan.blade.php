@@ -29,17 +29,17 @@
     <div class="flex flex-col gap-5">
         <div class="w-2/3 mx-auto border border-[#4F4F4F] rounded-2xl p-5">
             <p class="mb-5">Saya memahami bahwa konseling/konsultasi berbeda dengan curhat pada umumnya, sehingga saya akan memanfaatkan waktu konseling untuk benar-benar membantu saya menentukan alternatif solusi dalam menyelesaikan masalah saya.</p>
-            <input id="persetujuan-1" type="radio">
+            <input id="persetujuan-1" type="checkbox">
             <label for="persetujuan-1" class="text-[#155458] font-semibold">Saya mengerti</label>
         </div>
         <div class="w-2/3 mx-auto border border-[#4F4F4F] rounded-2xl p-5">
             <p class="mb-5">Psikolog tidak akan membagikan data personal saya kepada siapapun kecuali atas persetujuan saya atau diminta oleh badan hukum. Apabila saya berada dalam situasi krisis, yaitu situasi yang dapat berakibat membahayakan nyawa saya sendiri atau orang lain, maka psikolog berhak menginformasikan kondisi saya kepada orang lain (Dosen Pembimibing Akademik (DPA)/orang tua).</p>
-            <input id="persetujuan-2" type="radio">
+            <input id="persetujuan-2" type="checkbox">
             <label for="persetujuan-2" class="text-[#155458] font-semibold">Saya mengerti</label>
         </div>
         <div class="w-2/3 mx-auto border border-[#4F4F4F] rounded-2xl p-5">
             <p class="mb-5">Jika dalam situasi dan kondisi tertentu, psikolog dapat merujuk saya untuk melakukan konseling dengan tenaga profesional lain (psikolog lain atau psikiater)</p>
-            <input id="persetujuan-3" type="radio">
+            <input id="persetujuan-3" type="checkbox">
             <label for="persetujuan-3" class="text-[#155458] font-semibold">Saya mengerti</label>
         </div>
     </div>
@@ -51,17 +51,19 @@
 {{-- TOMBOL --}}
 <div class="absolute w-full flex justify-between px-10 bottom-16">
     <div class="flex h-[1.5rem] items-center gap-4">
-        <a href="" class="flex items-center gap-4">
+        <a href="/" class="flex items-center gap-4">
             <img src="{{ asset('images/back.png') }}" alt="Back">
-            <span class="text-[1.5rem] text-[#155458] font-bold">Back</span>
+            <span class="text-[1.5rem] text-[#155458] font-bold">Back to home</span>
         </a>
     </div>
     <div class="flex h-[1.5rem] items-center gap-4">
-        <a href="{{ route('form.data_diri') }}" class="flex items-center gap-4">
+        <a id="next-button" href="{{ route('form.data_diri') }}" class="flex items-center gap-4">
             <span class="text-[1.5rem] text-[#155458] font-bold">Next</span>
             <img src="{{ asset('images/next.png') }}" alt="Next">
         </a>
     </div>
 </div>
+
+
 
 @endsection

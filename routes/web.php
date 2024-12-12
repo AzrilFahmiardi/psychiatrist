@@ -4,7 +4,7 @@ use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return  view('login');
+    return  view('home');
 });
 
 Route::get('/login', function () {

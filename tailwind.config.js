@@ -19,6 +19,8 @@ export default {
             backgroundImage: {
                 "login-gradient":
                   "linear-gradient(to bottom right, #FAFAFA 0%, #51B2B8 50%, #155458 100%)",
+                "title-gradient":
+                  "linear-gradient(to bottom right, #51B2B8 0%, #155458 100%)",
                 
             },
             textShadow: {
@@ -39,6 +41,12 @@ export default {
                 },
                 '.text-shadow-lg': {
                     textShadow: '3px 3px 6px rgba(0, 0, 0, 0.5)',
+                },
+                '.text-stroke': {
+                    '-webkit-text-stroke': '2px black',
+                },
+                '.text-stroke-white': {
+                    '-webkit-text-stroke': '2px white',
                 },
             });
         },

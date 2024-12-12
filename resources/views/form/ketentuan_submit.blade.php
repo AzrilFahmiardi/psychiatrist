@@ -29,7 +29,7 @@
     <div class="flex flex-col gap-5">
         <div class="w-2/3 mx-auto border border-[#4F4F4F] rounded-2xl p-5">
             <p class="mb-5">Dimohon untuk berkomitmen hadir sesuai dengan jadwal yang telah dipilih karena keterbatasan kuota untuk memfasilitasi mahasiswa yang lain. Harap datang tepat waktu sesuai jadwal yang dipilih dan mohon untuk membawa identitas diri (KTP/SIM/sejenisnya) saat konseling. </p>
-            <input id="persetujuan-1" type="radio">
+            <input id="persetujuan-1" type="checkbox">
             <label for="persetujuan-1" class="text-[#155458] font-semibold">Saya mengerti</label>
         </div>
 
@@ -46,11 +46,13 @@
         </a>
     </div>
     <div class="flex h-[1.5rem] items-center gap-4">
-        <a href="#" class="flex items-center gap-4">
+        <a id="next-button" href="#" class="flex items-center gap-4">
             <span class="text-[1.5rem] text-[#155458] font-bold">Next</span>
             <img src="{{ asset('images/next.png') }}" alt="Next">
         </a>
     </div>
 </div>
+
+
 
 @endsection

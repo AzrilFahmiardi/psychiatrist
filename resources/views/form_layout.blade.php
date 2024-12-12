@@ -18,5 +18,25 @@
 
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const nextButton = document.getElementById('next-button');
+    
+            function updateButtonState() {
+                const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                if (allChecked) {
+                    nextButton.classList.remove('pointer-events-none', 'opacity-50');
+                } else {
+                    nextButton.classList.add('pointer-events-none', 'opacity-50');
+                }
+            }
+    
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateButtonState);
+            });
+                updateButtonState();
+        });
+    </script>
 </body>
 </html>

@@ -16,11 +16,16 @@
             <div class=" w-[50vw] flex justify-center items-center">  
             <div class="md:w-[70%] md:h-[800px] px-10 md:px-16 py-16 rounded-3xl bg-white shadow">
               <h2 class="text-[#155458] text-center text-[2.5rem] font-bold">Register</h2>
-              <p class="text-xs my-5 text-center">Login untuk mulai melakukan pendaftaran konseling</p>
+              <p class="text-xs my-5 text-center">Silahkan mendaftarkan email ugm</p>
               <form class="mt-16 space-y-4">
                 <div>
                   <div class="relative flex items-center">
-                    <input name="username" type="email" required class="w-full text-[#4F4F4F] text-sm border-[1px] border-[#155458] px-7 py-4 rounded-2xl outline-[#155458] placeholder:font-semibold placeholder:text-[#4F4F4F]" placeholder="Email" />
+                    <input name="nama" type="text" required class="w-full text-[#4F4F4F] text-sm border-[1px] border-[#155458] px-7 py-4 rounded-2xl outline-[#155458] placeholder:font-semibold placeholder:text-[#4F4F4F]" placeholder="Nama" />
+                  </div>
+                </div>
+                <div>
+                  <div class="relative flex items-center">
+                    <input name="email" type="email" required class="w-full text-[#4F4F4F] text-sm border-[1px] border-[#155458] px-7 py-4 rounded-2xl outline-[#155458] placeholder:font-semibold placeholder:text-[#4F4F4F]" placeholder="Email" />
                     <img src="images/email.png" alt="email" class="w-4 h-4 absolute right-4">
                   </div>
                 </div>
@@ -33,12 +38,12 @@
                 </div>
   
                 <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="flex items-center">
+                  {{-- <div class="flex items-center">
                     <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
                     <label for="remember-me" class="ml-3 block text-sm text-gray-800">
                       Remember me
                     </label>
-                  </div>
+                  </div> --}}
                   {{-- <div class="text-sm">
                     <a href="jajvascript:void(0);" class="text-blue-600 hover:underline font-semibold">
                       Forgot your password?
@@ -51,7 +56,7 @@
                     Register
                   </button>
                 </div>
-                <p class="text-gray-800 text-sm !mt-8 text-center">Don't have an account? <a href="javascript:void(0);" class="text-[#155458] hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>
+                <p class="text-gray-800 text-sm !mt-8 text-center">Already have an account? <a href="/login" class="text-[#155458] hover:underline ml-1 whitespace-nowrap font-semibold">Login here</a></p>
               </form>
             </div>
             </div>

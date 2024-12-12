@@ -51,7 +51,7 @@
                     Login
                   </button>
                 </div>
-                <p class="text-gray-800 text-sm !mt-8 text-center">Don't have an account? <a href="javascript:void(0);" class="text-[#155458] hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>
+                <p class="text-gray-800 text-sm !mt-8 text-center">Don't have an account? <a href="/register" class="text-[#155458] hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>
               </form>
             </div>
             </div>
