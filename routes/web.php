@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\SocialiteController;
-use Illuminate\Support\Facades\Route;
 
 // PAGES
 Route::get('/', function () {
