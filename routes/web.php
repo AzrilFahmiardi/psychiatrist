@@ -4,13 +4,16 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\SocialiteController;
+use App\Models\Jadwal;
+use Carbon\Carbon;
+
 
 // PAGES
-Route::get('/', function () {
-    return  view('home');
-})->name('home');
+Route::get('/', [JadwalController::class, 'index'])->name('home');
+Route::get('/jadwal', [JadwalController::class, 'filterJadwal'])->name('jadwal.filter');
 
 Route::get('/login', function () {
     return view('login');

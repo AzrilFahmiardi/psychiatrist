@@ -8,7 +8,6 @@ class ProgramStudi extends Model
 {
     protected $fillable = ['name', 'departemen_id'];
 
-    // Relasi ke Departemen
     public function departemen()
     {
         return $this->belongsTo(Departemen::class, 'departemen_id', 'id');

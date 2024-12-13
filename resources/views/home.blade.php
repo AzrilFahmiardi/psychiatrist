@@ -81,22 +81,37 @@
                     <div class="relative flex justify-between">
                         <h2 class="mb-3 font-bold text-[1.8rem] text-[#4F4F4F] mx-auto">Jadwal Konseling dan Dokter yang Tersedia</h2>
                     </div>
-                    <div class="w-full grid grid-cols-2 gap-5 mb-5">
-                        <select id="psikolog" name="psikolog" class="w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4"">
-                            <option value="option1">Dr. Azril Fahmiardi</option>
-                            <option value="option2">Dr. Shafwan </option>
-                            <option value="option3">Dr. Arga</option>
-                        </select>
-                        <img src="{{ asset('images/down-arrow.png') }}" alt="" class="absolute bottom-[1.1rem] right-10 ">                        
-                        <input type="date" id="tanggal" name="tanggal" class="w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4">
+                    <div >
+                        <form action="{{ route('jadwal.filter') }}" method="GET" class="w-full grid grid-cols-5 gap-5 mb-5">
+                            @csrf
+                            <select id="psikolog" name="psikolog" class="col-span-2 w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4">
+                                <option value="none">Pilih Psikolog</option>
+                                @foreach ($psikologs as $psikolog)
+                                    <option value="{{ $psikolog->id }}">
+                                        {{ $psikolog->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            <input type="date" id="tanggal" name="tanggal" class="col-span-2 w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4">
+                            <button type="submit" class="col-span-1 font-bold text-white bg-[#155458] px-3 py-1 rounded-md">Cari</button>
+                        </form>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
-                        <x-jadwalCard></x-jadwalCard>
-                        <x-jadwalCard></x-jadwalCard>
-                        <x-jadwalCard></x-jadwalCard>
-                        <x-jadwalCard></x-jadwalCard>
-                        <x-jadwalCard></x-jadwalCard>
-                        <x-jadwalCard></x-jadwalCard>
+                        @if ($jadwals && $jadwals->count() > 0)
+                            @foreach ($jadwals as $jad)
+                                @if ($jad->psikolog)
+                                <x-jadwalCard 
+                                :name="$jad->psikolog->name"
+                                :time="(\Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB')"
+                            />
+                                @else
+                                    <p>No psychologist assigned</p>
+                                @endif
+                            @endforeach
+                        @else
+                            <p>No schedules available</p>
+                        @endif
 
                     </div>
 
