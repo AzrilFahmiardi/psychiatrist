@@ -12,7 +12,8 @@
         <div class="relative flex flex-col w-[80vw] h-fit  pb-10 bg-white rounded-[3rem] shadow-3xl">   
             <div class="w-full px-[10rem]">
                 <h1 class="text-center text-[#155458] text-xl font-bold my-10">Pengisian data pribadi</h1>
-                <form class="bg-">
+                <form action="{{ route('pasien.update')}}" method="post">
+                    @csrf
                     <div class="grid gap-6 mb-6 md:grid-cols-2">
                         <div>
                             <label for="nama" class="block mb-2 text-sm font-semibold text-[1rem] text-[#155458]">Nama pendaftar</label>
@@ -22,9 +23,9 @@
                             <label for="program_studi" class="block mb-2 text-sm font-semibold text-[1rem] text-[#155458]">Program studi</label>
             
                             <select id="program_studi" name="program_studi" class=" border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full py-[1rem] px-4 appearance-none bg-[url('{{ asset('images/down-arrow.svg') }}')] bg-no-repeat bg-right-[10px] bg-center">
-                                <option value="option2">Teknologi Rekayasa Elektro</option>
-                                <option value="option3">Teknologi Rekayasa Instrumentasi dan Kontrol</option>
-                                <option value="option4">Teknologi Rekayasa Internet</option>
+                                <option value="Teknologi Rekayasa Elektro">Teknologi Rekayasa Elektro</option>
+                                <option value="Teknologi Rekayasa Instrumentasi dan Kontrol">Teknologi Rekayasa Instrumentasi dan Kontrol</option>
+                                <option value="Teknologi Rekayasa Internet">Teknologi Rekayasa Internet</option>
                             </select>
                             <img src="{{ asset('images/down-arrow.png') }}" alt="" class="absolute bottom-[1.1rem] right-7 ">
                                        
@@ -60,10 +61,10 @@
                             <label for="departemen" class="block mb-2 text-sm font-semibold text-[1rem] text-[#155458]">Asal departemen</label>
             
                             <select id="departemen" name="departemen" class=" border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full py-[1rem] px-4 appearance-none bg-[url('{{ asset('images/down-arrow.svg') }}')] bg-no-repeat bg-right-[10px] bg-center">
-                                <option value="option1">DTEDI</option>
-                                <option value="option2">DTM</option>
-                                <option value="option3">DEB</option>
-                                <option value="option4">DDD</option>
+                                <option value="DTEDI">DTEDI</option>
+                                <option value="DTM">DTM</option>
+                                <option value="DEB">DEB</option>
+                                <option value="DDD">DDD</option>
                             </select>
                             <img src="{{ asset('images/down-arrow.png') }}" alt="" class="absolute bottom-[1.1rem] right-7 ">
                                        
@@ -72,17 +73,17 @@
                             <label class="block mb-5 text-sm font-semibold text-[1rem] text-[#155458]">Layanan kesehatan mental yang pernah atau sedang diakses</label>
                             <div class="flex items-center mt-2 text-[#155458]">
                                 <label for="psikolog" class="inline-flex items-center mr-6">
-                                    <input type="radio" id="psikolog" name="status_layanan_akses" value="psikolog" 
+                                    <input type="radio" id="psikolog" name="status_akses_layanan" value="psikolog" 
                                         class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]">
                                     <span class="ml-2">Psikolog</span>
                                 </label>
                                 <label for="psikiater" class="inline-flex items-center mr-6">
-                                    <input type="radio" id="psikiater" name="status_layanan_akses" value="psikiater" 
+                                    <input type="radio" id="psikiater" name="status_akses_layanan" value="psikiater" 
                                         class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]">
                                     <span class="ml-2">Psikiater</span>
                                 </label>
                                 <label for="belum" class="inline-flex items-center">
-                                    <input type="radio" id="belum" name="status_layanan_akses" value="belum pernah" 
+                                    <input type="radio" id="belum" name="status_akses_layanan" value="belum pernah" 
                                         class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]">
                                     <span class="ml-2">Belum pernah</span>
                                 </label>
