@@ -30,6 +30,10 @@
 {{-- KONTEN FORM --}}
 <div class="w-full px-[10rem]">
     <h1 class="text-center text-[#155458] text-xl font-bold my-10">Validasi data pribadi</h1>
+    @php
+        $departemenList = [];
+        $programStudiList = [];
+    @endphp
     <form action="{{ route('pasien.update')}}" method="post">
         @csrf
         <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -39,19 +43,13 @@
             </div>
             <div class="relative">
                 <label for="program_studi" class="block mb-2 text-sm font-semibold text-[1rem] text-[#155458]">Program studi</label>
-                @php
-                    $programStudiList = [
-                        'Teknologi Rekayasa Elektro',
-                        'Teknologi Rekayasa Instrumentasi dan Kontrol',
-                        'Teknologi Rekayasa Internet'
-                    ];
-                @endphp
-                <select id="program_studi" name="program_studi" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full py-[1rem] px-4 appearance-none bg-[url('{{ asset('images/down-arrow.svg') }}')] bg-no-repeat bg-right-[10px] bg-center">
-                    @foreach ($programStudiList as $programStudi)
-                        <option value="{{ $programStudi }}" {{ $user->program_studi == $programStudi ? 'selected' : '' }}>
-                            {{ $programStudi }}
-                        </option>
-                    @endforeach
+                <select id="program_studi" name="program_studi" class="select2 border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full py-[1rem] px-4 appearance-none bg-[url('{{ asset('images/down-arrow.svg') }}')] bg-no-repeat bg-right-[10px] bg-center">
+                    @foreach ($prodi as $prod)
+            <option value="{{ $prod->name }}" 
+                {{ $user->program_studi == $prod->name ? 'selected' : '' }}>
+                {{ $prod->name }}
+            </option>
+        @endforeach
                 </select>
                 <img src="{{ asset('images/down-arrow.png') }}" alt="" class="absolute bottom-[1.1rem] right-7 ">
                            
@@ -85,20 +83,19 @@
             </div>
             <div class="relative">
                 <label for="departemen" class="block mb-2 text-sm font-semibold text-[1rem] text-[#155458]">Asal departemen</label>
+                
+                @foreach($departemen as $dep)
                 @php
-                    $departemenList = [
-                        'DTEDI',
-                        'DTM',
-                        'DEB',
-                        'DDD'
-                    ];
+                    $departemenList[] = $dep->name;
                 @endphp
+                @endforeach
                 <select id="departemen" name="departemen" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full py-[1rem] px-4 appearance-none bg-[url('{{ asset('images/down-arrow.svg') }}')] bg-no-repeat bg-right-[10px] bg-center">
-                    @foreach ($departemenList as $departemen)
-                        <option value="{{ $departemen }}" {{ $user->departemen == $departemen ? 'selected' : '' }}>
-                            {{ $departemen }}
-                        </option>
-                    @endforeach
+                    @foreach ($departemen as $dep)
+                    <option value="{{ $dep->name }}" 
+                        {{ $user->departemen == $dep->name ? 'selected' : '' }}>
+                        {{ $dep->name }}
+                    </option>
+                @endforeach
                 </select>
                 <img src="{{ asset('images/down-arrow.png') }}" alt="" class="absolute bottom-[1.1rem] right-7 ">
                            
@@ -153,5 +150,13 @@
         </a>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
+
+
 
 @endsection

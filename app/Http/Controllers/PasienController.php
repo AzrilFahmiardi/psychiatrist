@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Departemen;
+use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +14,12 @@ class PasienController extends Controller
     function getData(){
         $email = Auth::user()->email ;
         $user = User::where('email', $email)->first();
-        return view('components.profile', compact('user'));
+
+        $departemen = Departemen::all();
+        
+        $prodi = ProgramStudi::all();
+
+        return view('components.profile', compact('user', 'departemen', 'prodi'));
 
     }
 

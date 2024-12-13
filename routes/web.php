@@ -20,9 +20,6 @@ Route::get('/register', function () {
     return view('register');
 });
 
-Route::get('/profile', function () {
-    return view('components.profile');
-});
 
 // GOOGLE AUTHENTICATION
 Route::get('/auth/google', [SocialiteController::class, 'googleLogin'])->name('auth.google');
