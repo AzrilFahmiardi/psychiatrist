@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class PasienController extends Controller
 {
+
+    function getData(){
+        $email = Auth::user()->email ;
+        $user = User::where('email', $email)->first();
+        return view('components.profile', compact('user'));
+
+    }
+
     function updateDataPasien(Request $request){
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',

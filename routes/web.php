@@ -28,6 +28,7 @@ Route::get('/auth/google-callback', [SocialiteController::class, 'googleAuthenti
 Route::get('/logout', [SocialiteController::class, 'logout'])->name('google.logout');
 
 // FORM DATA PASIEN
+Route::get('/profile',[PasienController::class, 'getData'])->name('pasien.profile');
 Route::post('/profile/update',[PasienController::class, 'updateDataPasien'])->name('pasien.update');
 
 
