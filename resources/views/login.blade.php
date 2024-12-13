@@ -52,6 +52,7 @@
                   </button>
                 </div>
                 <p class="text-gray-800 text-sm !mt-8 text-center">Don't have an account? <a href="/register" class="text-[#155458] hover:underline ml-1 whitespace-nowrap font-semibold">Register here</a></p>
+                <a href="{{ route('auth.google') }}">login with google</a>
               </form>
             </div>
             </div>

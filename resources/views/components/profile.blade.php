@@ -91,8 +91,9 @@
                     </div>
                     
                     
-                    <div class="flex justify-end mt-20">
-                        <button type="submit" class="font-bold text-white bg-[#155458] px-6 py-3 rounded-md">Submit</button>
+                    <div class="flex justify-end mt-20 gap-5">
+                        <button type="submit" class="font-bold text-white bg-[#155458] px-6 py-3 rounded-md">Update</button>
+                        <a href="{{ route('google.logout') }}" class="font-bold text-white bg-[#155458] px-6 py-3 rounded-md">Logout</a>
                     </div>               
                 </form>
             </div>

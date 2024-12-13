@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,6 +19,11 @@ Route::get('/register', function () {
 Route::get('/profile', function () {
     return view('components.profile');
 });
+
+Route::get('/auth/google', [SocialiteController::class, 'googleLogin'])->name('auth.google');
+Route::get('/auth/google-callback', [SocialiteController::class, 'googleAuthentication'])->name('auth.google-callback');
+Route::get('/logout', [SocialiteController::class, 'logout'])->name('google.logout');
+
 
 Route::get('/form/persetujuan', [FormController::class, 'persetujuan'])->name('form.persetujuan');
 Route::get('/form/data-diri', [FormController::class, 'data_diri'])->name('form.data_diri');
