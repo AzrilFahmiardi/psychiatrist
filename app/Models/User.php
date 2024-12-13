@@ -21,7 +21,16 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'google_id'
+        'google_id',
+        'nama_lengkap',
+        'semester',
+        'usia',
+        'departemen',
+        'program_studi',
+        'jenis_kelamin',
+        'no_hp',
+        'status_akses_layanan',
+        'role'
     ];
 
     /**

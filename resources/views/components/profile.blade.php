@@ -16,7 +16,7 @@
                     <div class="grid gap-6 mb-6 md:grid-cols-2">
                         <div>
                             <label for="nama" class="block mb-2 text-sm font-semibold text-[1rem] text-[#155458]">Nama pendaftar</label>
-                            <input type="text" id="nama" name="nama" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full py-[1rem] px-4  " placeholder="nama lengkap" required />
+                            <input type="text" id="nama" name="nama_lengkap" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full py-[1rem] px-4  " placeholder="nama lengkap" required />
                         </div>
                         <div class="relative">
                             <label for="program_studi" class="block mb-2 text-sm font-semibold text-[1rem] text-[#155458]">Program studi</label>
@@ -31,7 +31,7 @@
                         </div>
                         <div>
                             <label for="semester" class="block mb-2 text-sm font-semibold text-[1rem] text-[#155458]">semester</label>
-                            <input type="number" id="company" name="semester" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl  block w-full py-[1rem] px-4  " placeholder="contoh : 6" required />
+                            <input type="number" id="company" name="semester"  min="1" max="14" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl  block w-full py-[1rem] px-4  " placeholder="contoh : 6" required />
                         </div>  
                         <div>
                             <label class="block mb-5 text-sm font-semibold text-[1rem] text-[#155458]">Jenis Kelamin</label>
@@ -50,7 +50,7 @@
                         </div>
                         <div>
                             <label for="usia" class="block mb-2 text-sm font-semibold text-[1rem] text-[#155458]">Usia</label>
-                            <input type="number" id="usia" name="usia" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl  block w-full py-[1rem] px-4  " placeholder="contoh : 20" required />
+                            <input type="number" id="usia" name="usia"  min="0" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl  block w-full py-[1rem] px-4  " placeholder="contoh : 20" required />
                         </div>
                         <div>
                             <label for="no_hp" class="block mb-2 text-sm font-semibold text-[1rem] text-[#155458]">No. HP/WA</label>
@@ -72,17 +72,17 @@
                             <label class="block mb-5 text-sm font-semibold text-[1rem] text-[#155458]">Layanan kesehatan mental yang pernah atau sedang diakses</label>
                             <div class="flex items-center mt-2 text-[#155458]">
                                 <label for="psikolog" class="inline-flex items-center mr-6">
-                                    <input type="radio" id="psikolog" name="jenis_kelamin" value="psikolog" 
+                                    <input type="radio" id="psikolog" name="status_layanan_akses" value="psikolog" 
                                         class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]">
                                     <span class="ml-2">Psikolog</span>
                                 </label>
                                 <label for="psikiater" class="inline-flex items-center mr-6">
-                                    <input type="radio" id="psikiater" name="jenis_kelamin" value="psikiater" 
+                                    <input type="radio" id="psikiater" name="status_layanan_akses" value="psikiater" 
                                         class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]">
                                     <span class="ml-2">Psikiater</span>
                                 </label>
                                 <label for="belum" class="inline-flex items-center">
-                                    <input type="radio" id="belum" name="jenis_kelamin" value="belum" 
+                                    <input type="radio" id="belum" name="status_layanan_akses" value="belum pernah" 
                                         class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]">
                                     <span class="ml-2">Belum pernah</span>
                                 </label>

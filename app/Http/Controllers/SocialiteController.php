@@ -16,11 +16,16 @@ class SocialiteController extends Controller
     function googleAuthentication(){
         $googleUser = Socialite::driver('google')->user();
 
+        // $emailDomain = substr(strrchr($googleUser->email, "@"), 1);
+        // if ($emailDomain !== 'mail.ugm.ac.id') {
+        //     return redirect('/')->withErrors(['email' => 'Hanya email kampus @mail.ugm.ac.id yang dapat digunakan untuk login.']);
+        // }
+
         $user = User::where('google_id', $googleUser->id)->first();
 
         if($user){
             Auth::login($user);
-            return view('home');
+            return redirect()->route('home');;
         }else{
             $userData = User::create([
                 'name' => $googleUser->name,
@@ -30,7 +35,7 @@ class SocialiteController extends Controller
 
             if($userData){
                 Auth::login($userData);
-                return view('home');
+                return redirect()->route('home');;
             }
         }
 

@@ -15,6 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('nama_lengkap')->nullable();
+            $table->string('semester')->nullable();
+            $table->string('usia')->nullable();
+            $table->string('departemen')->nullable();
+            $table->string('program_studi')->nullable();
+            $table->enum('jenis_kelamin', ['laki-laki', 'perempuan', 'unknown'])->nullable();
+            $table->string('no_hp')->nullable();
+            $table->enum('status_akses_layanan', ['piskolog', 'psikiater', 'belum pernah'])->nullable();
+            $table->enum('role', ['piskolog', 'pasien', 'admin'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('google_id')->nullable();
