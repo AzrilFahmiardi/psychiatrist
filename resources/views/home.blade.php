@@ -77,6 +77,7 @@
                     @endif
                     
                 </div>
+                {{-- JADWAL --}}
                 <div class="col-span-2 py-3 px-5 bg-[#FAFAFA] rounded-xl">
                     <div class="relative flex justify-between">
                         <h2 class="mb-3 font-bold text-[1.8rem] text-[#4F4F4F] mx-auto">Jadwal Konseling dan Dokter yang Tersedia</h2>
@@ -85,7 +86,7 @@
                         <form action="{{ route('jadwal.filter') }}" method="GET" class="w-full grid grid-cols-5 gap-5 mb-5">
                             @csrf
                             <select id="psikolog" name="psikolog" class="col-span-2 w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4">
-                                <option value="none">Pilih Psikolog</option>
+                                {{-- <option value="none">Pilih Psikolog</option> --}}
                                 @foreach ($psikologs as $psikolog)
                                     <option value="{{ $psikolog->id }}">
                                         {{ $psikolog->name }}
@@ -93,8 +94,17 @@
                                 @endforeach
                             </select>
 
-                            <input type="date" id="tanggal" name="tanggal" class="col-span-2 w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4">
-                            <button type="submit" class="col-span-1 font-bold text-white bg-[#155458] px-3 py-1 rounded-md">Cari</button>
+                            @php
+                            // Ambil tanggal hari ini dalam format yyyy-mm-dd
+                            $today = \Carbon\Carbon::now('Asia/Jakarta')->format('Y-m-d');
+                            @endphp
+                            
+                            <input type="date" 
+                                id="tanggal" 
+                                name="tanggal" 
+                                class="col-span-2 w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4" 
+                                value="{{ request('tanggal', $today) }}">                            
+                                <button type="submit" class="col-span-1 font-bold text-white bg-[#155458] px-3 py-1 rounded-md">Cari</button>
                         </form>
                     </div>
                     <div class="grid grid-cols-2 gap-3">

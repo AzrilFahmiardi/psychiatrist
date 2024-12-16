@@ -28,15 +28,28 @@
 </div>
 
 {{-- KONTEN FORM --}}
-<div class="w-full">
-    <h1 class="text-center text-[#155458] text-xl font-bold my-10">Pembayaran</h1>
-    <div class="flex flex-col gap-5">
-        
-
+<div class=" relative flex flex-col items-center w-fit mx-auto justify-start">
+    <h1 class="text-center text-[#155458] text-xl font-bold mt-10 mb-3">Pembayaran</h1>
+    {{-- GRATIS HABIS --}}
+    <h2 class="text-center text-[#155458] text-[3rem] font-bold my-10">Rp. 150.000,00</h1>
+    <div class="flex flex-col gap-5 border-2 border-[#4F4F4F] sm:w-[600px] py-3 px-4 rounded-xl text-[#4F4F4F] font-poppins">
+        <p>Transfer pembayaran ke</p>
+        <div class="flex justify-between items-center">
+            <img src="{{ asset('images/bri.png') }}" alt="BANK BRI">
+            <p class="flex items-center gap-3 cursor-pointer">123456789098631s<span><img src="{{ asset('images/copy.png') }}" alt=""></span></p>
+        </div>
     </div>
-    
+    <div class="flex items-center gap-3 absolute left-0 -bottom-10 cursor-pointer">
+        <img src="{{ asset('images/upload.png') }}" alt="upload" class="w-5">
+        <p class="text-[#4F4F4F] text-[0.8rem] font-semibold">Upload bukti pembayaran</p>
+    </div>
+
+    {{-- GRATIS BEUM HABIS --}}
+    {{-- <h2 class="text-center text-[#155458] text-[3rem] font-bold my-10 line-through">Rp. 150.000,00</h1>
+    <p>Anda dapat mengakses layanan ini secara gratis sampai hingga 2 kali pertemuan </p> --}}
 
 </div>
+
 {{-- TOMBOL --}}
 <div class="absolute w-full flex justify-between px-10 bottom-16">
     <div class="flex h-[1.5rem] items-center gap-4">

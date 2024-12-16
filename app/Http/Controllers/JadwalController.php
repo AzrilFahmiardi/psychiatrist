@@ -12,8 +12,9 @@ class JadwalController extends Controller
 {
     public function index()
     {
-        $jadwals = collect();
-        $psikologs = Psikolog::all();
+        $today = now()->toDateString(); // Mendapatkan tanggal hari ini dalam format 'YYYY-MM-DD'
+        $jadwals = Jadwal::whereDate('waktu', $today)->get(); // Filter jadwal berdasarkan tanggal hari ini
+        $psikologs = Psikolog::all(); // Mendapatkan semua data psikolog
         return view('home', compact('jadwals', 'psikologs'));
     }
     
