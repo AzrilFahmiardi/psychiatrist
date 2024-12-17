@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('psikolog_id');
             $table->unsignedBigInteger('jadwal_id');
             $table->enum('status_akses_layanan', ['submitted', 'scheduled', 'completed','rescheduled','cancel'])->default('scheduled');
+            $table->string('bukti_pembayaran')->nullable();
             $table->timestamps();
 
             $table->foreign('pasien_id')->references('id')->on('users')->onDelete('cascade');
