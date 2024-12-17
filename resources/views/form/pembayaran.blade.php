@@ -61,9 +61,8 @@
         </a>
     </div>
     <div class="flex h-[1.5rem] items-center gap-4">
-        <a id="next-button" href="#" class="flex items-center gap-4">
-            <span class="text-[1.5rem] text-[#155458] font-bold">Next</span>
-            <img src="{{ asset('images/next.png') }}" alt="Next">
+        <a id="next-button" href="{{ route('submit.booking') }}" class="flex items-center gap-4 font-poppins bg-[#155458] text-[#FAFAFA] py-2 px-4 rounded-xl font-bold text-[1.5rem]">
+            Submit
         </a>
     </div>
 </div>

@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pasien_id');
+            $table->unsignedBigInteger('psikolog_id');
+            $table->unsignedBigInteger('jadwal_id');
+            $table->enum('status_akses_layanan', ['submitted', 'scheduled', 'completed','rescheduled','cancel'])->default('scheduled');
             $table->timestamps();
+
+            $table->foreign('pasien_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('psikolog_id')->references('id')->on('psikologs')->onDelete('cascade');
+            $table->foreign('jadwal_id')->references('id')->on('jadwals')->onDelete('cascade');
+
         });
     }
 

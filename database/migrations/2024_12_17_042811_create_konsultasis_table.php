@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('konsultasis', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('booking_id');
+            $table->text('hasil_konsultasi');
             $table->timestamps();
+
+            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
+
         });
     }
 

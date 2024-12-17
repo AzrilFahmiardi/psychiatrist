@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Form;
 use App\Models\User;
 use App\Models\Jadwal;
+use App\Models\Booking;
 use App\Models\Psikolog;
 use App\Models\Departemen;
 use App\Models\ProgramStudi;
@@ -57,13 +58,46 @@ class FormController extends Controller
         return view('form.pilih_jadwal', compact('jadwals', 'psikologs'));
     }
 
-    function ketentuan_submit()
+    function ketentuan_submit(Request $request)
     {
-        return view('form.ketentuan_submit');
+        $jadwalId = $request->input('jadwal_id');
+        $psikologId = $request->input('psikolog_id');
+
+        session([
+            'selected_jadwal_id' => $jadwalId,
+            'selected_psikolog_id' => $psikologId
+        ]);
+        return view('form.ketentuan_submit', compact('jadwalId', 'psikologId'));
     }
 
     function pembayaran()
     {
-        return view('form.pembayaran');
+        $jadwalId = session('selected_jadwal_id');
+        $psikologId = session('selected_psikolog_id');
+
+        // Gunakan $jadwalId dan $psikologId untuk menyimpan ke tabel booking
+        return view('form.pembayaran', compact('jadwalId', 'psikologId'));
+    }
+
+    function simpan_booking()
+    {
+        $jadwalId = session('selected_jadwal_id');
+        $psikologId = session('selected_psikolog_id');
+        $user = Auth::user();
+
+        // Buat booking baru
+        $booking = new Booking();
+        $booking->pasien_id = $user->id;
+        $booking->jadwal_id = $jadwalId;
+        $booking->psikolog_id = $psikologId;
+        $booking->save();
+
+        // Kurangi trial_left jika masih memiliki trial
+        User::where('id', $user->id)->decrement('trial_left');
+
+
+        session()->forget(['selected_jadwal_id', 'selected_psikolog_id']);
+
+        return redirect()->route('home')->with('success', 'Jadwal berhasil terboking');
     }
 }
