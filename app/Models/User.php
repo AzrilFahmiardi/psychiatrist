@@ -30,7 +30,8 @@ class User extends Authenticatable
         'jenis_kelamin',
         'no_hp',
         'status_akses_layanan',
-        'role'
+        'role',
+        'trial_left'
     ];
 
     /**

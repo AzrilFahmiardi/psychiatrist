@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('no_hp')->nullable();
             $table->enum('status_akses_layanan', ['psikolog', 'psikiater', 'belum pernah'])->nullable();
             $table->enum('role', ['psikolog', 'pasien', 'admin'])->nullable();
+            $table->integer('trial_left')->default(2);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('google_id')->nullable();
