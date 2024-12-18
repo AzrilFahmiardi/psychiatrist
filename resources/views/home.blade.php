@@ -64,27 +64,26 @@
                 @if(Auth::check())
                 <a href="/form/persetujuan" class="text-[#51B2B8] font-semibold bg-[#FAFAFA] py-3 px-4 rounded-xl hover:scale-110 transition duration-300 ease-in-out">Daftar sekarang</a>
                 @else 
-                    <button id="loginPopupButton" class="text-[#51B2B8] font-semibold bg-[#FAFAFA] py-3 px-4 rounded-xl hover:scale-110 transition duration-300 ease-in-out">
-                        Daftar sekarang
-                    </button>
-                    <div id="loginPopup" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
-                        <div class="bg-white p-6 rounded-xl shadow-lg w-96">
-                            <h3 class="text-lg font-semibold">Silahkan login terlebih dahulu</h3>
-                            <p class="text-sm">Anda harus login untuk melanjutkan pendaftaran.</p>
-                            <div class="mt-4">
-                                <a href="/login" class="text-white py-1 px-2 rounded-md bg-blue-500 hover:bg-blue-400">Login</a>
-                                <button onclick="closePopup()" class="ml-2 text-white py-1 px-2 rounded-md bg-red-500 hover:bg-red-400">Tutup</button>
-                            </div>
+                <button id="loginPopupButton" class="text-[#51B2B8] font-semibold bg-[#FAFAFA] py-3 px-4 rounded-xl hover:scale-110 transition duration-300 ease-in-out">
+                    Daftar sekarang
+                </button>
+                <div id="loginPopup" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+                    <div class="bg-white p-6 rounded-md text-center">
+                        <p class="text-lg">Silakan login untuk melanjutkan pendaftaran</p>
+                        <div class="mt-4">
+                            <a href="/login" class="bg-[#155458] px-4 py-2 rounded-md text-white">Login</a>
+                            <button onclick="closeModal()" class="bg-gray-500 px-4 py-2 rounded-md text-white ml-2">Tutup</button>
                         </div>
-                    </div>        
-                        <script>
-                            document.getElementById('loginPopupButton').onclick = function() {
-                                document.getElementById('loginPopup').classList.remove('hidden');
-                            };
-                            function closePopup() {
-                                document.getElementById('loginPopup').classList.add('hidden');
-                            }
-                        </script>
+                    </div>
+                </div>       
+                <script>
+                    document.getElementById('loginPopupButton').onclick = function() {
+                        document.getElementById('loginPopup').classList.remove('hidden');
+                    };
+                    function closeModal() {
+                        document.getElementById('loginPopup').classList.add('hidden');
+                    }
+                </script>
                     @endif    
             </div>
             
@@ -99,7 +98,7 @@
                                     <p class="text-[#4F4F4F] text-[0.8rem]">{{ $formattedDate }}</p>
                                     <div class="flex justify-between">
                                         <p class="text-[#4F4F4F] text-[0.8rem]">{{ $formattedTime }}</p>
-                                        <a href="/riwayat" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Jadwal lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
+                                        <a href="{{ route('riwayat.booking') }}" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Jadwal lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
                                     </div>
                                 @else
                                     <p class="text-[#4F4F4F] text-[0.8rem]">Belum ada jadwal yang dibooking</p>
@@ -120,7 +119,7 @@
                                 </p>
                                 <p class="text-[#4F4F4F] text-[0.8rem] mt-2 truncate">Hasil : {{ $konsultasi->hasil_konsultasi }}</p>
                                 <hr class="my-3">
-                                <a href="/riwayat" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Hasil lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
+                                <a href="{{ route('riwayat.booking') }}" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Hasil lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
                             @else
                                 <p class="text-[#4F4F4F] text-[0.8rem]">Belum ada hasil konsultasi</p>
                             @endif

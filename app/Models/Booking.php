@@ -27,6 +27,6 @@ class Booking extends Model
     }
     public function konsultasi()
     {
-        return $this->belongsTo(Konsultasi::class);
+        return $this->hasOne(Konsultasi::class);
     }
 }

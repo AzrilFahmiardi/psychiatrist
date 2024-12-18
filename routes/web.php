@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\SocialiteController;
 use App\Models\Jadwal;
 use Carbon\Carbon;
@@ -22,6 +23,10 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('register');
 });
+
+// RIWAYAT
+Route::get('/riwayat', [RiwayatController::class, 'getBooking'])->name('riwayat.booking');
+
 
 
 // GOOGLE AUTHENTICATION
