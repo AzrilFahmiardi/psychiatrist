@@ -34,13 +34,23 @@
     selectedPsychologId: null,
     canProceed: false,
 
-    selectSchedule(scheduleId, psychologId) {
+    selectSchedule(scheduleId, psychologId, status) {
+        // Always allow setting activeCard, but only proceed if status is available
         this.activeCard = scheduleId;
-        this.selectedScheduleId = scheduleId;
-        this.selectedPsychologId = psychologId;
-        this.canProceed = true;
-        console.log('Selected Schedule:', scheduleId);
-        console.log('Selected Psychologist:', psychologId);
+
+        if (status === 'available') {
+            this.selectedScheduleId = scheduleId;
+            this.selectedPsychologId = psychologId;
+            this.canProceed = true;
+            console.log('Selected Schedule:', scheduleId);
+            console.log('Selected Psychologist:', psychologId);
+            console.log('status : ',status)
+        } else {
+            // Reset selection if not available
+            this.selectedScheduleId = null;
+            this.selectedPsychologId = null;
+            this.canProceed = false;
+        }
     },
 
     generateNextUrl() {
@@ -88,14 +98,23 @@
                 @if ($jadwals && $jadwals->count() > 0)
                     @foreach ($jadwals as $jad)
                         @if ($jad->psikolog)
-                            <div 
-                                @click="selectSchedule({{ $jad->id }}, {{ $jad->psikolog->id }})"
-                                :class="activeCard === {{ $jad->id }} ? 'bg-yellow-500 text-black border-yellow-300' : 'bg-[#155458] text-white border-[#FAFAFA]'" 
-                                class="jadwal-card border-2 w-full py-2 px-2 rounded-md transition duration-300 ease-in-out hover:scale-[1.02] cursor-pointer"
-                            >
-                                <p class="text-[1.1rem] font-bold">{{ $jad->psikolog->name }}</p>
-                                <p class="text-[0.8rem]">Pukul {{ \Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') }} WIB</p>
-                            </div>
+                             <div 
+                        @click="selectSchedule({{ $jad->id }}, {{ $jad->psikolog->id }}, '{{ $jad->status }}')"
+                        :class="{
+                            'bg-[#155458] text-white border-[#155458]': activeCard === {{ $jad->id }} && '{{ $jad->status }}' === 'available',
+                            'bg-[#155458] text-black border-green-300': activeCard === {{ $jad->id }},
+                            'bg-gray-200 text-gray-500 border-gray-300 opacity-60': '{{ $jad->status }}' === 'booked'
+                        }"
+                        class="jadwal-card border-2 w-full py-2 px-2 rounded-md transition duration-300 ease-in-out 
+                               {{ $jad->status === 'booked' ? 'cursor-not-allowed' : 'hover:scale-[1.02] cursor-pointer' }}"
+                    >
+                        <p class="text-[1.1rem] font-bold">{{ $jad->psikolog->name }}</p>
+                        <p class="text-[0.8rem]">Pukul {{ \Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') }} WIB</p>
+                        
+                        @if($jad->status === 'booked')
+                            <span class="text-xs text-red-500 block mt-1">Sudah Dibooking</span>
+                        @endif
+                    </div>
                         @else
                             <p>No psychologist assigned</p>
                         @endif

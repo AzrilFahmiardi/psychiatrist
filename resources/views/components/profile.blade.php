@@ -37,16 +37,20 @@
                             <input type="number" id="company" name="semester"  min="1" max="14" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-sm rounded-2xl  block w-full py-[1rem] px-4 " value="{{ $user ? $user->semester : '' }}" placeholder="contoh : 6" required />
                         </div>  
                         <div>
-                            <label class="block mb-5 text-sm font-semibold text-[1rem] text-[#155458]">Jenis Kelamin</label>
+                            <label class="block mb-5 text-sm font-semibold text-[1rem] text-[#155458]">Jenis Kelamin *</label>
                             <div class="flex items-center mt-2 text-[#155458]">
                                 <label for="laki-laki" class="inline-flex items-center mr-6">
-                                    <input type="radio" id="laki-laki" name="jenis_kelamin" value="laki-laki" class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]" {{ $user && $user->jenis_kelamin == 'laki-laki' ? 'checked' : '' }}
-                                    class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]">
+                                    <input type="radio" id="laki-laki" name="jenis_kelamin" value="laki-laki" 
+                                    class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]" 
+                                    {{ $user && $user->jenis_kelamin == 'laki-laki' ? 'checked' : '' }}
+                                    required>
                                     <span class="ml-2">Laki-laki</span>
                                 </label>
                                 <label for="perempuan" class="inline-flex items-center">
-                                    <input type="radio" id="perempuan" name="jenis_kelamin" value="perempuan" class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]" {{ $user && $user->jenis_kelamin == 'perempuan' ? 'checked' : '' }}
-                                    class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]">
+                                    <input type="radio" id="perempuan" name="jenis_kelamin" value="perempuan" 
+                                    class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]" 
+                                    {{ $user && $user->jenis_kelamin == 'perempuan' ? 'checked' : '' }}
+                                    required>
                                     <span class="ml-2">Perempuan</span>
                                 </label>
                             </div>
@@ -79,18 +83,27 @@
                                        
                         </div>
                         <div>
-                            <label class="block mb-5 text-sm font-semibold text-[1rem] text-[#155458]">Layanan kesehatan mental yang pernah atau sedang diakses</label>
+                            <label class="block mb-5 text-sm font-semibold text-[1rem] text-[#155458]">Layanan kesehatan mental yang pernah atau sedang diakses *</label>
                             <div class="flex items-center mt-2 text-[#155458]">
                                 <label for="psikolog" class="inline-flex items-center mr-6">
-                                    <input type="radio" id="psikolog" name="status_akses_layanan" value="psikolog" class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]" {{ $user && $user->status_akses_layanan == 'psikolog' ? 'checked' : '' }}>
+                                    <input type="radio" id="psikolog" name="status_akses_layanan" value="psikolog" 
+                                    class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]" 
+                                    {{ $user && $user->status_akses_layanan == 'psikolog' ? 'checked' : '' }}
+                                    required>
                                     <span class="ml-2">Psikolog</span>
                                 </label>
                                 <label for="psikiater" class="inline-flex items-center mr-6">
-                                    <input type="radio" id="psikiater" name="status_akses_layanan" value="psikiater" class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]" {{ $user && $user->status_akses_layanan == 'psikiater' ? 'checked' : '' }}>
+                                    <input type="radio" id="psikiater" name="status_akses_layanan" value="psikiater" 
+                                    class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]" 
+                                    {{ $user && $user->status_akses_layanan == 'psikiater' ? 'checked' : '' }}
+                                    required>
                                     <span class="ml-2">Psikiater</span>
                                 </label>
                                 <label for="belum" class="inline-flex items-center">
-                                    <input type="radio" id="belum" name="status_akses_layanan" value="belum pernah" class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]" {{ $user && $user->status_akses_layanan == 'belum pernah' ? 'checked' : '' }}>
+                                    <input type="radio" id="belum" name="status_akses_layanan" value="belum pernah" 
+                                    class="form-radio border-[#155458] focus:ring-[#155458] text-[#155458]" 
+                                    {{ $user && $user->status_akses_layanan == 'belum pernah' ? 'checked' : '' }}
+                                    required>
                                     <span class="ml-2">Belum pernah</span>
                                 </label>
                             </div>

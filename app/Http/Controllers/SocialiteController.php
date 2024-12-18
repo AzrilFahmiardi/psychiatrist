@@ -25,7 +25,11 @@ class SocialiteController extends Controller
 
         if($user){
             Auth::login($user);
-            return redirect()->route('home');;
+            if (empty($user->nama_lengkap)) {
+            return redirect()->route('pasien.profile'); 
+        }
+
+        return redirect()->route('home'); // Redirect ke halaman utama
         }else{
             $userData = User::create([
                 'name' => $googleUser->name,
@@ -35,7 +39,11 @@ class SocialiteController extends Controller
 
             if($userData){
                 Auth::login($userData);
-                return redirect()->route('home');;
+                if (empty($user->nama_lengkap)) {
+            return redirect()->route('pasien.profile'); 
+        }
+
+        return redirect()->route('home'); // Redirect ke halaman utama
             }
         }
 

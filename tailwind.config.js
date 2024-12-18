@@ -28,6 +28,10 @@ export default {
                 DEFAULT: '2px 2px 4px rgba(0, 0, 0, 0.5)',
                 lg: '3px 3px 6px rgba(0, 0, 0, 0.5)',
             },
+            colors: {
+                greenTheme: '#155458',
+                FAFA : '#FAFAFA'
+            },
         },
     },
     plugins: [

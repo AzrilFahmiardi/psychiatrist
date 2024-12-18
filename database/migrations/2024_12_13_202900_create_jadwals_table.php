@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->datetime('waktu');
             $table->unsignedBigInteger('psikolog_id');
+            $table->enum('status', ['available', 'booked'])->default('available');
+
             $table->timestamps();
 
             $table->foreign('psikolog_id')->references('id')->on('psikologs')->onDelete('cascade');

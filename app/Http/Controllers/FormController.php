@@ -12,6 +12,7 @@ use App\Models\Departemen;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FormController extends Controller
 {
@@ -91,51 +92,56 @@ class FormController extends Controller
     }
 
     function simpan_booking(Request $request)
-{
-    // Ambil data sesi dan user
-    $jadwalId = session('selected_jadwal_id');
-    $psikologId = session('selected_psikolog_id');
-    $user = Auth::user();
+    {
+        // Ambil data sesi dan user
+        $jadwalId = session('selected_jadwal_id');
+        $psikologId = session('selected_psikolog_id');
+        $user = Auth::user();
 
-    $trial = $user->trial_left;
+        $trial = $user->trial_left;
 
-    try {
-        // Buat booking baru
-        $booking = new Booking();
-        $booking->pasien_id = $user->id;
-        $booking->jadwal_id = $jadwalId;
-        $booking->psikolog_id = $psikologId;
+        try {
+            // Buat booking baru
+            $booking = new Booking();
+            $booking->pasien_id = $user->id;
+            $booking->jadwal_id = $jadwalId;
+            $booking->psikolog_id = $psikologId;
 
-        // Jika trial habis, wajib upload bukti pembayaran
-        if ($trial <= 0) {
-            // Validasi input
-            $request->validate([
-                'bukti_pembayaran' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            ]);
+            // Jika trial habis, wajib upload bukti pembayaran
+            if ($trial <= 0) {
+                // Validasi input
+                $request->validate([
+                    'bukti_pembayaran' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+                ]);
 
-            // Simpan file bukti pembayaran
-            $buktiPath = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
-            $booking->bukti_pembayaran = $buktiPath;
-            $booking->status_akses_layanan = 'submitted';
+                // Simpan file bukti pembayaran
+                $buktiPath = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
+                $booking->bukti_pembayaran = $buktiPath;
+                $booking->status_akses_layanan = 'submitted';
 
+            }
+
+            // Simpan booking
+            $booking->save();
+
+            DB::table('jadwals')->where('id', $jadwalId)->update(['status' => 'booked']);
+
+
+            // Kurangi trial_left jika masih memiliki trial
+            if ($trial > 0) {
+                User::where('id', $user->id)->decrement('trial_left');
+            }
+
+            
+
+            // Hapus sesi
+            session()->forget(['selected_jadwal_id', 'selected_psikolog_id']);
+
+            return redirect()->route('home')->with('success', 'Jadwal berhasil terboking.');
+        } catch (\Exception $e) {
+            // Log error
+            
+            return redirect()->back()->with('error', 'Gagal membuat booking. Silakan coba lagi.');
         }
-
-        // Simpan booking
-        $booking->save();
-
-        // Kurangi trial_left jika masih memiliki trial
-        if ($trial > 0) {
-            User::where('id', $user->id)->decrement('trial_left');
-        }
-
-        // Hapus sesi
-        session()->forget(['selected_jadwal_id', 'selected_psikolog_id']);
-
-        return redirect()->route('home')->with('success', 'Jadwal berhasil terboking.');
-    } catch (\Exception $e) {
-        // Log error
-        
-        return redirect()->back()->with('error', 'Gagal membuat booking. Silakan coba lagi.');
     }
-}
 }
