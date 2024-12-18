@@ -21,9 +21,14 @@
            {{ $jad->status === 'booked' ? 'cursor-not-allowed' : 'hover:scale-[1.02] cursor-pointer' }}"
 >
     <p class="text-[1.1rem] font-bold">{{ $jad->psikolog->name }}</p>
-    <p class="text-[0.8rem]">Pukul {{ \Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') }} WIB</p>
     
     @if($jad->status === 'booked')
-        <span class="text-xs text-red-500 block mt-1">Sudah Dibooking</span>
+        <div class="flex justify-between">
+            <p class="text-[0.8rem]">Pukul {{ \Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') }} WIB</p>
+            <p class="text-[0.8rem] text-red-500">Sudah Dibooking</p>
+        </div>
+    @else
+        <p class="text-[0.8rem]">Pukul {{ \Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') }} WIB</p>
+
     @endif
 </div>

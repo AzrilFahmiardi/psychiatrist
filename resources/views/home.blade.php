@@ -168,10 +168,11 @@
                         @if ($jadwals && $jadwals->count() > 0)
                             @foreach ($jadwals as $jad)
                                 @if ($jad->psikolog)
-                                <x-jadwalCard 
-                                :name="$jad->psikolog->name"
-                                :time="(\Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB')"
-                            />
+                                    <x-jadwalCard 
+                                        :name="$jad->psikolog->name"
+                                        :time="(\Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB')"
+                                        :status="$jad->status"
+                                    />
                                 @else
                                     <p>No psychologist assigned</p>
                                 @endif
