@@ -89,7 +89,7 @@
             </div>
             
             <div class="w-[85vw] h-[300px] grid grid-cols-3 gap-4">
-                <div class="col-span-1 space-y-7">
+                <div class="col-span-1 space-y-4">
                     
                     <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[140px]">
                         <h2 class="mb-1 font-bold text-[1.2rem] text-[#155458]">Jadwal anda</h2>
@@ -111,22 +111,22 @@
                     
                     
                     <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[180px]">
-                        <h2 class="mb-3 font-bold text-[1.2rem] text-[#155458]">Hasil Konseling</h2>
-
+                        <h2 class="mb-1 font-bold text-[1.2rem] text-[#155458]">Hasil Konseling</h2>
                         @if(Auth::check())
-                            <p class="text-[#4F4F4F] font-semibold">dr. Azril Fahmiardi, Sp.Kj.</p>
-                            <p class="text-[#4F4F4F] text-[0.8rem]">Senin, 09 December 2024</p>
-                            <hr class="my-3">
-                            <a href="/riwayat" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Hasil lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
-
-                            {{-- <p class="text-[#4F4F4F] font-semibold">dr. Azril Fahmiardi, Sp.Kj.</p>
-                            <div class="flex justify-between">
-                                <p class="text-[#4F4F4F] text-[0.8rem]">Senin, 09 December 2024</p>
-                                <a href="" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Lihat hasil <span><img src="images/right_arrow.png" alt=""></span></a>
-                            </div> --}}
-                            @else 
-                            <p class="text-[#4F4F4F] text-[0.8rem] ">Silahkan login untuk melihat hasil konseling</p>
+                            @if(isset($konsultasi))
+                                <p class="text-[#4F4F4F] font-semibold">{{ $konsultasi->booking->psikolog->name }}</p>
+                                <p class="text-[#4F4F4F] text-[0.8rem]">
+                                    {{ \Carbon\Carbon::parse($konsultasi->booking->waktu)->isoFormat('dddd, D MMMM YYYY') }}
+                                </p>
+                                <p class="text-[#4F4F4F] text-[0.8rem] mt-2 truncate">Hasil : {{ $konsultasi->hasil_konsultasi }}</p>
+                                <hr class="my-3">
+                                <a href="/riwayat" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Hasil lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
+                            @else
+                                <p class="text-[#4F4F4F] text-[0.8rem]">Belum ada hasil konsultasi</p>
                             @endif
+                        @else
+                            <p class="text-[#4F4F4F] text-[0.8rem]">Silahkan login untuk melihat hasil konseling</p>
+                        @endif
 
 
                     </div>

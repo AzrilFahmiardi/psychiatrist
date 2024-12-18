@@ -25,4 +25,8 @@ class Booking extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function konsultasi()
+    {
+        return $this->belongsTo(Konsultasi::class);
+    }
 }

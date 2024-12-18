@@ -10,4 +10,15 @@ class Konsultasi extends Model
         'booking_id', 
         'hasil_konsultasi',
     ];
+
+    public function booking()
+{
+    return $this->belongsTo(Booking::class);
+}
+
+public function jadwal()
+{
+    return $this->belongsToThrough(Jadwal::class, Booking::class);
+}
+
 }
