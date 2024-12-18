@@ -8,6 +8,21 @@
     <title>Psychiatrist</title>
 </head>
 <body>
+    @php
+    use Carbon\Carbon;
+
+    $formattedDate = '';
+    $formattedTime = '';
+    
+    if(Auth::check() && isset($bookingLastest)) {
+        $jadwal = Carbon::parse($bookingLastest->jadwal->waktu);
+        $jadwal->timezone('Asia/Jakarta');
+        Carbon::setLocale('id'); 
+        $formattedDate = $jadwal->translatedFormat('l, d F Y');
+        $formattedTime = $jadwal->format('H:i') . '-' . $jadwal->addHour()->format('H:i') . ' WIB';
+    }
+@endphp
+
     {{-- Flash Message Container --}}
   <div id="flash-message-container" class="absolute top-5 left-0 right-0">
     @if(session('error'))
@@ -75,38 +90,48 @@
             
             <div class="w-[85vw] h-[300px] grid grid-cols-3 gap-4">
                 <div class="col-span-1 space-y-7">
-                    @if(Auth::check())
-                    <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl">
-                        <h2 class="mb-3 font-bold text-[1.2rem] text-[#155458]">Jadwal anda</h2>
-                        <p class="text-[#4F4F4F] font-semibold">dr. Azril Fahmiardi, Sp.Kj.</p>
-                        <p class="text-[#4F4F4F] text-[0.8rem]">Senin, 09 December 2024</p>
-                        <p class="text-[#4F4F4F] text-[0.8rem]">Pukul 09:00-10:00 WIB</p>
+                    
+                    <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[140px]">
+                        <h2 class="mb-1 font-bold text-[1.2rem] text-[#155458]">Jadwal anda</h2>
+                            @if(Auth::check())
+                                @if(isset($bookingLastest))
+                                    <p class="text-[#4F4F4F] font-semibold">{{ $bookingLastest->psikolog->name }}</p>
+                                    <p class="text-[#4F4F4F] text-[0.8rem]">{{ $formattedDate }}</p>
+                                    <div class="flex justify-between">
+                                        <p class="text-[#4F4F4F] text-[0.8rem]">{{ $formattedTime }}</p>
+                                        <a href="/riwayat" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Jadwal lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
+                                    </div>
+                                @else
+                                    <p class="text-[#4F4F4F] text-[0.8rem]">Belum ada jadwal yang dibooking</p>
+                                @endif
+                            @else
+                                <p class="text-[#4F4F4F] text-[0.8rem]">Silahkan login untuk melihat jadwal anda</p>
+                            @endif
                     </div>
-                    @else 
-                        <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[140px]">
-                            <h2 class="mb-3 font-bold text-[1rem] text-[#155458]">Silahkan login dulu untuk melihat jadwal anda</h2>
-                        </div>
-                    @endif
-                    @if(Auth::check())
-                    <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl">
+                    
+                    
+                    <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[180px]">
                         <h2 class="mb-3 font-bold text-[1.2rem] text-[#155458]">Hasil Konseling</h2>
+
+                        @if(Auth::check())
                             <p class="text-[#4F4F4F] font-semibold">dr. Azril Fahmiardi, Sp.Kj.</p>
-                            <div class="flex justify-between">
-                                <p class="text-[#4F4F4F] text-[0.8rem]">Senin, 09 December 2024</p>
-                                <a href="" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Lihat hasil <span><img src="images/right_arrow.png" alt=""></span></a>
-                            </div>
+                            <p class="text-[#4F4F4F] text-[0.8rem]">Senin, 09 December 2024</p>
                             <hr class="my-3">
-                            <p class="text-[#4F4F4F] font-semibold">dr. Azril Fahmiardi, Sp.Kj.</p>
+                            <a href="/riwayat" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Hasil lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
+
+                            {{-- <p class="text-[#4F4F4F] font-semibold">dr. Azril Fahmiardi, Sp.Kj.</p>
                             <div class="flex justify-between">
                                 <p class="text-[#4F4F4F] text-[0.8rem]">Senin, 09 December 2024</p>
                                 <a href="" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Lihat hasil <span><img src="images/right_arrow.png" alt=""></span></a>
-                            </div>
+                            </div> --}}
+                            @else 
+                            <p class="text-[#4F4F4F] text-[0.8rem] ">Silahkan login untuk melihat hasil konseling</p>
+                            @endif
+
+
                     </div>
-                    @else 
-                    <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[170px]">
-                        <h2 class="mb-3 font-bold text-[1rem] text-[#155458]">Silahkan login dulu untuk melihat Hasil Konseling</h2>
-                    </div>
-                    @endif
+                   
+                    
                     
                 </div>
                 {{-- JADWAL --}}

@@ -12,4 +12,17 @@ class Booking extends Model
         'jadwal_id', 
         'status_akses_layanan',
     ];
+
+    public function psikolog()
+    {
+        return $this->belongsTo(Psikolog::class);
+    }
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class);
+    }
+    public function pasien()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

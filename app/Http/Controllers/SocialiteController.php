@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,9 +30,9 @@ class SocialiteController extends Controller
             if($user){
                 Auth::login($user);
                 if (empty($user->nama_lengkap)) {
-                    return redirect()->route('pasien.profile'); 
+                    return redirect()->route('pasien.profile',); 
                 }
-    
+
                 return redirect()->route('home');
             } else {
                 $userData = User::create([
