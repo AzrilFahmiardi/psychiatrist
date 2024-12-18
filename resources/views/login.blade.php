@@ -8,6 +8,38 @@
     <title>Psychiatrist</title>
 </head>
 <body>
+  {{-- Flash Message Container --}}
+  <div id="flash-message-container" class="absolute top-5 left-0 right-0">
+    @if(session('error'))
+    <div id="error-message" class="bg-red-500 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+        <p class="text-sm">{{ session('error') }}</p>
+    </div>
+    @endif
+
+    @if(session('success'))
+    <div id="success-message" class="bg-green-500 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+        <p class="text-sm">{{ session('success') }}</p>
+    </div>
+    @endif
+
+    @if(session('status'))
+    <div id="status-message" class="bg-blue-500 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+        <p class="text-sm">{{ session('status') }}</p>
+    </div>
+    @endif
+
+    @if(session('warning'))
+    <div id="warning-message" class="bg-yellow-500 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+        <p class="text-sm">{{ session('warning') }}</p>
+    </div>
+    @endif
+
+    @if(session('info'))
+    <div id="info-message" class="bg-blue-300 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+        <p class="text-sm">{{ session('info') }}</p>
+    </div>
+    @endif
+</div>
     <div class="bg-login-gradient font-poppins px-10">
         <div class="min-h-screen w-full grid lg:grid-cols-2 md:grid-cols-1 py-6 px-4">
             <div class="flex my-auto p-10">
@@ -63,5 +95,23 @@
             </div>
         </div>
       </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        // Auto-dismiss messages after 5 seconds
+        const messages = document.querySelectorAll('#flash-message-container > div');
+        
+        messages.forEach(function(message) {
+            // Fade in
+            setTimeout(() => {
+                message.classList.add('opacity-0', 'h-0', 'py-0');
+            }, 5000);  // <-- This is where the 5-second timing is set
+
+            // Remove from DOM
+            setTimeout(() => {
+                message.remove();
+            }, 5000);  // <-- This is slightly after the fade-out to complete the animation
+            });
+        });
+      </script>
 </body>
 </html>
