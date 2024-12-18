@@ -60,13 +60,20 @@ class FormController extends Controller
 
     function ketentuan_submit(Request $request)
     {
-        $jadwalId = $request->input('jadwal_id');
-        $psikologId = $request->input('psikolog_id');
+        $jadwalId = $request->input('jadwal_id') ?? session('selected_jadwal_id');
+        $psikologId = $request->input('psikolog_id') ?? session('selected_psikolog_id');
 
+        // If no IDs are found, redirect back to schedule selection
+        if (!$jadwalId || !$psikologId) {
+            return redirect()->route('form.pilih_jadwal')->with('error', 'Silakan pilih jadwal terlebih dahulu.');
+        }
+
+        // Store in session again to maintain state
         session([
             'selected_jadwal_id' => $jadwalId,
             'selected_psikolog_id' => $psikologId
         ]);
+
         return view('form.ketentuan_submit', compact('jadwalId', 'psikologId'));
     }
 
@@ -75,7 +82,11 @@ class FormController extends Controller
         $jadwalId = session('selected_jadwal_id');
         $psikologId = session('selected_psikolog_id');
 
-        // Gunakan $jadwalId dan $psikologId untuk menyimpan ke tabel booking
+        // If no IDs are found, redirect back to schedule selection
+        if (!$jadwalId || !$psikologId) {
+            return redirect()->route('form.pilih_jadwal')->with('error', 'Silakan pilih jadwal terlebih dahulu.');
+        }
+
         return view('form.pembayaran', compact('jadwalId', 'psikologId'));
     }
 

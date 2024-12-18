@@ -119,7 +119,7 @@
             <a 
                 id="next-button" 
                 x-show="canProceed"
-                x-bind:href="generateNextUrl()"
+                x-bind:href="'{{ route('form.ketentuan_submit') }}?jadwal_id=' + selectedScheduleId + '&psikolog_id=' + selectedPsychologId"
                 class="flex items-center gap-4"
             >
                 <span class="text-[1.5rem] text-[#155458] font-bold">Next</span>
