@@ -52,3 +52,33 @@ Route::post('/submit-booking', [FormController::class, 'simpan_booking'])->name(
 Route::middleware(['auth'])->group(function () {
     Route::get('/my-calendar', [CalendarController::class, 'show'])->name('calendar.show');
 });
+
+// ADMIN ROUTES
+// Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.home');
+    });
+
+    // Route::get('/admin/jadwal', [JadwalController::class, 'index'])->name('admin.jadwal');
+    // Route::get('/admin/jadwal/create', [JadwalController::class, 'create'])->name('admin.jadwal.create');
+    // Route::post('/admin/jadwal/store', [JadwalController::class, 'store'])->name('admin.jadwal.store');
+    // Route::get('/admin/jadwal/edit/{id}', [JadwalController::class, 'edit'])->name('admin.jadwal.edit');
+    // Route::post('/admin/jadwal/update/{id}', [JadwalController::class, 'update'])->name('admin.jadwal.update');
+    // Route::get('/admin/jadwal/delete/{id}', [JadwalController::class, 'destroy'])->name('admin.jadwal.delete');
+
+    // Route::get('/admin/pasien', [PasienController::class, 'index'])->name('admin.pasien');
+    // Route::get('/admin/pasien/create', [PasienController::class, 'create'])->name('admin.pasien.create');
+    // Route::post('/admin/pasien/store', [PasienController::class, 'store'])->name('admin.pasien.store');
+    // Route::get('/admin/pasien/edit/{id}', [PasienController::class, 'edit'])->name('admin.pasien.edit');
+    // Route::post('/admin/pasien/update/{id}', [PasienController::class, 'update'])->name('admin.pasien.update');
+    // Route::get('/admin/pasien/delete/{id}', [PasienController::class, 'destroy'])->name('admin.pasien.delete');
+
+    // Route::get('/admin/riwayat', [RiwayatController::class, 'index'])->name('admin.riwayat');
+    // Route::get('/admin/riwayat/create', [RiwayatController::class, 'create'])->name('admin.riwayat.create');
+    // Route::post('/admin/riwayat/store', [RiwayatController::class, 'store'])->name('admin.riwayat.store');
+    
+    // Route::get('/admin/riwayat/edit/{id}', [RiwayatController::class, 'edit'])->name('admin.riwayat.edit');
+    // Route::post('/admin/riwayat/update/{id}', [RiwayatController::class, 'update'])->name('admin.riwayat.update');
+    // Route::get('/admin/riwayat/delete/{id}', [RiwayatController::class, 'destroy'])->name('admin.riwayat.delete');
+// });
+
