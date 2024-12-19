@@ -1,15 +1,16 @@
 <?php
 
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Jadwal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SocialiteController;
-use App\Models\Jadwal;
-use Carbon\Carbon;
 
 
 // PAGES
@@ -48,4 +49,6 @@ Route::get('/form/ketentuan-submit', [FormController::class, 'ketentuan_submit']
 Route::get('/form/pembayaran', [FormController::class, 'pembayaran'])->name('form.pembayaran');
 Route::post('/submit-booking', [FormController::class, 'simpan_booking'])->name('submit.booking');
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-calendar', [CalendarController::class, 'show'])->name('calendar.show');
+});

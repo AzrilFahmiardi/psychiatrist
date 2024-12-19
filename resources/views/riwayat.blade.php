@@ -59,9 +59,21 @@
 
             {{-- END NAVBAR --}}
             <h1 class="mt-10 text-[2rem] font-bold text-[#155458]">Riwayat  dan hasil konseling pasien</h1>
-            <div id="googleCalndear" class="w-[90vw] h-[500px] bg-gray-500 my-5 rounded-xl"></div>
-
-            <div class="w-full px-20 py-16">
+            
+            {{-- GOOGLE CALENDAR --}}
+            <div class="card-body w-[90vw] h-[500px] my-5 rounded-xl">
+                <iframe src="https://calendar.google.com/calendar/embed?src={{ urlencode(auth()->user()->email) }}" 
+                        style="border: 0" 
+                        width="100%" 
+                        height="600" 
+                        frameborder="0" 
+                        scrolling="no">
+                </iframe>
+            </div>
+            
+            
+            
+            <div class="w-full px-20 py-16 mt-16">
                 <div class=" h-fit ">
                     <p class="bg-[#155458] text-[#FAFAFA] w-fit py-2 px-6 rounded-xl">Jadwal yang dibooking</p>
                     

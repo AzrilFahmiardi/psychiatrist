@@ -38,6 +38,14 @@ return [
         'client_id' => env('CLIENT_ID'),
         'client_secret' => env('CLIENT_SECRET'),
         'redirect' => env('CALLBACK_REDIRECT'),
+        'scopes' => [
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'openid',
+        'offline_access'  // Untuk mendapatkan refresh token
+        ],
+        'prompt' => 'consent',  // Untuk memaksa tampilan consent screen
+        'access_type' => 'offline',
 ],
 
 ];

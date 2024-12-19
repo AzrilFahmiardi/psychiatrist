@@ -38,7 +38,8 @@ class JadwalController extends Controller
         }
     
         // Ambil jadwal hari ini
-        $today = now()->toDateString(); // Mendapatkan tanggal hari ini dalam format 'YYYY-MM-DD'
+        $today = Carbon::now('Asia/Jakarta')->toDateString(); // Mendapatkan tanggal hari ini dalam format 'YYYY-MM-DD' sesuai zona waktu Indonesia
+
         $jadwals = Jadwal::whereDate('waktu', $today)->get(); // Filter jadwal berdasarkan tanggal hari ini
         
         // Mengambil semua data psikolog

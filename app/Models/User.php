@@ -31,7 +31,8 @@ class User extends Authenticatable
         'no_hp',
         'status_akses_layanan',
         'role',
-        'trial_left'
+        'trial_left',
+        'google_token'
     ];
 
     /**

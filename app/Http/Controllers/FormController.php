@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Google\Client;
+use Google\Service\Calendar;
 
 class FormController extends Controller
 {
@@ -98,6 +100,7 @@ class FormController extends Controller
         $jadwalId = session('selected_jadwal_id');
         $psikologId = session('selected_psikolog_id');
         $user = Auth::user();
+        $token = json_decode($user->google_token, true);
         $trial = $user->trial_left;
         $currentDate = Carbon::now();  // Ambil waktu sekarang
         $oneWeekAgo = $currentDate->copy()->subDays(7);  // Salin objek dan kurangi 7 hari
@@ -138,6 +141,67 @@ class FormController extends Controller
 
             $booking->save();
 
+            // ADD TO GOOGLE CALENDAR
+            $client = new Client();
+    $client->setClientId(config('services.google.client_id'));
+    $client->setClientSecret(config('services.google.client_secret'));
+    $client->setAccessType('offline');        
+
+    // Set token yang tersimpan
+    $token = json_decode($user->google_token, true);
+    $client->setAccessToken($token);
+
+    // Cek jika token expired
+    if ($client->isAccessTokenExpired()) {
+        if (isset($token['refresh_token'])) {
+            $newToken = $client->fetchAccessTokenWithRefreshToken($token['refresh_token']);
+            
+            // Simpan token baru
+            $user->google_token = json_encode($newToken);
+            $user->save();
+        } else {
+            throw new \Exception('Refresh token tidak tersedia. Silakan login ulang.');
+        }
+    }
+
+    $service = new Calendar($client);
+    $dokter = Psikolog::where('id', $psikologId)->first();
+    $waktu = Jadwal::where('id', $jadwalId)->first();
+    
+    $carbonWaktu = Carbon::parse($waktu->waktu);
+    
+    $event = new Calendar\Event([
+        'summary' => "Konsultasi dengan {$dokter->name}",
+        'description' => "Konsultasi Psikologi di UGM Medical Center",
+        'location' => 'UGM Medical Center',
+        'start' => [
+            'dateTime' => $carbonWaktu->toIso8601String(),
+            'timeZone' => 'Asia/Jakarta',
+        ],
+        'end' => [
+            'dateTime' => $carbonWaktu->copy()->addHour()->toIso8601String(),
+            'timeZone' => 'Asia/Jakarta',
+        ],
+        'reminders' => [
+            'useDefault' => false,
+            'overrides' => [
+                ['method' => 'email', 'minutes' => 24 * 60], // reminder 1 hari sebelumnya
+                ['method' => 'popup', 'minutes' => 30], // reminder 30 menit sebelumnya
+            ],
+        ],
+    ]);
+
+    // Tambahkan event ke kalender
+    $createdEvent = $service->events->insert('primary', $event);
+    
+    // Simpan ID event Google Calendar ke database (opsional)
+    // $booking->google_calendar_event_id = $createdEvent->id;
+
+            
+
+
+            // UPDATE VARIABEL
+
             DB::table('jadwals')->where('id', $jadwalId)->update(['status' => 'booked']);
 
             if ($trial > 0) {
@@ -148,6 +212,7 @@ class FormController extends Controller
 
             return redirect()->route('home')->with('success', 'Jadwal berhasil terboking.');
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->back()->with('error', 'Gagal membuat booking. Silakan coba lagi.');
         }
     }
