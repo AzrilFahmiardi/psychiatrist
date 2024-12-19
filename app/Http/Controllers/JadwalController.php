@@ -26,7 +26,7 @@ class JadwalController extends Controller
             // Cek jika ada booking terakhir
             if ($bookingLastest) {
                 // Ambil konsultasi terkait dengan booking terakhir
-                $konsultasi = Konsultasi::all()->first();
+                $konsultasi = Konsultasi::orderBy('created_at', 'desc')->first();
             } else {
                 // Jika tidak ada booking terakhir, set konsultasi null
                 $konsultasi = null;
@@ -62,7 +62,7 @@ public function filterJadwal(Request $request)
         // Cek jika ada booking yang ditemukan
         if ($bookingLastest) {
             // Ambil konsultasi terkait dengan booking terakhir
-            $konsultasi = Konsultasi::all()->first();
+            $konsultasi = Konsultasi::orderBy('created_at', 'desc')->first();
         } else {
             // Jika tidak ada booking terakhir, set konsultasi null
             $konsultasi = null;

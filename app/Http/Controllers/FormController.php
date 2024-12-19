@@ -11,8 +11,9 @@ use App\Models\Psikolog;
 use App\Models\Departemen;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class FormController extends Controller
 {
@@ -93,56 +94,60 @@ class FormController extends Controller
 
     function simpan_booking(Request $request)
     {
-        // Ambil data sesi dan user
+        // KUMPULIN DATA
         $jadwalId = session('selected_jadwal_id');
         $psikologId = session('selected_psikolog_id');
         $user = Auth::user();
         $trial = $user->trial_left;
+        $currentDate = Carbon::now();  // Ambil waktu sekarang
+        $oneWeekAgo = $currentDate->copy()->subDays(7);  // Salin objek dan kurangi 7 hari
+
 
         try {
-            // Cek apakah jadwal sudah dibooking
+            // CEK JUMLAH BOOKING USER
+            $bookingCount = Booking::where('pasien_id', $user->id)
+                ->whereBetween('created_at', [$oneWeekAgo, $currentDate])
+                ->count();
+
+            if ($bookingCount >= 2) {
+                return redirect()->route('home')->with('error', 'Anda hanya dapat memesan maksimal 2 kali dalam seminggu.');
+            }
+
             $existingBooking = Booking::where('jadwal_id', $jadwalId)->first();
             if ($existingBooking) {
                 return redirect()->route('home')->with('error', 'Jadwal sudah dibooking. Silakan pilih jadwal lain.');
             }
 
-            // Buat booking baru
+            // INSERT DATA
             $booking = new Booking();
             $booking->pasien_id = $user->id;
             $booking->jadwal_id = $jadwalId;
             $booking->psikolog_id = $psikologId;
             $booking->status_akses_layanan = 'submitted';
 
-            // Jika trial habis, wajib upload bukti pembayaran
+            // CEK TRIAL
             if ($trial <= 0) {
-                // Validasi input
                 $request->validate([
                     'bukti_pembayaran' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
                 ]);
 
-                // Simpan file bukti pembayaran
                 $buktiPath = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
                 $booking->bukti_pembayaran = $buktiPath;
                 $booking->status_akses_layanan = 'scheduled';
             }
 
-            // Simpan booking
             $booking->save();
 
-            // Update status jadwal menjadi 'booked'
             DB::table('jadwals')->where('id', $jadwalId)->update(['status' => 'booked']);
 
-            // Kurangi trial_left jika masih memiliki trial
             if ($trial > 0) {
                 User::where('id', $user->id)->decrement('trial_left');
             }
 
-            // Hapus sesi
             session()->forget(['selected_jadwal_id', 'selected_psikolog_id']);
 
             return redirect()->route('home')->with('success', 'Jadwal berhasil terboking.');
         } catch (\Exception $e) {
-            // Log error
             return redirect()->back()->with('error', 'Gagal membuat booking. Silakan coba lagi.');
         }
     }
