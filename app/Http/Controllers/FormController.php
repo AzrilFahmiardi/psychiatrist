@@ -178,8 +178,8 @@ class FormController extends Controller
             'timeZone' => 'Asia/Jakarta',
         ],
         'attendees' => [
-        ['email' => 'anakijummira@gmail.com'],
-        // ['email' => 'email_pasien@example.com'],
+            ['email' => $dokter->email],
+            // ['email' => 'email_pasien@example.com'],
         ],
         'end' => [
             'dateTime' => $carbonWaktu->copy()->addHour()->toIso8601String(),
