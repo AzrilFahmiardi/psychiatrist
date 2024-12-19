@@ -97,15 +97,21 @@ class FormController extends Controller
         $jadwalId = session('selected_jadwal_id');
         $psikologId = session('selected_psikolog_id');
         $user = Auth::user();
-
         $trial = $user->trial_left;
 
         try {
+            // Cek apakah jadwal sudah dibooking
+            $existingBooking = Booking::where('jadwal_id', $jadwalId)->first();
+            if ($existingBooking) {
+                return redirect()->route('home')->with('error', 'Jadwal sudah dibooking. Silakan pilih jadwal lain.');
+            }
+
             // Buat booking baru
             $booking = new Booking();
             $booking->pasien_id = $user->id;
             $booking->jadwal_id = $jadwalId;
             $booking->psikolog_id = $psikologId;
+            $booking->status_akses_layanan = 'submitted';
 
             // Jika trial habis, wajib upload bukti pembayaran
             if ($trial <= 0) {
@@ -117,22 +123,19 @@ class FormController extends Controller
                 // Simpan file bukti pembayaran
                 $buktiPath = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
                 $booking->bukti_pembayaran = $buktiPath;
-                $booking->status_akses_layanan = 'submitted';
-
+                $booking->status_akses_layanan = 'scheduled';
             }
 
             // Simpan booking
             $booking->save();
 
+            // Update status jadwal menjadi 'booked'
             DB::table('jadwals')->where('id', $jadwalId)->update(['status' => 'booked']);
-
 
             // Kurangi trial_left jika masih memiliki trial
             if ($trial > 0) {
                 User::where('id', $user->id)->decrement('trial_left');
             }
-
-            
 
             // Hapus sesi
             session()->forget(['selected_jadwal_id', 'selected_psikolog_id']);
@@ -140,7 +143,6 @@ class FormController extends Controller
             return redirect()->route('home')->with('success', 'Jadwal berhasil terboking.');
         } catch (\Exception $e) {
             // Log error
-            
             return redirect()->back()->with('error', 'Gagal membuat booking. Silakan coba lagi.');
         }
     }

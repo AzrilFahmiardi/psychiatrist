@@ -31,23 +31,22 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const nextButton = document.getElementById('next-button');
-    
-            function updateButtonState() {
-                const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-                if (allChecked) {
-                    nextButton.classList.remove('pointer-events-none', 'opacity-50');
-                } else {
-                    nextButton.classList.add('pointer-events-none', 'opacity-50');
-                }
-            }
-    
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', updateButtonState);
-            });
-                updateButtonState();
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const nextButton = document.getElementById('next-button');
+
+        if (!nextButton || checkboxes.length === 0) return;
+
+        function updateButtonState() {
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            nextButton.classList.toggle('pointer-events-none', !allChecked);
+            nextButton.classList.toggle('opacity-50', !allChecked);
+        }
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateButtonState);
         });
+        updateButtonState();
+    });
     </script>
     @push('scripts')
     <script>

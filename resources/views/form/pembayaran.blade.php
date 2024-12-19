@@ -42,7 +42,10 @@
                 <p>Transfer pembayaran ke</p>
                 <div class="flex justify-between items-center">
                     <img src="{{ asset('images/bri.png') }}" alt="BANK BRI">
-                    <p class="flex items-center gap-3 cursor-pointer">123456789098631s<span><img src="{{ asset('images/copy.png') }}" alt=""></span></p>
+                    <p id="account-number" class="flex items-center gap-3">
+                        123456789098631s
+                        <span class="cursor-pointer"><img src="{{ asset('images/copy.png') }}" alt="salin text" id="copy-button"></span>
+                    </p>                
                 </div>
             </div>
 
@@ -53,7 +56,7 @@
                     Upload bukti pembayaran
                     <span id="file-name" class="text-[#4F4F4F] text-sm font-normal ml-2"></span>
                 </label>
-                <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" accept="image/*" class="hidden" required>
+                <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" accept="image/*" class="visually-hidden" required>
             </div>
         @endif
     </div>
@@ -73,17 +76,36 @@
         </div>
     </div>
 </form>
+<span id="file-error" class="text-red-500 text-sm"></span>
+
 
 <script>
-document.getElementById('bukti_pembayaran').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file.size > 2 * 1024 * 1024) { // Maksimal 2MB
-        alert('Ukuran file terlalu besar. Maksimal 2MB.');
-        event.target.value = '';
-        return;
-    }
-    const fileName = file.name || 'Belum ada file dipilih';
-    document.getElementById('file-name').textContent = fileName;
-});
+    document.getElementById('bukti_pembayaran').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const errorMessage = document.getElementById('file-error');
+        
+        if (file && file.size > 2 * 1024 * 1024) { // Maksimal 2MB
+            errorMessage.textContent = 'Ukuran file terlalu besar. Maksimal 2MB.';
+            event.target.value = '';
+        } else {
+            errorMessage.textContent = '';
+        }
+
+        const fileName = file ? file.name : 'Belum ada file dipilih';
+        document.getElementById('file-name').textContent = fileName;
+    });
+
+    document.getElementById('copy-button').addEventListener('click', function() {
+            // Ambil teks yang akan disalin
+            const textToCopy = document.getElementById('account-number').innerText;
+
+            // Gunakan API Clipboard untuk menyalin teks
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('Teks berhasil disalin ke clipboard!');
+            }).catch(err => {
+                console.error('Gagal menyalin teks:', err);
+            });
+        });
 </script>
+    
 @endsection
