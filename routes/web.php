@@ -48,6 +48,7 @@ Route::get('/form/pilih-jadwal/update', [FormController::class, 'filterJadwal'])
 Route::get('/form/ketentuan-submit', [FormController::class, 'ketentuan_submit'])->name('form.ketentuan_submit');
 Route::get('/form/pembayaran', [FormController::class, 'pembayaran'])->name('form.pembayaran');
 Route::post('/submit-booking', [FormController::class, 'simpan_booking'])->name('submit.booking');
+Route::post('/booking/{booking}/cancel', [FormController::class, 'cancel_booking'])->name('booking.cancel');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/my-calendar', [CalendarController::class, 'show'])->name('calendar.show');

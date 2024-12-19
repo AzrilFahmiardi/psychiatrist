@@ -172,11 +172,15 @@ class FormController extends Controller
     
     $event = new Calendar\Event([
         'summary' => "Konsultasi dengan {$dokter->name}",
-        'description' => "Konsultasi Psikologi di UGM Medical Center",
-        'location' => 'UGM Medical Center',
+        'description' => "SIKOLOV - Konseling Sekolah Vokasi",
+        'location' => 'TILC Sekolah Vokasi',
         'start' => [
             'dateTime' => $carbonWaktu->toIso8601String(),
             'timeZone' => 'Asia/Jakarta',
+        ],
+        'attendees' => [
+        ['email' => 'anakijummira@gmail.com'],
+        // ['email' => 'email_pasien@example.com'],
         ],
         'end' => [
             'dateTime' => $carbonWaktu->copy()->addHour()->toIso8601String(),
@@ -216,4 +220,28 @@ class FormController extends Controller
             return redirect()->back()->with('error', 'Gagal membuat booking. Silakan coba lagi.');
         }
     }
+
+    public function cancel_booking(Booking $booking)
+{
+    
+
+    if ($booking->status_akses_layanan === 'completed') {
+        return redirect()->back()->with('error', 'Cannot cancel a completed booking');
+    }
+
+    // Check if booking is within 24 hours
+    // if (Carbon::parse($booking->jadwal->waktu)->diffInHours(now()) < 24) {
+    //     return redirect()->back()->with('error', 'Bookings can only be cancelled at least 24 hours before the appointment');
+    // }
+
+    $jadwalId = $booking->jadwal_id;
+    $booking->delete();
+
+    DB::table('jadwals')->where('id', $jadwalId)->update([
+        'status' => 'available'
+    ]);
+
+
+    return redirect()->back()->with('success', 'Booking has been cancelled successfully');
+}
 }

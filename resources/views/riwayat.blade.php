@@ -8,6 +8,38 @@
     <title>Psychiatrist</title>
 </head>
 <body>
+    {{-- Flash Message Container --}}
+  <div id="flash-message-container" class="absolute top-5 left-0 right-0">
+    @if(session('error'))
+    <div id="error-message" class="bg-red-500 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+        <p class="text-sm">{{ session('error') }}</p>
+    </div>
+    @endif
+
+    @if(session('success'))
+    <div id="success-message" class="bg-green-500 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+        <p class="text-sm">{{ session('success') }}</p>
+    </div>
+    @endif
+
+    @if(session('status'))
+    <div id="status-message" class="bg-blue-500 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+        <p class="text-sm">{{ session('status') }}</p>
+    </div>
+    @endif
+
+    @if(session('warning'))
+    <div id="warning-message" class="bg-yellow-500 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+        <p class="text-sm">{{ session('warning') }}</p>
+    </div>
+    @endif
+
+    @if(session('info'))
+    <div id="info-message" class="bg-blue-300 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+        <p class="text-sm">{{ session('info') }}</p>
+    </div>
+    @endif
+</div>
     <div>
     </div>
     <div class="bg-[##FAFAFA] font-poppins px-10">
@@ -77,12 +109,17 @@
                 <div class=" h-fit ">
                     <p class="bg-[#155458] text-[#FAFAFA] w-fit py-2 px-6 rounded-xl">Jadwal yang dibooking</p>
                     
-                    <div class=" gap-5 mt-10 grid grid-cols-2">
+                    <div class="gap-5 mt-10 grid grid-cols-2">
                         @foreach ($bookings as $book)
                             <div class="w-full h-fit border border-gray-200 shadow-lg rounded-xl py-5 px-5">
                                 <p class="font-bold text-[1.3rem]">{{ $book->psikolog->name }}</p>
                                 <p class="text-gray-700">{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}</p>
-
+                                <p class="text-gray-700">
+                                    {{ 
+                                        \Carbon\Carbon::parse($book->jadwal->waktu)->addHours(7)->format('H:i') . '-' . 
+                                        \Carbon\Carbon::parse($book->jadwal->waktu)->addHours(8)->format('H:i') . ' WIB' 
+                                    }}
+                                </p>
                                 <div class="flex justify-between items-end">
                                     <p class="text-gray-700 mt-8">status: 
                                         <span class="px-2
@@ -97,14 +134,23 @@
                                             {{ $book->status_akses_layanan }}
                                         </span>
                                     </p>
-
-                                    @if($book->status_akses_layanan === 'completed')
-                                        <p class="text-[#155458] text-[0.8rem] flex items-center gap-2 cursor-pointer hover:underline"
-                                        onclick="showConsultationResult('{{ $book->psikolog->name }}', '{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}', '{{ $book->konsultasi->hasil_konsultasi }}')">
-                                            Lihat hasil konsultasi
-                                            <span><img src="../images/right_arrow.png" alt="tes"></span>
-                                        </p>
-                                    @endif
+                    
+                                    <div class="flex items-center gap-4">
+                                        @if($book->status_akses_layanan === 'completed')
+                                            <p class="text-[#155458] text-[0.8rem] flex items-center gap-2 cursor-pointer hover:underline"
+                                            onclick="showConsultationResult('{{ $book->psikolog->name }}', '{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}', '{{ $book->konsultasi->hasil_konsultasi }}')">
+                                                Lihat hasil konsultasi
+                                                <span><img src="../images/right_arrow.png" alt="tes"></span>
+                                            </p>
+                                        @elseif($book->status_akses_layanan !== 'completed')
+                                            <form action="{{ route('booking.cancel', $book->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                                                @csrf
+                                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 text-sm">
+                                                    Cancel
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -151,6 +197,24 @@
                 document.getElementById('consultationModal').classList.add('hidden');
             }
         </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            // Auto-dismiss messages after 5 seconds
+            const messages = document.querySelectorAll('#flash-message-container > div');
+            
+            messages.forEach(function(message) {
+                // Fade in
+                setTimeout(() => {
+                    message.classList.add('opacity-0', 'h-0', 'py-0');
+                }, 5000);  // <-- This is where the 5-second timing is set
+    
+                // Remove from DOM
+                setTimeout(() => {
+                    message.remove();
+                }, 5000);  // <-- This is slightly after the fade-out to complete the animation
+                });
+            });
+          </script>
     </div>
 
 
