@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('password')->nullable();
             $table->string('nama_lengkap')->nullable();
             $table->string('semester')->nullable();
             $table->string('usia')->nullable();
@@ -26,7 +27,6 @@ return new class extends Migration
             $table->enum('role', ['psikolog', 'pasien', 'admin'])->nullable();
             $table->integer('trial_left')->default(2);
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
             $table->string('google_id')->nullable();
             $table->text('google_token')->nullable();
             $table->rememberToken();

@@ -24,17 +24,17 @@
     <div id="app" class="flex">
         <!-- Sidebar Start -->
         <aside data-sidebar
-            class="absolute md:relative z-20 left-0 top-0 flex flex-col bg-clip-border rounded-xl transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out bg-white text-gray-700 h-screen w-[20rem] p-6 shadow-md">
+            class="fixed z-20 left-0 top-0 flex flex-col bg-clip-border rounded-xl transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out bg-white text-gray-700 h-screen w-[20rem] p-6 shadow-md">
             <div class="mb-2 flex items-center gap-4 p-4">
-                <img src="https://www.material-tailwind.com/logos/mt-logo.png" alt="brand" class="h-9 w-9" />
-                <p class="block antialiased font-sans leading-relaxed text-blue-gray-900 text-lg font-bold">
-                    Material Tailwind
+                {{-- <img src="https://www.material-tailwind.com/logos/mt-logo.png" alt="brand" class="h-9 w-9" /> --}}
+                <p class="block antialiased font-sans leading-relaxed text-teal-900 text-lg font-bold">
+                   Admin Sokolov
                 </p>
             </div>
-            <hr class="my-2 border-gray-200" />
+            
             <nav class="flex flex-col gap-1 p-2 text-gray-700">
                 <!-- Contoh Accordion Item -->
-                <div>
+                {{-- <div>
                     <div data-ripple-dark="true"
                         class="flex items-center p-3 rounded-lg transition-all hover:bg-gray-50 cursor-pointer"
                         data-accordion-button>
@@ -56,10 +56,10 @@
                         </nav>
                     </div>
                 </div>
-                <hr class="my-2 border-gray-200" />
+                <hr class="my-2 border-gray-200" /> --}}
 
                 <!-- Accordion Dashboard -->
-                <div>
+                {{-- <div>
                     <div data-ripple-dark="true"
                         class="flex items-center p-3 rounded-lg transition-all hover:bg-gray-50 cursor-pointer"
                         data-accordion-button>
@@ -81,30 +81,39 @@
                     <div class="max-h-0 overflow-hidden transition-all duration-300" data-accordion-content>
                         <nav class="flex flex-col gap-1 px-4 pb-2 text-sm text-gray-700">
                             <a data-ripple-dark="true" href="#"
-                                class="block p-2 hover:bg-gray-100 rounded">Analytics</a>
+                                class="block p-2 ms-6 hover:bg-gray-100 rounded">Analytics</a>
                             <a data-ripple-dark="true" href="#"
-                                class="block p-2 hover:bg-gray-100 rounded">Sales</a>
+                                class="block p-2 ms-6 hover:bg-gray-100 rounded">Sales</a>
                         </nav>
                     </div>
-                </div>
+                </div> --}}
                 <!-- Menu lain seperti Products, Orders, dsb bisa langsung dibuat link biasa atau dijadikan accordion juga -->
             </nav>
             <hr class="my-2 border-gray-200" />
             <nav class="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
-                <div role="button" data-ripple-dark="true" tabindex="0"
-                    class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-opacity-80  focus:bg-opacity-80 active:bg-opacity-80 outline-none select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900 data-[selected=true]:text-gray-900">
+                <a href="{{ route('admin.psikologs.index') }}" role="button" data-ripple-dark="true" tabindex="0"
+                    class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-opacity-80 focus:bg-opacity-80 active:bg-opacity-80 outline-none select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900 cursor-pointer {{ Request::is('admin/psikologs*') ? 'text-teal-600' : '' }}">
                     <div class="grid place-items-center mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            aria-hidden="true" data-slot="icon" class="h-5 w-5">
-                            <path fill-rule="evenodd"
-                                d="M12 2.25c-2.429 0-4.817.178-7.152.521C2.87 3.061 1.5 4.795 1.5 6.741v6.018c0 1.946 1.37 3.68 3.348 3.97.877.129 1.761.234 2.652.316V21a.75.75 0 0 0 1.28.53l4.184-4.183a.39.39 0 0 1 .266-.112c2.006-.05 3.982-.22 5.922-.506 1.978-.29 3.348-2.023 3.348-3.97V6.741c0-1.947-1.37-3.68-3.348-3.97A49.145 49.145 0 0 0 12 2.25ZM8.25 8.625a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Zm2.625 1.125a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z"
-                                clip-rule="evenodd"></path>
-                        </svg>
+                        <i class="fa fa-users"></i>
                     </div>
-                    Help &amp; Support
-                </div>
-                <div role="button" data-ripple-dark="true" tabindex="0"
-                    class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-opacity-80  focus:bg-opacity-80 active:bg-opacity-80 outline-none select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900 data-[selected=true]:text-gray-900">
+                    Psikolog
+                </a>
+                <a href="{{ route('admin.jadwals.index') }}" role="button" data-ripple-dark="true" tabindex="0"
+                    class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-opacity-80 focus:bg-opacity-80 active:bg-opacity-80 outline-none select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900 cursor-pointer {{ Request::is('admin/jadwals*') ? 'text-teal-600' : '' }}">
+                    <div class="grid place-items-center mr-5">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    Jadwal
+                </a>
+                <a href="{{ route('admin.bookings.index') }}" role="button" data-ripple-dark="true" tabindex="0"
+                    class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-opacity-80 focus:bg-opacity-80 active:bg-opacity-80 outline-none select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900 cursor-pointer {{ Request::is('admin/bookings*') ? 'text-teal-600' : '' }}">
+                    <div class="grid place-items-center mr-5">
+                        <i class="fa fa-clipboard"></i>
+                    </div>
+                    Booking
+                </a>
+                <a href="{{ route('google.logout') }}" role="button" data-ripple-dark="true" tabindex="0"
+                    class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-opacity-80 focus:bg-opacity-80 active:bg-opacity-80 outline-none select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900">
                     <div class="grid place-items-center mr-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                             stroke="currentColor" aria-hidden="true" data-slot="icon" class="h-5 w-5">
@@ -114,18 +123,16 @@
                         </svg>
                     </div>
                     Sign Out
-                </div>
+                </a>
             </nav>
             <div role="alert"
                 class="relative w-full font-sans text-base font-regular px-4 py-4 rounded-lg bg-green-500/20 text-green-900 mt-auto flex"
                 style="opacity: 1">
                 <div class="mr-12">
-                    <p
-                        class="block antialiased font-sans text-sm leading-normal text-green-500 mb-1 font-bold">
+                    <p class="block antialiased font-sans text-sm leading-normal text-green-500 mb-1 font-bold">
                         New Version Available
                     </p>
-                    <p
-                        class="block antialiased font-sans text-sm leading-normal text-green-500 font-normal">
+                    <p class="block antialiased font-sans text-sm leading-normal text-green-500 font-normal">
                         Update your app and enjoy the new features and improvements.
                     </p>
                     <div class="mt-4 flex gap-4">
@@ -145,7 +152,7 @@
         <!-- Sidebar End -->
 
         <!-- Main Content -->
-        <div class="flex-1 p-6">
+        <div class="md:ms-[18em] w-full p-6">
             @yield('content')
         </div>
     </div>

@@ -11,6 +11,7 @@ class Booking extends Model
         'psikolog_id', 
         'jadwal_id', 
         'status_akses_layanan',
+        'bukti_pembayaran',
     ];
 
     public function psikolog()

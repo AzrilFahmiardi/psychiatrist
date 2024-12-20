@@ -1,9 +1,8 @@
 <?php
 
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Jadwal;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminBookingController;
+use App\Http\Controllers\AdminJadwalController;
+use App\Http\Controllers\AdminPsikologController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\JadwalController;
@@ -11,7 +10,7 @@ use App\Http\Controllers\PasienController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SocialiteController;
-
+use App\Http\Middleware\AdminMiddleware;
 
 // PAGES
 Route::get('/', [JadwalController::class, 'index'])->name('home');
@@ -19,7 +18,7 @@ Route::get('/jadwal', [JadwalController::class, 'filterJadwal'])->name('jadwal.f
 
 Route::get('/login', function () {
     return view('login');
-});
+})->name('login');
 
 Route::get('/register', function () {
     return view('register');
@@ -54,31 +53,14 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // ADMIN ROUTES
-// Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.home');
+    Route::middleware([AdminMiddleware::class, 'auth'])->group(function () {
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::get('/admin', function () {
+                return view('admin.home');
+            });
+
+            Route::resource('psikologs', AdminPsikologController::class);
+            Route::resource('jadwals', AdminJadwalController::class)->only(['index', 'create', 'store', 'destroy']);
+            Route::resource('bookings', AdminBookingController::class)->only(['index', 'edit', 'update']);
+        });
     });
-
-    // Route::get('/admin/jadwal', [JadwalController::class, 'index'])->name('admin.jadwal');
-    // Route::get('/admin/jadwal/create', [JadwalController::class, 'create'])->name('admin.jadwal.create');
-    // Route::post('/admin/jadwal/store', [JadwalController::class, 'store'])->name('admin.jadwal.store');
-    // Route::get('/admin/jadwal/edit/{id}', [JadwalController::class, 'edit'])->name('admin.jadwal.edit');
-    // Route::post('/admin/jadwal/update/{id}', [JadwalController::class, 'update'])->name('admin.jadwal.update');
-    // Route::get('/admin/jadwal/delete/{id}', [JadwalController::class, 'destroy'])->name('admin.jadwal.delete');
-
-    // Route::get('/admin/pasien', [PasienController::class, 'index'])->name('admin.pasien');
-    // Route::get('/admin/pasien/create', [PasienController::class, 'create'])->name('admin.pasien.create');
-    // Route::post('/admin/pasien/store', [PasienController::class, 'store'])->name('admin.pasien.store');
-    // Route::get('/admin/pasien/edit/{id}', [PasienController::class, 'edit'])->name('admin.pasien.edit');
-    // Route::post('/admin/pasien/update/{id}', [PasienController::class, 'update'])->name('admin.pasien.update');
-    // Route::get('/admin/pasien/delete/{id}', [PasienController::class, 'destroy'])->name('admin.pasien.delete');
-
-    // Route::get('/admin/riwayat', [RiwayatController::class, 'index'])->name('admin.riwayat');
-    // Route::get('/admin/riwayat/create', [RiwayatController::class, 'create'])->name('admin.riwayat.create');
-    // Route::post('/admin/riwayat/store', [RiwayatController::class, 'store'])->name('admin.riwayat.store');
-    
-    // Route::get('/admin/riwayat/edit/{id}', [RiwayatController::class, 'edit'])->name('admin.riwayat.edit');
-    // Route::post('/admin/riwayat/update/{id}', [RiwayatController::class, 'update'])->name('admin.riwayat.update');
-    // Route::get('/admin/riwayat/delete/{id}', [RiwayatController::class, 'destroy'])->name('admin.riwayat.delete');
-// });
-
