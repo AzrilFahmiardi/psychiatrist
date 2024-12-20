@@ -67,12 +67,13 @@
                 <button id="loginPopupButton" class="text-[#51B2B8] font-semibold bg-[#FAFAFA] py-3 px-4 rounded-xl hover:scale-110 transition duration-300 ease-in-out">
                     Daftar sekarang
                 </button>
-                <div id="loginPopup" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
-                    <div class="bg-white p-6 rounded-md text-center">
-                        <p class="text-lg">Silakan login untuk melanjutkan pendaftaran</p>
+                <div id="loginPopup" class="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center hidden">
+                    <div class="bg-white p-6 rounded-md text-center w-[350px]">
+                        <p class="text-lg font-bold text-[#4F4F4F]">Login untuk melanjutkan</p>
+                        <p class="text-sm text-[#4F4F4F] my-5">Anda harus login untuk melanjutkan ke pendaftaran</p>
                         <div class="mt-4">
-                            <a href="/login" class="bg-[#155458] px-4 py-2 rounded-md text-white">Login</a>
-                            <button onclick="closeModal()" class="bg-gray-500 px-4 py-2 rounded-md text-white ml-2">Tutup</button>
+                            <a href="/login" class="bg-[#155458] px-4 py-2 rounded-md text-white hover:bg-[#155458c2]">Login</a>
+                            <button onclick="closeModal()" class="border border-[#155458] px-4 py-2 rounded-md text-[#155458] ml-2 hover:bg-[#1554582d]">Cancel</button>
                         </div>
                     </div>
                 </div>       

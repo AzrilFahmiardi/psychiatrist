@@ -34,19 +34,18 @@
     selectedPsychologId: null,
     canProceed: false,
 
-    selectSchedule(scheduleId, psychologId, status) {
-        // Always allow setting activeCard, but only proceed if status is available
+    selectSchedule(scheduleId, psychologId, status, waktu) {
+        const isExpired = new Date(waktu) < new Date(); // Cek apakah jadwal sudah kadaluarsa
         this.activeCard = scheduleId;
-
-        if (status === 'available') {
+    
+        if (status === 'available' && !isExpired) {
             this.selectedScheduleId = scheduleId;
             this.selectedPsychologId = psychologId;
             this.canProceed = true;
             console.log('Selected Schedule:', scheduleId);
             console.log('Selected Psychologist:', psychologId);
-            console.log('status : ',status)
         } else {
-            // Reset selection if not available
+            // Reset selection jika tidak tersedia atau kadaluarsa
             this.selectedScheduleId = null;
             this.selectedPsychologId = null;
             this.canProceed = false;
@@ -98,28 +97,30 @@
                 @if ($jadwals && $jadwals->count() > 0)
                     @foreach ($jadwals as $jad)
                         @if ($jad->psikolog)
-                             <div 
-                        @click="selectSchedule({{ $jad->id }}, {{ $jad->psikolog->id }}, '{{ $jad->status }}')"
-                        :class="{
-                            'bg-[#155458] text-white border-[#155458]': activeCard === {{ $jad->id }} && '{{ $jad->status }}' === 'available',
-                            'bg-[#155458] text-black border-green-300': activeCard === {{ $jad->id }},
-                            'bg-gray-200 text-gray-500 border-gray-300 opacity-60': '{{ $jad->status }}' === 'booked'
-                        }"
-                        class="jadwal-card border-2 w-full py-2 px-2 rounded-md transition duration-300 ease-in-out 
-                               {{ $jad->status === 'booked' ? 'cursor-not-allowed' : 'hover:scale-[1.02] cursor-pointer' }}"
-                    >
-                        <p class="text-[1.1rem] font-bold">{{ $jad->psikolog->name }}</p>
-                        
-                        @if($jad->status === 'booked')
-                            <div class="flex justify-between">
-                                <p class="text-[0.8rem]">Pukul {{ \Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') }} WIB</p>
-                                <p class="text-[0.8rem] text-red-500">Sudah Dibooking</p>
+                            @php
+                                $isExpired = \Carbon\Carbon::parse($jad->waktu) < now();
+                            @endphp
+                            <div 
+                                @click="selectSchedule({{ $jad->id }}, {{ $jad->psikolog->id }}, '{{ $jad->status }}', '{{ $jad->waktu }}')"
+                                :class="{
+                                    'bg-[#155458] text-white border-[#155458]': activeCard === {{ $jad->id }} && '{{ $jad->status }}' === 'available' && !{{ json_encode($isExpired) }},
+                                    'bg-[#155458] text-black border-green-300': activeCard === {{ $jad->id }},
+                                    'bg-gray-200 text-gray-500 border-gray-300 opacity-60': '{{ $jad->status }}' === 'booked' || {{ json_encode($isExpired) }}
+                                }"
+                                class="jadwal-card border-2 w-full py-2 px-2 rounded-md transition duration-300 ease-in-out 
+                                    {{ ($jad->status === 'booked' || $isExpired) ? 'cursor-not-allowed' : 'hover:scale-[1.02] cursor-pointer' }}"
+                            >
+                                <p class="text-[1.1rem] font-bold">{{ $jad->psikolog->name }}</p>
+                                
+                                <div class="flex justify-between">
+                                    <p class="text-[0.8rem]">Pukul {{ \Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') }} WIB</p>
+                                    @if($jad->status === 'booked')
+                                        <p class="text-[0.8rem] text-red-500">Sudah Dibooking</p>
+                                    @elseif($isExpired)
+                                        <p class="text-[0.8rem] text-red-500">Jadwal Kadaluarsa</p>
+                                    @endif
+                                </div>
                             </div>
-                        @else
-                            <p class="text-[0.8rem]">Pukul {{ \Carbon\Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') }} WIB</p>
-
-                        @endif
-                    </div>
                         @else
                             <p>No psychologist assigned</p>
                         @endif

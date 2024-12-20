@@ -39,8 +39,8 @@ class FormController extends Controller
 
     function pilih_jadwal()
     {
-        $today = now()->toDateString(); // Mendapatkan tanggal hari ini dalam format 'YYYY-MM-DD'
-        $jadwals = Jadwal::whereDate('waktu', $today)->get(); // Filter jadwal berdasarkan tanggal hari ini
+        $today = Carbon::now('Asia/Jakarta')->toDateString(); // Mendapatkan tanggal hari ini dalam format 'YYYY-MM-DD' sesuai zona waktu Indonesia
+        $jadwals = Jadwal::whereDate('waktu', $today)->get();
         $psikologs = Psikolog::all(); // Mendapatkan semua data psikolog
         return view('form.pilih_jadwal', compact('jadwals', 'psikologs'));
     }
@@ -139,7 +139,6 @@ class FormController extends Controller
                 $booking->status_akses_layanan = 'scheduled';
             }
 
-            $booking->save();
 
             // ADD TO GOOGLE CALENDAR
             $client = new Client();
@@ -172,11 +171,15 @@ class FormController extends Controller
     
     $event = new Calendar\Event([
         'summary' => "Konsultasi dengan {$dokter->name}",
-        'description' => "Konsultasi Psikologi di UGM Medical Center",
-        'location' => 'UGM Medical Center',
+        'description' => "SIKOLOV - Konseling Sekolah Vokasi",
+        'location' => 'TILC Sekolah Vokasi',
         'start' => [
             'dateTime' => $carbonWaktu->toIso8601String(),
             'timeZone' => 'Asia/Jakarta',
+        ],
+        'attendees' => [
+            ['email' => $dokter->email],
+            // ['email' => 'email_pasien@example.com'],
         ],
         'end' => [
             'dateTime' => $carbonWaktu->copy()->addHour()->toIso8601String(),
@@ -195,25 +198,102 @@ class FormController extends Controller
     $createdEvent = $service->events->insert('primary', $event);
     
     // Simpan ID event Google Calendar ke database (opsional)
-    // $booking->google_calendar_event_id = $createdEvent->id;
+    $booking->google_calendar_event_id = $createdEvent->id;
+    $booking->save();
+
 
             
 
 
-            // UPDATE VARIABEL
+    // UPDATE VARIABEL
 
-            DB::table('jadwals')->where('id', $jadwalId)->update(['status' => 'booked']);
+    DB::table('jadwals')->where('id', $jadwalId)->update(['status' => 'booked']);
 
-            if ($trial > 0) {
-                User::where('id', $user->id)->decrement('trial_left');
+    if ($trial > 0) {
+        User::where('id', $user->id)->decrement('trial_left');
+    }
+
+    session()->forget(['selected_jadwal_id', 'selected_psikolog_id']);
+
+        return redirect()->route('home')->with('success', 'Jadwal berhasil terboking.');
+    } catch (\Exception $e) {
+        dd($e);
+        return redirect()->back()->with('error', 'Gagal membuat booking. Silakan coba lagi.');
+    }
+    }
+
+    public function cancel_booking(Booking $booking)
+{
+    if ($booking->status_akses_layanan === 'completed') {
+        return redirect()->back()->with('error', 'Cannot cancel a completed booking');
+    }
+
+    $waktuBooking = Carbon::parse($booking->jadwal->waktu)->timezone('Asia/Jakarta');
+    $sekarang = now()->timezone('Asia/Jakarta');
+    $selisihJam = $sekarang->diffInHours($waktuBooking, false);
+
+    if (!$waktuBooking->isFuture()) {
+        return redirect()->back()->with('error', 'Cannot cancel a booking that has already passed.');
+    }
+    if ($selisihJam < 24) {
+        return redirect()->back()->with('error', 'Booking can only be cancelled at least 24 hours before the schedule');
+    }
+
+    try {
+        // Delete from Google Calendar if event ID exists
+        if ($booking->google_calendar_event_id) {
+            $user = Auth::user();
+            $token = json_decode($user->google_token, true);
+
+            // Set up Google Client
+            $client = new Client();
+            $client->setClientId(config('services.google.client_id'));
+            $client->setClientSecret(config('services.google.client_secret'));
+            $client->setAccessType('offline');
+
+            // Set token
+            $client->setAccessToken($token);
+
+            // Check if token is expired
+            if ($client->isAccessTokenExpired()) {
+                if (isset($token['refresh_token'])) {
+                    $newToken = $client->fetchAccessTokenWithRefreshToken($token['refresh_token']);
+                    
+                    // Save new token
+                    $user->google_token = json_encode($newToken);
+                    $user->save();
+                } else {
+                    throw new \Exception('Refresh token tidak tersedia. Silakan login ulang.');
+                }
             }
 
-            session()->forget(['selected_jadwal_id', 'selected_psikolog_id']);
+            // Initialize Calendar service
+            $service = new Calendar($client);
 
-            return redirect()->route('home')->with('success', 'Jadwal berhasil terboking.');
-        } catch (\Exception $e) {
-            dd($e);
-            return redirect()->back()->with('error', 'Gagal membuat booking. Silakan coba lagi.');
+            // Delete the event
+            $service->events->delete('primary', $booking->google_calendar_event_id);
         }
+
+        $user = User::find($booking->pasien_id);
+        
+        // Return trial if booking was using trial
+        if (!$booking->bukti_pembayaran) {
+            $newTrialLeft = min($user->trial_left + 1, 2);
+            $user->trial_left = $newTrialLeft;
+            $user->save();
+        }   
+
+        $jadwalId = $booking->jadwal_id;
+        $booking->delete();
+
+        DB::table('jadwals')->where('id', $jadwalId)->update([
+            'status' => 'available'
+        ]);
+
+        return redirect()->back()->with('success', 'Booking has been cancelled successfully');
+
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Failed to cancel booking: ' . $e->getMessage());
     }
+}
 }

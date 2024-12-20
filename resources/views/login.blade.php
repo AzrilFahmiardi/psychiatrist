@@ -41,18 +41,22 @@
     @endif
 </div>
     <div class="bg-login-gradient font-poppins px-10">
-        <div class="min-h-screen w-full grid lg:grid-cols-2 md:grid-cols-1 py-6 px-4">
-            <div class="flex my-auto p-10">
-                <h1 class="text-white font-bold text-[2rem] md:text-[4.5rem] text-shadow">Fasilitas Konseling Sekolah Vokasi UGM</h1>
+        <div class="min-h-screen w-full flex flex-col items-center py-10">
+            <div class="font-poppins text-white my-10">
+                <h1 class="text-white font-bold text-[2rem] md:text-[4.5rem]">SIKOLOV</h1>
+                <p>Fasilitas konseling Sekolah Vokasi UGM</p>
             </div> 
             <div class=" lg:w-[50vw] md:w-[90vw]  flex justify-center items-center">  
-            <div class="flex flex-col item-center md:w-[70%] md:h-fit px-10 md:px-16 py-16 rounded-3xl bg-white shadow">
+            <div class="flex flex-col item-center md:w-[70%] md:h-fit px-10 md:px-16 py-10 rounded-3xl bg-white shadow ">
               <h2 class="text-[#155458] text-center text-[2.5rem] font-bold">Login</h2>
               <p class="text-xs my-5 text-center">Login untuk mulai melakukan pendaftaran konseling</p>
-              <a href="{{ route('auth.google') }}" class="w-full py-5 px-4 text-center font-bold  text-sm tracking-wide rounded-2xl text-white bg-[#155458] hover:bg-[#155458da] focus:outline-none">login with google</a>
-              <a href="/" class="flex items-center gap-4 my-10">
+              <a href="{{ route('auth.google') }}" class="flex items-center gap-3 w-fit my-5 mx-auto py-3 px-10 text-center font-bold  text-lg tracking-wide rounded-2xl text-[#155458] border border-[#155458]  hover:bg-[#15545813] focus:outline-none">
+                <span><img src="images/googleLogo.png" alt="googleLogo"></span>
+                login with google
+              </a>
+              <a href="/" class="flex items-center gap-4 mt-10">
                 <img src="{{ asset('images/back.png') }}" alt="Back" class="w-7">
-                <span class="text-[1.1rem] text-[#155458] font-bold">Back to home</span>
+                <span class="text-[1.rem] text-[#155458] font-bold">Back</span>
               </a>
               {{-- <form class="mt-16 space-y-4">
                 <div>
