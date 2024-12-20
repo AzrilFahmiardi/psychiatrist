@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         // Menambahkan data user
         $user = User::create([
             'name' => 'Dr. Andi Wijaya',
-            'email' => 'anakijummira@gmail.com',
+            'email' => 'andi@psikolog.com',
             'password' => Hash::make('password'),
             'nama_lengkap' => 'Dr. Andi Wijaya, M.Psi.',
             'role' => 'psikolog',
@@ -31,6 +31,21 @@ class DatabaseSeeder extends Seeder
             'name' => 'Dr. Andi Wijaya',
             'nama_lengkap' => 'Dr. Andi Wijaya, M.Psi.',
             'email' => 'andi@psikolog.com',
+        ]);
+
+        $user2 = User::create([
+            'name' => 'Dr. Budi Santoso',
+            'email' => 'drbudi@psikolog.com',
+            'password' => Hash::make('password'),
+            'nama_lengkap' => 'Dr. Budi Santoso, M.Psi.',
+            'role' => 'psikolog',
+        ]);
+
+        Psikolog::create([
+            'user_id' => $user2->id,
+            'name' => 'Dr. Budi Santoso',
+            'nama_lengkap' => 'Dr. Budi Santoso, M.Psi.',
+            'email' => 'drbudi@psikolog.com',
         ]);
 
         // Menjalankan seeder lainnya

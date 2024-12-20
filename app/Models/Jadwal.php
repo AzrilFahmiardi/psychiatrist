@@ -9,11 +9,21 @@ class Jadwal extends Model
 {
     protected $fillable = [
         'waktu',
-        'status'
+        'status',
+        'psikolog_id',
+    ];
+
+    protected $casts = [
+        'waktu' => 'datetime',
     ];
 
     public function psikolog()
     {
         return $this->belongsTo(Psikolog::class, 'psikolog_id', 'id');
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'jadwal_id', 'id');
     }
 }
