@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminBookingController;
 use App\Http\Controllers\AdminJadwalController;
 use App\Http\Controllers\AdminPsikologController;
+use App\Http\Controllers\AgendaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\JadwalController;
@@ -55,10 +56,13 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-// BAGIAN PSIKOLOG DAN ADMIN
+// BAGIAN PSIKOLOG
 Route::get('/login2', [SocialiteController::class, 'nonPasienLoginPage'])->name('nonPasien.loginpage');
 Route::post('/login2', [SocialiteController::class, 'nonPasienLogin'])->name('auth.nonPasien');
-Route::get('/lhome-psikolog', [SocialiteController::class, 'homePsikolog'])->name('home.psikolog');
+Route::get('/home-psikolog', [AgendaController::class, 'homePsikolog'])->name('home.psikolog');
+Route::get('/agenda-psikolog', [AgendaController::class, 'agendaPsikolog'])->name('agenda.psikolog');
+Route::get('/agenda-psikolog/filter', [AgendaController::class, 'agendaPsikologFilterJadwal'])->name('agenda.psikolog.filter');
+
 
 // ADMIN ROUTES
     Route::middleware([AdminMiddleware::class, 'auth'])->group(function () {

@@ -26,4 +26,16 @@ class Jadwal extends Model
     {
         return $this->hasMany(Booking::class, 'jadwal_id', 'id');
     }
+
+    public function pasien()
+    {
+        return $this->hasManyThrough(
+            User::class,       // Model yang dituju
+            Booking::class,    // Model perantara
+            'jadwal_id',       // Foreign key di tabel Booking
+            'id',              // Foreign key di tabel User
+            'id',              // Local key di tabel Jadwal
+            'pasien_id'        // Local key di tabel Booking
+        );
+    }
 }

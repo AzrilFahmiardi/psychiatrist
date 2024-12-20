@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
 use Log;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Jadwal;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -138,13 +140,4 @@ class SocialiteController extends Controller
         }
     }
 
-    function homePsikolog() {
-        $bookings = Booking::where('psikolog_id', Auth::id())
-                           ->where('status', '!=', 'completed') // Filter status
-                           ->latest('created_at')               // Urutkan dari yang terbaru berdasarkan created_at
-                           ->take(3)                            // Ambil 3 data saja
-                           ->get();
-    
-        return view('home-psikolog', compact('bookings'));
-    }
 }

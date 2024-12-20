@@ -49,7 +49,7 @@
                 <a href="/" class="text-shadow-lg font-bold">SV UGM</a>
                 <div class="flex gap-7">
                     <a href="/" class="font-bold">Home</a>
-                    <a href="{{ route('riwayat.booking') }}">Riwayat</a>
+                    <a href="{{ route('agenda.psikolog') }}">Agenda</a>
                 </div>
                 <a href="{{ route('pasien.profile') }}" class="font-bold bg-[#155458be] px-4 py-1 rounded-md hover:bg-[#1554588e]">{{ Auth::user()->name }}</a>
             </nav>
