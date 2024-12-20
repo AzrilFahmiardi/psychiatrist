@@ -12,6 +12,7 @@ class Booking extends Model
         'jadwal_id', 
         'status',
         'google_calendar_event_id',
+        'bukti_pembayaran',
     ];
 
     public function psikolog()

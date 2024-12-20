@@ -1,9 +1,8 @@
 <?php
 
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Jadwal;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminBookingController;
+use App\Http\Controllers\AdminJadwalController;
+use App\Http\Controllers\AdminPsikologController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\JadwalController;
@@ -11,7 +10,7 @@ use App\Http\Controllers\PasienController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SocialiteController;
-
+use App\Http\Middleware\AdminMiddleware;
 
 // PAGES
 Route::get('/', [JadwalController::class, 'index'])->name('home');
@@ -19,7 +18,7 @@ Route::get('/jadwal', [JadwalController::class, 'filterJadwal'])->name('jadwal.f
 
 Route::get('/login', function () {
     return view('login');
-});
+})->name('login');
 
 Route::get('/register', function () {
     return view('register');
@@ -60,3 +59,16 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/login2', [SocialiteController::class, 'nonPasienLoginPage'])->name('nonPasien.loginpage');
 Route::post('/login2', [SocialiteController::class, 'nonPasienLogin'])->name('auth.nonPasien');
 Route::get('/lhome-psikolog', [SocialiteController::class, 'homePsikolog'])->name('home.psikolog');
+
+// ADMIN ROUTES
+    Route::middleware([AdminMiddleware::class, 'auth'])->group(function () {
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::get('/admin', function () {
+                return view('admin.home');
+            });
+
+            Route::resource('psikologs', AdminPsikologController::class);
+            Route::resource('jadwals', AdminJadwalController::class)->only(['index', 'create', 'store', 'destroy']);
+            Route::resource('bookings', AdminBookingController::class)->only(['index', 'edit', 'update']);
+        });
+    });
