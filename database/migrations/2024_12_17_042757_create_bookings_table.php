@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('pasien_id');
             $table->unsignedBigInteger('psikolog_id');
             $table->unsignedBigInteger('jadwal_id');
-            $table->enum('status_akses_layanan', ['submitted', 'scheduled', 'completed','rescheduled','cancel'])->default('scheduled');
+            $table->enum('status', ['submitted', 'scheduled', 'completed','rescheduled','cancel'])->default('scheduled');
             $table->string('bukti_pembayaran')->nullable();
             $table->string('google_calendar_event_id')->nullable();
             $table->timestamps();

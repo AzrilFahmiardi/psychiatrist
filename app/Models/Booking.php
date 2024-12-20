@@ -10,7 +10,7 @@ class Booking extends Model
         'pasien_id', 
         'psikolog_id', 
         'jadwal_id', 
-        'status_akses_layanan',
+        'status',
         'google_calendar_event_id',
     ];
 

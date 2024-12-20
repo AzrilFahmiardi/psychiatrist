@@ -53,3 +53,10 @@ Route::post('/booking/{booking}/cancel', [FormController::class, 'cancel_booking
 Route::middleware(['auth'])->group(function () {
     Route::get('/my-calendar', [CalendarController::class, 'show'])->name('calendar.show');
 });
+
+
+
+// BAGIAN PSIKOLOG DAN ADMIN
+Route::get('/login2', [SocialiteController::class, 'nonPasienLoginPage'])->name('nonPasien.loginpage');
+Route::post('/login2', [SocialiteController::class, 'nonPasienLogin'])->name('auth.nonPasien');
+Route::get('/lhome-psikolog', [SocialiteController::class, 'homePsikolog'])->name('home.psikolog');

@@ -126,7 +126,7 @@ class FormController extends Controller
             $booking->pasien_id = $user->id;
             $booking->jadwal_id = $jadwalId;
             $booking->psikolog_id = $psikologId;
-            $booking->status_akses_layanan = 'submitted';
+            $booking->status = 'submitted';
 
             // CEK TRIAL
             if ($trial <= 0) {
@@ -136,7 +136,7 @@ class FormController extends Controller
 
                 $buktiPath = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
                 $booking->bukti_pembayaran = $buktiPath;
-                $booking->status_akses_layanan = 'scheduled';
+                $booking->status = 'scheduled';
             }
 
 
@@ -224,7 +224,7 @@ class FormController extends Controller
 
     public function cancel_booking(Booking $booking)
 {
-    if ($booking->status_akses_layanan === 'completed') {
+    if ($booking->status === 'completed') {
         return redirect()->back()->with('error', 'Cannot cancel a completed booking');
     }
 

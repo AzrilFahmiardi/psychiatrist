@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use Log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialiteController extends Controller
@@ -98,5 +100,51 @@ class SocialiteController extends Controller
     function logout() {
         Auth::logout(); 
         return redirect('/'); 
+    }
+
+
+
+    // LOGIN NON PASIEN
+    function nonPasienLoginPage(){
+        return view('login2');
+    }
+    function nonPasienLogin(Request $request){
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->with('error', 'Email tidak ditemukan.');
+        }
+
+        // Periksa password
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->with('error', 'Password salah.');
+        }
+
+        // Login user
+        Auth::login($user);
+
+        // Redirect berdasarkan role
+        if ($user->role === 'psikolog') {
+            return redirect()->route('home.psikolog');
+        } elseif ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->route('user.dashboard');
+        }
+    }
+
+    function homePsikolog() {
+        $bookings = Booking::where('psikolog_id', Auth::id())
+                           ->where('status', '!=', 'completed') // Filter status
+                           ->latest('created_at')               // Urutkan dari yang terbaru berdasarkan created_at
+                           ->take(3)                            // Ambil 3 data saja
+                           ->get();
+    
+        return view('home-psikolog', compact('bookings'));
     }
 }
