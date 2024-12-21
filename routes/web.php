@@ -62,7 +62,9 @@ Route::post('/login2', [SocialiteController::class, 'nonPasienLogin'])->name('au
 Route::get('/home-psikolog', [AgendaController::class, 'homePsikolog'])->name('home.psikolog');
 Route::get('/agenda-psikolog', [AgendaController::class, 'agendaPsikolog'])->name('agenda.psikolog');
 Route::get('/agenda-psikolog/filter', [AgendaController::class, 'agendaPsikologFilterJadwal'])->name('agenda.psikolog.filter');
-
+Route::post('/add-konsultasi', [AgendaController::class, 'addKonsultasi'])->name('add.konsultasi');
+Route::post('/update-konsultasi', [AgendaController::class, 'updateKonsultasi'])->name('update.konsultasi');
+Route::get('/logout2', [SocialiteController::class, 'nonPasienLogout'])->name('nonPasien.logout');
 
 // ADMIN ROUTES
     Route::middleware([AdminMiddleware::class, 'auth'])->group(function () {

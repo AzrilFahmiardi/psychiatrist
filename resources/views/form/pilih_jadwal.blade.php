@@ -33,9 +33,15 @@
     canProceed: false,
 
     selectSchedule(scheduleId, psychologId, status, waktu) {
-        const currentDate = new Date();
-        const scheduleDate = new Date(waktu);
-        const isExpired = scheduleDate < currentDate;
+        // Convert both times to Asia/Jakarta timezone for consistent comparison
+        const jakartaTimezone = 'Asia/Jakarta';
+        const currentDate = new Date().toLocaleString('en-US', { timeZone: jakartaTimezone });
+        const scheduleDate = new Date(waktu).toLocaleString('en-US', { timeZone: jakartaTimezone });
+        
+        const currentDateTime = new Date(currentDate);
+        const scheduleDateTime = new Date(scheduleDate);
+        
+        const isExpired = scheduleDateTime < currentDateTime;
         
         console.log('Schedule Selection:', {
             scheduleId,
@@ -43,8 +49,9 @@
             status,
             waktu,
             isExpired,
-            currentDate: currentDate.toISOString(),
-            scheduleDate: scheduleDate.toISOString()
+            currentDate: currentDateTime.toISOString(),
+            scheduleDate: scheduleDateTime.toISOString(),
+            jakartaTime: new Date().toLocaleString('en-US', { timeZone: jakartaTimezone })
         });
 
         this.activeCard = scheduleId;
@@ -82,7 +89,8 @@
                     </select>
     
                     @php
-                        $today = \Carbon\Carbon::now('Asia/Jakarta')->format('Y-m-d');
+                        $jakartaTz = new DateTimeZone('Asia/Jakarta');
+                        $today = \Carbon\Carbon::now($jakartaTz)->format('Y-m-d');
                     @endphp
                     
                     <input 
@@ -105,12 +113,15 @@
                     @foreach ($jadwals as $jad)
                         @if ($jad->psikolog)
                             @php
-                                $scheduleDateTime = \Carbon\Carbon::parse($jad->waktu);
-                                $isExpired = $scheduleDateTime->lt(now());
+                                // Ensure consistent timezone handling
+                                $jakartaTz = new DateTimeZone('Asia/Jakarta');
+                                $scheduleDateTime = \Carbon\Carbon::parse($jad->waktu)->setTimezone($jakartaTz);
+                                $currentDateTime = \Carbon\Carbon::now($jakartaTz);
+                                $isExpired = $scheduleDateTime->lt($currentDateTime);
                                 $isAvailable = $jad->status === 'available' && !$isExpired;
                             @endphp
                             <div 
-                                @click="selectSchedule({{ $jad->id }}, {{ $jad->psikolog->id }}, '{{ $jad->status }}', '{{ $jad->waktu }}')"
+                                @click="selectSchedule({{ $jad->id }}, {{ $jad->psikolog->id }}, '{{ $jad->status }}', '{{ $scheduleDateTime->toIso8601String() }}')"
                                 :class="{
                                     'bg-[#155458] text-white border-[#155458]': activeCard === {{ $jad->id }} && {{ json_encode($isAvailable) }},
                                     'bg-gray-200 text-gray-500 border-gray-300 opacity-60': !{{ json_encode($isAvailable) }}
@@ -121,7 +132,7 @@
                                 <p class="text-[1.1rem] font-bold">{{ $jad->psikolog->name }}</p>
                                 <div class="flex justify-between">
                                     <p class="text-[0.8rem]">
-                                        {{ $scheduleDateTime->setTimezone('Asia/Jakarta')->format('d M Y') }} - 
+                                        {{ $scheduleDateTime->locale('id')->translatedFormat('l') }} - 
                                         Pukul {{ $scheduleDateTime->format('H:i') }} WIB
                                     </p>
                                     @if($jad->status === 'booked')
@@ -174,9 +185,14 @@
             canProceed: false,
 
             selectSchedule(scheduleId, psychologId, status, waktu) {
-                const currentDate = new Date();
-                const scheduleDate = new Date(waktu);
-                const isExpired = scheduleDate < currentDate;
+                const jakartaTimezone = 'Asia/Jakarta';
+                const currentDate = new Date().toLocaleString('en-US', { timeZone: jakartaTimezone });
+                const scheduleDate = new Date(waktu).toLocaleString('en-US', { timeZone: jakartaTimezone });
+                
+                const currentDateTime = new Date(currentDate);
+                const scheduleDateTime = new Date(scheduleDate);
+                
+                const isExpired = scheduleDateTime < currentDateTime;
 
                 this.activeCard = scheduleId;
                 

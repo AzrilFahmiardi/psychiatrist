@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
             'name' => 'Dr. Andi Wijaya',
             'nama_lengkap' => 'Dr. Andi Wijaya, M.Psi.',
-            'email' => 'andi@psikolog.com',
+            'email' => 'anakijummira@gmail.com',
         ]);
 
         $user2 = User::create([

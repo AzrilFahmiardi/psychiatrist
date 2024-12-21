@@ -140,4 +140,9 @@ class SocialiteController extends Controller
         }
     }
 
+    function nonPasienLogout(){
+        Auth::logout(); 
+        return redirect('/login2'); 
+    }
+
 }

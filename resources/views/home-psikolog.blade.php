@@ -51,7 +51,7 @@
                     <a href="/" class="font-bold">Home</a>
                     <a href="{{ route('agenda.psikolog') }}">Agenda</a>
                 </div>
-                <a href="{{ route('pasien.profile') }}" class="font-bold bg-[#155458be] px-4 py-1 rounded-md hover:bg-[#1554588e]">{{ Auth::user()->name }}</a>
+                <a href="{{ route('nonPasien.logout') }}" class="font-bold bg-[#155458be] px-4 py-1 rounded-md hover:bg-[#1554588e]">{{ Auth::user()->name }}</a>
             </nav>
             @else
                 <nav class="flex justify-between w-full py-7 font-poppins text-[#FAFAFA] text-xl px-20">
@@ -60,7 +60,7 @@
                         <a href="/" class="font-bold">Home</a>
                         <a href="#" onclick="showLoginModal(event)">Riwayat</a> <!-- Trigger modal -->
                     </div>
-                    <a href="/login" class="font-bold bg-[#155458] px-4 py-1 rounded-md">Login</a>
+                    <a href="/login2" class="font-bold bg-[#155458] px-4 py-1 rounded-md">Login</a>
                 </nav>
                 
                 <!-- Modal -->
@@ -101,50 +101,53 @@
                 {{-- LEFT CONTENT --}}
                 <div class="bg-[#FAFAFA] py-5 px-5 rounded-xl h-full">
                     <h2 class="mb-1 font-bold text-[1.2rem] text-[#155458]">Agenda anda</h2>   
-                    @foreach ($bookings as $book)
-                    @php
-                        $statusClass = '';
-                        $statusBgColor = '';
-                        $statusIcon = '';
-                        $statusInfo = '';
-
-                        if (($book->status === 'submitted' || $book->status === 'scheduled') && now()->greaterThan($book->jadwal->waktu)) {
-                            $statusClass = 'text-green-500';
-                            $statusBgColor = 'bg-[#155458]';
-                            $statusIcon = 'images/warning_green.png';
-                            $statusInfo = 'Menunggu hasil konsultasi dari anda';
-                        } elseif($book->status === 'submitted') {
-                            $statusClass = 'text-yellow-700';
-                            $statusBgColor = 'bg-green-700';
-                            $statusIcon = 'images/warning_yellow.png';
-                            $statusInfo = 'Siap untuk pertemuan';
-                        } elseif($book->status === 'scheduled') {
-                            $statusClass = 'text-orange-600';
-                            $statusBgColor = 'bg-yellow-600';
-                            $statusIcon = 'images/warning_orange.png';
-                            $statusInfo = 'Admin sedang melakukan pengecekan bukti pembayaran';
-                        }
-                    
-                    @endphp
-                    <div class="text-[#4F4F4F] pr-2 pb-2">
-                        <p class="font-semibold text-[1.1rem] mt-5">{{ $book->pasien->name }}</p>
-                        <p class="text-[0.9rem]">{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                        <p class="text-[0.9rem]">
-                            {{ \Carbon\Carbon::parse($book->jadwal->waktu)->addHours(7)->format('H:i') }} - 
-                            {{ \Carbon\Carbon::parse($book->jadwal->waktu)->addHours(8)->format('H:i') }} WIB
-                        </p>
-                        <div class="flex justify-between">
-                            <p class="flex items-center gap-2 {{ $statusClass }} text-[0.7rem] my-2">
-                                <img alt="infoLogo" class="h-[1em] w-[1em] inline-block" src="{{ $statusIcon }}">
-                                {{ $statusInfo }}
+                    @if ($bookings && $bookings->isNotEmpty())
+                        @foreach ($bookings as $book)
+                        @php
+                            $statusClass = '';
+                            $statusBgColor = '';
+                            $statusIcon = '';
+                            $statusInfo = '';
+                
+                            if (($book->status === 'submitted' || $book->status === 'scheduled') && now()->greaterThan($book->jadwal->waktu)) {
+                                $statusClass = 'text-green-500';
+                                $statusBgColor = 'bg-[#155458]';
+                                $statusIcon = 'images/warning_green.png';
+                                $statusInfo = 'Menunggu hasil konsultasi dari anda';
+                            } elseif($book->status === 'submitted') {
+                                $statusClass = 'text-yellow-700';
+                                $statusBgColor = 'bg-green-700';
+                                $statusIcon = 'images/warning_yellow.png';
+                                $statusInfo = 'Siap untuk pertemuan';
+                            } elseif($book->status === 'scheduled') {
+                                $statusClass = 'text-orange-600';
+                                $statusBgColor = 'bg-yellow-600';
+                                $statusIcon = 'images/warning_orange.png';
+                                $statusInfo = 'Admin sedang melakukan pengecekan bukti pembayaran';
+                            }
+                        @endphp
+                        <div class="text-[#4F4F4F] pr-2 pb-2">
+                            <p class="font-semibold text-[1.1rem] mt-5">{{ $book->pasien->name }}</p>
+                            <p class="text-[0.9rem]">{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}</p>
+                            <p class="text-[0.9rem]">
+                                {{ \Carbon\Carbon::parse($book->jadwal->waktu)->addHours(7)->format('H:i') }} - 
+                                {{ \Carbon\Carbon::parse($book->jadwal->waktu)->addHours(8)->format('H:i') }} WIB
                             </p>
-                            <p class="text-[0.9rem] text-[#FAFAFA] px-2 py-1 {{ $statusBgColor }} rounded">{{ $book->status }}</p>
+                            <div class="flex justify-between">
+                                <p class="flex items-center gap-2 {{ $statusClass }} text-[0.7rem] my-2">
+                                    <img alt="infoLogo" class="h-[1em] w-[1em] inline-block" src="{{ $statusIcon }}">
+                                    {{ $statusInfo }}
+                                </p>
+                                <p class="text-[0.9rem] text-[#FAFAFA] px-2 py-1 {{ $statusBgColor }} rounded">{{ $book->status }}</p>
+                            </div>
                         </div>
-                        
-                    </div>
-                    <hr>
-                    @endforeach
+                        <hr>
+                        @endforeach
+                    @else
+                        <p class="text-gray-700 text-sm">Tidak ada agenda</p>
+                    @endif
                 </div>
+                
                 
                 
              
