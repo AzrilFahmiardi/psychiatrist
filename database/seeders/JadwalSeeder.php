@@ -24,7 +24,7 @@ class JadwalSeeder extends Seeder
         for ($day = 0; $day < $days; $day++) {
             for ($slot = 0; $slot < $slotsPerDay; $slot++) {
                 $schedules[] = [
-                    'waktu' => $startDate->copy()->addDays($day)->addHours($slot),
+                    'waktu' => $startDate->copy()->addDays($day)->addHours($slot+12),
                     'psikolog_id' => $psikologId,
                     'created_at' => now(),
                     'updated_at' => now(),

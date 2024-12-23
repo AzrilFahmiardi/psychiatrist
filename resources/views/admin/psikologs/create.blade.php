@@ -38,6 +38,13 @@
                     placeholder="Password" />
             </div>
 
+            <div>
+                <label class="block mb-1 text-sm text-slate-600">Confirm Password</label>
+                <input type="password" name="confirmPassword"
+                    class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 focus:outline-none focus:border-slate-400 shadow-sm"
+                    placeholder="Password" />
+            </div>
+
             <button data-ripple-light="true" type="submit"
                 class="mb-5 inline-block lign-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">Simpan</button>
             <a href="{{ route('admin.psikologs.index') }}"

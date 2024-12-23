@@ -98,7 +98,7 @@
                                             
                                             @if($jadwal->bookings->count() > 0)
                                                 @php
-                                                    $statusClass = match($jadwal->bookings[0]->status_akses_layanan) {
+                                                    $statusClass = match($jadwal->bookings[0]->status) {
                                                         'submitted' => 'bg-yellow-100 text-yellow-800',
                                                         'scheduled' => 'bg-blue-100 text-blue-800',
                                                         'completed' => 'bg-green-100 text-green-800',
@@ -108,7 +108,7 @@
                                                     };
                                                 @endphp
                                                 <a href="{{ route('admin.bookings.edit', $jadwal->bookings[0]) }}" class="text-xs font-semibold mt-1 px-2 py-0.5 rounded-sm {{ $statusClass }}">
-                                                    {{ ucfirst($jadwal->bookings[0]->status_akses_layanan) }}
+                                                    {{ ucfirst($jadwal->bookings[0]->status) }}
                                                 </a>
                                             @endif
                                         </div>
