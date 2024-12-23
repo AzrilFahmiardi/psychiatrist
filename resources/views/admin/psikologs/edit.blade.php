@@ -36,6 +36,12 @@
                     class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 focus:outline-none focus:border-slate-400 shadow-sm" />
             </div>
 
+            <div>
+                <label class="block mb-1 text-sm text-slate-600">Confirm Password (kosongkan jika tidak diubah)</label>
+                <input type="password" name="confirmPassword"
+                    class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 focus:outline-none focus:border-slate-400 shadow-sm" />
+            </div>
+
             <button type="submit" class="px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600">Update</button>
             <a href="{{ route('admin.psikologs.index') }}"
                 class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Kembali</a>

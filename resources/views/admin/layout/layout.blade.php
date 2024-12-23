@@ -127,8 +127,8 @@
             </nav>
             <div role="alert"
                 class="relative w-full font-sans text-base font-regular px-4 py-4 rounded-lg bg-green-500/20 text-green-900 mt-auto flex"
-                style="opacity: 1">
-                <div class="mr-12">
+                style="opacity: 0">
+                {{-- <div class="mr-12">
                     <p class="block antialiased font-sans text-sm leading-normal text-green-500 mb-1 font-bold">
                         New Version Available
                     </p>
@@ -142,11 +142,11 @@
                             class="block antialiased font-sans text-sm leading-normal text-green-500 font-medium">Upgrade
                             Now</a>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <p
                 class=" antialiased font-sans text-sm  leading-normal text-inherit mt-5 font-medium text-gray-500 flex justify-center">
-                mt v2.1.2
+                SIKOLOV &copy; 2025
             </p>
         </aside>
         <!-- Sidebar End -->
