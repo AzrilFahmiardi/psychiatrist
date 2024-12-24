@@ -36,8 +36,8 @@ Route::get('/auth/google-callback', [SocialiteController::class, 'googleAuthenti
 Route::get('/logout', [SocialiteController::class, 'logout'])->name('google.logout');
 
 // FORM DATA PASIEN
-Route::get('/profile',[PasienController::class, 'getData'])->name('pasien.profile');
-Route::post('/profile/update',[PasienController::class, 'updateDataPasien'])->name('pasien.update');
+Route::get('/profile', [PasienController::class, 'getData'])->name('pasien.profile');
+Route::post('/profile/update', [PasienController::class, 'updateDataPasien'])->name('pasien.update');
 
 
 // FORM BOOKING
@@ -67,14 +67,10 @@ Route::post('/update-konsultasi', [AgendaController::class, 'updateKonsultasi'])
 Route::get('/logout2', [SocialiteController::class, 'nonPasienLogout'])->name('nonPasien.logout');
 
 // ADMIN ROUTES
-    Route::middleware([AdminMiddleware::class, 'auth'])->group(function () {
-        Route::prefix('admin')->name('admin.')->group(function () {
-            Route::get('/admin', function () {
-                return view('admin.home');
-            });
-
-            Route::resource('psikologs', AdminPsikologController::class);
-            Route::resource('jadwals', AdminJadwalController::class)->only(['index', 'create', 'store', 'destroy']);
-            Route::resource('bookings', AdminBookingController::class)->only(['index', 'edit', 'update']);
-        });
+Route::middleware([AdminMiddleware::class, 'auth'])->group(function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('psikologs', AdminPsikologController::class);
+        Route::resource('jadwals', AdminJadwalController::class)->only(['index', 'create', 'store', 'destroy']);
+        Route::resource('bookings', AdminBookingController::class)->only(['index', 'edit', 'update']);
     });
+});

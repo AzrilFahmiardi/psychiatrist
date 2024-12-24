@@ -80,12 +80,12 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {{ $booking->status_akses_layanan === 'completed' ? 'bg-green-100 text-green-800' : '' }}
-                                    {{ $booking->status_akses_layanan === 'scheduled' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                                    {{ $booking->status_akses_layanan === 'submitted' ? 'bg-blue-100 text-blue-800' : '' }}
-                                    {{ $booking->status_akses_layanan === 'rescheduled' ? 'bg-orange-100 text-orange-800' : '' }}
-                                    {{ $booking->status_akses_layanan === 'cancel' ? 'bg-red-100 text-red-800' : '' }}">
-                                    {{ ucfirst($booking->status_akses_layanan) }}
+                                    {{ $booking->status === 'completed' ? 'bg-green-100 text-green-800' : '' }}
+                                    {{ $booking->status === 'scheduled' ? 'bg-yellow-100 text-yellow-800' : '' }}
+                                    {{ $booking->status === 'submitted' ? 'bg-blue-100 text-blue-800' : '' }}
+                                    {{ $booking->status === 'rescheduled' ? 'bg-orange-100 text-orange-800' : '' }}
+                                    {{ $booking->status === 'cancel' ? 'bg-red-100 text-red-800' : '' }}">
+                                    {{ ucfirst($booking->status) }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

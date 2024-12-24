@@ -77,12 +77,13 @@ class AdminJadwalController extends Controller
         $startHour = $currentHour + (2 - ($currentHour % 2));
 
         // Jika hasil perhitungan startHour kurang dari 8, tetapkan ke 8
-        $startHour = max(8, $startHour);
+        $startHour = 7;
 
         for ($hour = $startHour; $hour < 19; $hour += 1) {
             $time = Carbon::createFromTime($hour, 0)->format('H:i');
             $sessions[$time] = $time;
         }
+
         return view('admin.jadwals.create', compact('psikologs', 'daysOfWeek', 'sessions'));
     }
 
@@ -157,7 +158,7 @@ class AdminJadwalController extends Controller
 
         if ($bookeds->count() > 0) {
             foreach ($bookeds as $booked) {
-                $booked->status_akses_layanan = 'rescheduled';
+                $booked->status = 'rescheduled';
                 $booked->save();
             }
         } else {

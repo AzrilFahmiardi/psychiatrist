@@ -52,7 +52,7 @@
               <p class="text-xs my-5 text-center">Login untuk mulai melakukan pendaftaran konseling</p>
               <a href="{{ route('auth.google') }}" class="flex items-center gap-3 w-fit my-5 mx-auto py-3 px-10 text-center font-bold  text-lg tracking-wide rounded-2xl text-[#155458] border border-[#155458]  hover:bg-[#15545813] focus:outline-none">
                 <span><img src="images/googleLogo.png" alt="googleLogo"></span>
-                login with google
+                Login with Google
               </a>
               <a href="/" class="flex items-center gap-4 mt-10">
                 <img src="{{ asset('images/back.png') }}" alt="Back" class="w-7">

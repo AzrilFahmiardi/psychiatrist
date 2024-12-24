@@ -74,7 +74,7 @@
                     <select name="status_akses_layanan"
                         class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm">
                         @foreach(['submitted', 'scheduled', 'completed', 'rescheduled', 'cancel'] as $status)
-                            <option value="{{ $status }}" {{ $booking->status_akses_layanan === $status ? 'selected' : '' }}>
+                            <option value="{{ $status }}" {{ $booking->status === $status ? 'selected' : '' }}>
                                 {{ ucfirst($status) }}
                             </option>
                         @endforeach

@@ -37,9 +37,10 @@ class AdminPsikologController extends Controller
             'nama_lengkap' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
+            'confirmPassword' => 'required|same:password',
         ]);
 
-        User::create([
+        $user = User::create([
             'nama_lengkap' => $request->nama_lengkap,
             'name' => $request->nama_lengkap,
             'email' => $request->email,
@@ -51,7 +52,7 @@ class AdminPsikologController extends Controller
             'nama_lengkap' => $request->nama_lengkap,
             'email' => $request->email,
             'name' => $request->nama_lengkap,
-            'user_id' => $request->id,
+            'user_id' => $user->id,
         ]);
 
         return redirect()->route('admin.psikologs.index')->with('success', 'Psikolog created successfully.');
@@ -68,24 +69,26 @@ class AdminPsikologController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $psikolog)
     {
+        
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email' => 'required|email|unique:users,email,' . $psikolog->id,
             'password' => 'nullable|string|min:6',
+            'confirmPassword' => 'nullable|same:password',
         ]);
-
-        $user->nama_lengkap = $request->nama_lengkap;
-        $user->email = $request->email;
+        // dd($psikolog->nama_lengkap, $request->nama_lengkap);
+        $psikolog->nama_lengkap = $request->nama_lengkap;
+        $psikolog->email = $request->email;
 
         if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+            $psikolog->password = Hash::make($request->password);
         }
 
-        $user->save();
+        $psikolog->save();
 
-        $psikolog = Psikolog::where('user_id', $user->id)->first();
+        $psikolog = Psikolog::where('user_id', $psikolog->id)->first();
         $psikolog->nama_lengkap = $request->nama_lengkap;
         $psikolog->email = $request->email;
         $psikolog->name = $request->nama_lengkap;
@@ -98,10 +101,13 @@ class AdminPsikologController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $psikolog)
     {
-        $psikolog = Psikolog::where('user_id', $user->id)->first();
-        $user->delete();
+        // dd($psikolog->id);
+        $psikologFind = Psikolog::where('user_id', $psikolog->id)->first();
+        // dd($psikologFind);
+        $psikologFind->delete();
+        $psikolog->delete();
         return redirect()->route('admin.psikologs.index')->with('success', 'Psikolog deleted successfully.');
     }
 }

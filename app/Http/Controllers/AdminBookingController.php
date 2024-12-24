@@ -18,7 +18,7 @@ class AdminBookingController extends Controller
             ->when($selectedPsikolog, function($query) use ($selectedPsikolog) {
                 return $query->where('psikolog_id', $selectedPsikolog);
             })
-            ->where('status_akses_layanan', $selectedStatus)
+            ->where('status', $selectedStatus)
             ->latest()
             ->paginate(10);
 
@@ -37,7 +37,7 @@ class AdminBookingController extends Controller
         ]);
 
         $booking->update([
-            'status_akses_layanan' => $request->status_akses_layanan,
+            'status' => $request->status_akses_layanan,
         ]);
 
         return redirect()->route('admin.bookings.index')

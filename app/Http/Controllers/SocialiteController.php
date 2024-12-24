@@ -134,7 +134,7 @@ class SocialiteController extends Controller
         if ($user->role === 'psikolog') {
             return redirect()->route('home.psikolog');
         } elseif ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.psikologs.index');
         } else {
             return redirect()->route('user.dashboard');
         }
