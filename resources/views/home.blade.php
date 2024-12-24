@@ -98,7 +98,8 @@
                     @endif    
             </div>
             
-            <div class="w-[85vw] h-[300px] grid grid-cols-3 gap-2 z-10">
+            {{-- KONTEN --}}
+            <div class="w-[85vw] h-[300px] grid grid-cols-1 md:grid-cols-3 gap-2 z-10">
                 <div class="col-span-1 space-y-2">
                     
                     <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[100px] ">

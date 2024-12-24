@@ -45,52 +45,90 @@
     <div class="bg-[##FAFAFA] font-poppins px-10">
         <div class="min-h-screen w-full flex flex-col items-center">
             {{-- NAVBAR --}}
-            @if (Auth::check())
-                <nav class="flex justify-between w-full pt-7 pb-5 font-poppins text-[#155458] text-xl px-20">
-                    <a href="/" class=" font-bold">SV UGM</a>
-                    <div class="flex gap-7">
-                        <a href="/" >Home</a>
-                        <a href="{{ route('riwayat.booking') }}" class="font-bold">Riwayat</a>
-                    </div>
-                    <a href="{{ route('pasien.profile') }}" class="font-bold bg-transparent border-2 border-[#155458be] hover:bg-[#15545870] px-4 py-1 rounded-md">{{ Auth::user()->name }}</a>
-                </nav>
-            @else
-                <nav class="flex justify-between w-full pt-7 pb-5 font-poppins text-[#155458] text-xl px-20">
-                    <a href="/" class=" font-bold">SV UGM</a>
-                    <div class="flex gap-7">
-                        <a href="/" class="font-bold">Home</a>
-                        <a href="#" onclick="showLoginModal(event)" class="font-bold">Riwayat</a> <!-- Trigger modal -->
-                    </div>
-                    <a href="/login" class="font-bold bg-[#155458] px-4 py-1 rounded-md">Login</a>
-                </nav>
-                
-                <!-- Modal -->
-                <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
-                    <div class="bg-white p-6 rounded-md text-center">
-                        <p class="text-lg">Silakan login untuk melihat riwayat</p>
-                        <div class="mt-4">
-                            <a href="/login" class="bg-[#155458] px-4 py-2 rounded-md text-white">Login</a>
-                            <button onclick="closePopup()" class="bg-gray-500 px-4 py-2 rounded-md text-white ml-2">Tutup</button>
-                        </div>
-                    </div>
-                </div>
+@if (Auth::check())
+<nav class="w-full pt-7 pb-5 font-poppins text-[#155458] text-xl md:px-20 px-6 relative">
+    <div class="flex justify-between items-center">
+        <a href="/" class="font-bold">SV UGM</a>
+        
+        <!-- Hamburger Button -->
+        <button type="button" onclick="toggleMenu()" class="md:hidden z-50 relative w-8 h-8 flex justify-center items-center">
+            <div id="hamburger" class="flex flex-col justify-between w-6 h-5 transform transition-all duration-300">
+                <span class="w-full h-0.5 bg-[#155458] transform transition-all duration-300"></span>
+                <span class="w-full h-0.5 bg-[#155458] transform transition-all duration-300"></span>
+                <span class="w-full h-0.5 bg-[#155458] transform transition-all duration-300"></span>
+            </div>
+        </button>
 
-                <!-- JavaScript for Modal -->
-                <script>
-                    function showLoginModal(event) {
-                        event.preventDefault(); // Prevent default anchor action
-                        document.getElementById('loginModal').classList.remove('hidden');
-                    }
+        <div class="hidden md:flex md:items-center md:gap-7">
+            <a href="/">Home</a>
+            <a href="{{ route('riwayat.booking') }}" class="font-bold">Riwayat</a>
+        </div>
 
-                    function closePopup() {
-                        document.getElementById('loginModal').classList.add('hidden');
-                    }
-                </script>
-            @endif
-            <hr class="bg-[#00000080] h-[2px] w-full px-20">
+        <a href="{{ route('pasien.profile') }}" class="hidden md:block font-bold bg-transparent border-2 border-[#155458be] hover:bg-[#15545870] px-4 py-1 rounded-md">
+            {{ Auth::user()->name }}
+        </a>
+    </div>
 
-            {{-- END NAVBAR --}}
-            <h1 class="mt-10 text-[2rem] font-bold text-[#155458]">Riwayat  dan hasil konseling pasien</h1>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="absolute top-full left-0 w-full bg-white border-2 border-[#155458] rounded-xl transform transition-all duration-300 -translate-y-full opacity-0 invisible md:hidden shadow-lg z-30">
+        <div class="py-4 px-6 space-y-4">
+            <a href="/" class="block hover:text-gray-600 transition-colors">Home</a>
+            <a href="{{ route('riwayat.booking') }}" class="block font-bold hover:text-gray-600 transition-colors">Riwayat</a>
+            <a href="{{ route('pasien.profile') }}" class="block font-bold bg-[#155458] text-white px-4 py-2 rounded-md hover:bg-[#15545870] w-fit">
+                {{ Auth::user()->name }}
+            </a>
+        </div>
+    </div>
+</nav>
+@else
+<nav class="w-full pt-7 pb-5 font-poppins text-[#155458] text-xl md:px-20 px-6 relative">
+    <div class="flex justify-between items-center">
+        <a href="/" class="font-bold">SV UGM</a>
+        
+        <!-- Hamburger Button -->
+        <button type="button" onclick="toggleMenu()" class="md:hidden z-50 relative w-8 h-8 flex justify-center items-center">
+            <div id="hamburger" class="flex flex-col justify-between w-6 h-5 transform transition-all duration-300">
+                <span class="w-full h-0.5 bg-[#155458] transform transition-all duration-300"></span>
+                <span class="w-full h-0.5 bg-[#155458] transform transition-all duration-300"></span>
+                <span class="w-full h-0.5 bg-[#155458] transform transition-all duration-300"></span>
+            </div>
+        </button>
+
+        <div class="hidden md:flex md:items-center md:gap-7">
+            <a href="/" class="font-bold">Home</a>
+            <a href="#" onclick="showLoginModal(event)" class="font-bold">Riwayat</a>
+        </div>
+
+        <a href="/login" class="hidden md:block font-bold bg-[#155458] text-white px-4 py-1 rounded-md">Login</a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="absolute top-full left-0 w-full bg-white border-2 border-[#155458] rounded-xl transform transition-all duration-300 -translate-y-full opacity-0 invisible md:hidden shadow-lg z-30">
+        <div class="py-4 px-6 space-y-4">
+            <a href="/" class="block font-bold hover:text-gray-600 transition-colors">Home</a>
+            <a href="#" onclick="showLoginModal(event)" class="block font-bold hover:text-gray-600 transition-colors">Riwayat</a>
+            <a href="/login" class="block font-bold bg-[#155458] text-white px-4 py-2 rounded-md hover:bg-[#15545870] w-fit">
+                Login
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Modal (unchanged) -->
+<div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-6 rounded-md text-center">
+        <p class="text-lg">Silakan login untuk melihat riwayat</p>
+        <div class="mt-4">
+            <a href="/login" class="bg-[#155458] px-4 py-2 rounded-md text-white">Login</a>
+            <button onclick="closePopup()" class="bg-gray-500 px-4 py-2 rounded-md text-white ml-2">Tutup</button>
+        </div>
+    </div>
+</div>
+@endif
+<hr class="bg-[#00000080] h-[2px] w-full px-20">
+{{-- END NAVBAR --}}
+
+            <h1 class="mt-10 text-[1rem] sm:text-[1.5rem]  md:text-[2rem] font-bold text-[#155458]">Riwayat  dan hasil konseling pasien</h1>
             
             {{-- GOOGLE CALENDAR --}}
             <div class="card-body w-[90vw] h-[500px] my-5 rounded-xl">
@@ -103,9 +141,9 @@
                 </iframe>
             </div>
             
-            <div class="w-full px-20 mt-[100px]">
-                <p class="font-bold text-gray-800 my-5">status</p>
-                <table class="text-sm">
+            <div class="w-full px-0 lg:px-20 mt-[100px]">
+                <p class="font-bold text-gray-800 my-5 text-xs sm:text-sm  md:text-base">status</p>
+                <table class="text-[0.6rem] sm:text-[0.8rem] md:text-sm">
                     <tbody class="divide-y-8 divide-transparent">
                         <tr>
                             <td class="w-8">
@@ -136,25 +174,25 @@
             </div>
             
             
-            <div class="w-full px-20 py-16 mt-[10px]">
+            <div class="w-full md:px-10 py-16 mt-[10px]">
                 
-                <div class=" h-fit ">
-                    <p class=" text-[#155458] font-bold">Jadwal yang dibooking</p>
+                <div class=" h-[250px]">
+                    <p class=" text-[#155458] text-xs sm:text-sm  md:text-base font-bold">Jadwal yang dibooking</p>
                     
-                    <div class="gap-5 mt-5 grid grid-cols-2">
+                    <div class="gap-5 mt-5 flex h-[180px] overflow-auto">
                         @foreach ($bookings as $book)
-                            <div class="w-full h-fit border border-gray-200 shadow-lg rounded-xl py-5 px-5">
-                                <p class="font-bold text-[1.3rem]">{{ $book->psikolog->name }}</p>
-                                <p class="text-gray-700">{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                                <p class="text-gray-700">
+                            <div class="min-w-[200px] sm:min-w-[300px] md:min-w-[500px] h-fit border border-gray-200 shadow-lg rounded-xl py-5 px-5">
+                                <p class="font-bold text-[0.8rem] sm:text-[1rem]  md:text-[1.3rem]">{{ $book->psikolog->name }}</p>
+                                <p class="text-gray-700 text-xs sm:text-sm  md:text-base">{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}</p>
+                                <p class="text-gray-700 text-xs sm:text-sm  md:text-base">
                                     {{ 
                                         \Carbon\Carbon::parse($book->jadwal->waktu)->addHours(7)->format('H:i') . '-' . 
                                         \Carbon\Carbon::parse($book->jadwal->waktu)->addHours(8)->format('H:i') . ' WIB' 
                                     }}
                                 </p>
-                                <div class="flex justify-between items-end">
-                                    <p class="text-gray-700 mt-8">status: 
-                                        <span class="px-2
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-3">
+                                    <p class="text-gray-700 mt-3 md:mt-8 text-xs sm:text-sm  md:text-base">status: 
+                                        <span class="px-2 text-xs sm:text-sm  md:text-base
                                             @if($book->status === 'completed')
                                                 bg-[#155458]
                                             @elseif($book->status === 'submitted')
@@ -169,7 +207,7 @@
                     
                                     <div class="flex items-center gap-4">
                                         @if($book->status === 'completed')
-                                            <p class="text-[#155458] text-[0.8rem] flex items-center gap-2 cursor-pointer hover:underline"
+                                            <p class="text-[#155458] text-[0.4rem] sm:text-[0.6rem]  md:text-[0.8rem] flex items-center gap-2 cursor-pointer hover:underline"
                                             onclick="showConsultationResult('{{ $book->psikolog->name }}', '{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}', '{{ $book->konsultasi->hasil_konsultasi }}')">
                                                 Lihat hasil konsultasi
                                                 <span><img src="../images/right_arrow.png" alt="tes"></span>
@@ -186,6 +224,7 @@
                                 </div>
                             </div>
                         @endforeach
+                        
                     </div>
                     
                 </div>
@@ -247,6 +286,34 @@
                 });
             });
           </script>
+          
+<script>
+    function toggleMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburger = document.getElementById('hamburger');
+        const spans = hamburger.getElementsByTagName('span');
+    
+        if (mobileMenu.classList.contains('-translate-y-full')) {
+            // Menu Opening
+            mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'invisible');
+            mobileMenu.classList.add('translate-y-0', 'opacity-100', 'visible');
+            
+            // Hamburger Animation
+            spans[0].classList.add('rotate-45', 'translate-y-2');
+            spans[1].classList.add('opacity-0');
+            spans[2].classList.add('-rotate-45', '-translate-y-2');
+        } else {
+            // Menu Closing
+            mobileMenu.classList.remove('translate-y-0', 'opacity-100', 'visible');
+            mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'invisible');
+            
+            // Hamburger Animation
+            spans[0].classList.remove('rotate-45', 'translate-y-2');
+            spans[1].classList.remove('opacity-0');
+            spans[2].classList.remove('-rotate-45', '-translate-y-2');
+        }
+    }
+    </script>
     </div>
 
 
