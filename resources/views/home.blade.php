@@ -58,8 +58,8 @@
 <img src="images/elips.png" class="absolute top-0 right-0 " alt="">
 <img src="images/elips2.png" class="absolute bottom-0 left-0 " alt="">
 
-    <div class="bg-login-gradient font-poppins px-10 z-10">
-        <div class="min-h-screen w-full flex flex-col items-center">
+    <div class="bg-login-gradient h-[900px] font-poppins px-10 z-10">
+        <div class="w-full flex flex-col items-center">
             <div class="w-full z-40">
                 <x-navbar></x-navbar>
 
@@ -100,7 +100,7 @@
             
             {{-- KONTEN --}}
             <div class="w-[85vw] h-[300px] grid grid-cols-1 md:grid-cols-3 gap-2 z-10">
-                <div class="col-span-1 space-y-2">
+                <div class="md:col-span-1 space-y-2">
                     
                     <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[100px] ">
                         <h2 class="mb-1 font-bold text-[0.5rem] md:text-[1.2rem] text-[#155458]">Jadwal anda</h2>
@@ -152,7 +152,8 @@
                     
                 </div>
                 {{-- JADWAL --}}
-                <div class="col-span-2 py-3 px-5 bg-[#FAFAFA] rounded-xl">
+                <div class="md:col-span-2 py-3 px-5 bg-[#FAFAFA] rounded-xl">
+                    
                     <div class="relative flex justify-between">
                         <h2 class="mb-3 font-bold text-[0.6rem] md:text-[1rem] lg:text-[1.3rem]  text-[#4F4F4F] mx-auto">Jadwal Konseling dan Dokter yang Tersedia</h2>
                     </div>

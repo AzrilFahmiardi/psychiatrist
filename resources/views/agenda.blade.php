@@ -44,30 +44,56 @@
     </div>
     <div class="bg-[##FAFAFA] font-poppins px-10">
         <div class="min-h-screen w-full flex flex-col items-center">
-            {{-- NAVBAR --}}
-            @if (Auth::check())
-                <nav class="flex justify-between w-full pt-7 pb-5 font-poppins text-[#155458] text-xl px-20">
-                    <a href="/" class=" font-bold">SV UGM</a>
-                    <div class="flex gap-7">
-                        <a href="{{ route('home.psikolog') }}" >Home</a>
-                        <a href="{{ route('agenda.psikolog') }}" class="font-bold">Agenda</a>
-                    </div>
-                    <a href="{{ route('nonPasien.logout') }}" class="font-bold bg-transparent border-2 border-[#155458be] hover:bg-[#15545870] px-4 py-1 rounded-md">{{ Auth::user()->name }}</a>
-                </nav>
 
-            @endif
-            <hr class="bg-[#00000080] h-[2px] w-full px-20">
+             {{-- NAVBAR --}}
+@if (Auth::check())
+<nav class="w-full pt-7 pb-5 font-poppins text-[#155458] text-xl md:px-20 px-6 relative">
+    <div class="flex justify-between items-center">
+        <a href="/" class="font-bold">SV UGM</a>
+        
+        <!-- Hamburger Button -->
+        <button type="button" onclick="toggleMenu()" class="md:hidden z-50 relative w-8 h-8 flex justify-center items-center">
+            <div id="hamburger" class="flex flex-col justify-between w-6 h-5 transform transition-all duration-300">
+                <span class="w-full h-0.5 bg-[#155458] transform transition-all duration-300"></span>
+                <span class="w-full h-0.5 bg-[#155458] transform transition-all duration-300"></span>
+                <span class="w-full h-0.5 bg-[#155458] transform transition-all duration-300"></span>
+            </div>
+        </button>
 
-            {{-- END NAVBAR --}}
+        <div class="hidden md:flex md:items-center md:gap-7">
+            <a href="{{ route('home.psikolog') }}">Home</a>
+            <a href="{{ route('agenda.psikolog') }}" class="font-bold">Agenda</a>
+        </div>
+
+        <a href="{{ route('nonPasien.logout') }}" class="hidden md:block font-bold bg-transparent border-2 border-[#155458be] hover:bg-[#15545870] px-4 py-1 rounded-md">
+            {{ Auth::user()->name }}
+        </a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="absolute top-full left-0 w-full bg-white border-2 border-[#155458] rounded-xl transform transition-all duration-300 -translate-y-full opacity-0 invisible md:hidden shadow-lg z-30">
+        <div class="py-4 px-6 space-y-4">
+            <a href="{{ route('home.psikolog') }}" class="block hover:text-gray-600 transition-colors">Home</a>
+            <a href="{{ route('agenda.psikolog') }}" class="block font-bold hover:text-gray-600 transition-colors">Agenda</a>
+            <a href="{{ route('nonPasien.logout') }}" class="block font-bold bg-[#155458] text-white px-4 py-2 rounded-md hover:bg-[#15545870] w-fit">
+                {{ Auth::user()->name }}
+            </a>
+        </div>
+    </div>
+</nav>
+
+@endif
+<hr class="bg-[#00000080] h-[2px] w-full px-20">
+{{-- END NAVBAR --}}
             
-            {{-- KONTEN --}}
-            <div class="w-full px-20 py-16">
-                <div class="">
-                    <p class="text-[#155458] text-[2rem] mx-auto font-bold w-fit py-2 px-6 rounded-xl">Jadwal minggu ini</p>
+{{-- KONTEN --}}
+<div class="w-full py-16">
+<div class="">
+    <p class="text-[#155458] text-[1.2rem] sm:text-[1.7rem]  md:text-[2rem] mx-auto font-bold w-fit py-2 px-6 rounded-xl">Jadwal minggu ini</p>
                     
-<div class="col-span-2 py-3 px-5 rounded-xl">
+<div class="col-span-2 py-3 px-5 rounded-xl w-[90%] md:w-4/5 overflow-auto mx-auto">
     {{-- GRID 7 HARI --}}
-    <div class="grid grid-cols-7 gap-3">
+    <div class="grid grid-cols-7 gap-3 min-w-[1200px]">
         @php
             use Carbon\Carbon;
             
@@ -113,7 +139,7 @@
             @endforeach
         @else
             <!-- Tidak ada jadwal -->
-            <p class="text-gray-600 text-sm flex-grow rounded-lg bg-gray-200 flex items-center justify-center">
+            <p class="text-gray-600 text-[0.5rem] lg:text-sm flex-grow rounded-lg bg-gray-200 flex items-center justify-center">
                 No schedules available
             </p>
         @endif
@@ -121,36 +147,37 @@
     
         @endforeach
     </div>
-    <div class="flex justify-end gap-5 items-center mt-5">
-        <form action="{{ route('agenda.psikolog.filter') }}" method="GET" class="flex gap-x-3">
-            <input type="hidden" name="week_offset" value="{{ intval(request('week_offset', 0)) - 1 }}">
-            <button type="submit" class="font-bold text-white bg-[#155458] hover:bg-[#155458c2] px-3 py-2 rounded-full">
-                ←
-            </button>
-            
-        </form>
+    
+</div>
+<div class="flex justify-center md:justify-end gap-5 items-center mt-5  w-[90%] md:w-4/5 mx-auto">
+    <form action="{{ route('agenda.psikolog.filter') }}" method="GET" class="flex gap-x-3">
+        <input type="hidden" name="week_offset" value="{{ intval(request('week_offset', 0)) - 1 }}">
+        <button type="submit" class="font-bold text-white bg-[#155458] hover:bg-[#155458c2] px-3 py-2 rounded-full">
+            ←
+        </button>
+        
+    </form>
 
-        <form action="{{ route('agenda.psikolog.filter') }}" method="GET" class="flex gap-x-3">
-            <input type="hidden" name="week_offset" value="0">
-            <button type="submit" class="font-bold text-[#155458] border border-[#155458]  px-4 py-2 rounded-md">
-                Minggu Ini
-            </button>
-        </form>
+    <form action="{{ route('agenda.psikolog.filter') }}" method="GET" class="flex gap-x-3">
+        <input type="hidden" name="week_offset" value="0">
+        <button type="submit" class="font-bold text-[#155458] border border-[#155458]  px-4 py-2 rounded-md text-xs sm:text-sm  md:text-base">
+            Minggu Ini
+        </button>
+    </form>
 
-        <form action="{{ route('agenda.psikolog.filter') }}" method="GET" class="flex gap-x-3">
-            <input type="hidden" name="week_offset" value="{{ intval(request('week_offset', 0)) + 1 }}">
-            <button type="submit" class="font-bold text-white bg-[#155458] hover:bg-[#155458c2] px-3 py-2 rounded-full">
-                →
-            </button>
-        </form>
-    </div>
+    <form action="{{ route('agenda.psikolog.filter') }}" method="GET" class="flex gap-x-3">
+        <input type="hidden" name="week_offset" value="{{ intval(request('week_offset', 0)) + 1 }}">
+        <button type="submit" class="font-bold text-white bg-[#155458] hover:bg-[#155458c2] px-3 py-2 rounded-full">
+            →
+        </button>
+    </form>
 </div>
                     
 </div>
     <div class="mt-10 flex flex-col gap-20">
         <div>
             {{-- AGENDA YANG AKAN DATANG --}}
-            <p class=" text-[#155458] text-lg font-bold mb-2">AGENDA YANG AKAN DATANG</p>
+            <p class=" text-[#155458] text-base sm:text-lg font-bold mb-2">AGENDA YANG AKAN DATANG</p>
             <div class="grid grid-cols-3 gap-5">
             @if ($bookings && $bookings->isNotEmpty())                
                 @foreach ($bookings as $book)
@@ -210,26 +237,26 @@
                 </div>
                 @endforeach
             @else
-                <p  class="text-gray-700 text-sm">tidak ada agenda</p>
+                <p  class="text-gray-700 text-xs sm:text-sm">tidak ada agenda</p>
             @endif
             </div>
         </div>
         <div>
             {{-- RIWAYAT KONSELING --}}
-            <p class=" text-[#155458] text-lg font-bold mb-2">RIWAYAT KONSELING</p>
-            <div class="grid grid-cols-3 gap-5">
+            <p class=" text-[#155458] text-base sm:text-lg font-bold mb-2">RIWAYAT KONSELING</p>
+            <div class="flex gap-5 overflow-x-auto">
                 @if ($completes && $completes->isNotEmpty())
                     @foreach ($completes as $kons)
-                    <div class="flex  flex-col text-[#4F4F4F] py-5 px-5 border-2 border-[#155458] rounded-lg hover:bg-gray-100 h-[250px] max-h-[300px]">
+                    <div class="flex  flex-col text-[#4F4F4F] py-5 px-5 border-2 border-[#155458] rounded-lg hover:bg-gray-100 min-w-[200px] h-[250px] max-h-[300px]">
                         <p class="font-semibold text-[1.1rem]">{{ $kons->pasien->name }}</p>
-                        <p class="text-[0.9rem]">{{ \Carbon\Carbon::parse($kons->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}</p>
-                        <div class="flex justify-between">
-                            <p class="text-[0.9rem]">
+                        <p class="text-[0.7rem] sm:text-[0.8rem]  md:text-[0.9rem]">{{ \Carbon\Carbon::parse($kons->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}</p>
+                        <div class="flex lg:flex-row flex-col gap-2 justify-between">
+                            <p class="text-[0.7rem] sm:text-[0.8rem]  md:text-[0.9rem]">
                                 {{ \Carbon\Carbon::parse($kons->jadwal->waktu)->addHours(7)->format('H:i') }} - 
                                 {{ \Carbon\Carbon::parse($kons->jadwal->waktu)->addHours(8)->format('H:i') }} WIB
                             </p>
                             <button 
-                                class="consultation-btn text-[#155458] border border-[#155458] hover:bg-[#15545828] rounded px-2"
+                                class="consultation-btn text-[#155458] border border-[#155458] text-sm  md:text-base hover:bg-[#15545828] rounded py-2 md:py-0 px-2"
                                 data-konsultasi-id="{{ $kons->konsultasi->id }}"
                                 data-patient-name="{{ $kons->pasien->name }}"
                                 data-date="{{ \Carbon\Carbon::parse($kons->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}"
@@ -463,5 +490,32 @@
         });
     });
 </script>
+<script>
+    function toggleMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburger = document.getElementById('hamburger');
+        const spans = hamburger.getElementsByTagName('span');
+    
+        if (mobileMenu.classList.contains('-translate-y-full')) {
+            // Menu Opening
+            mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'invisible');
+            mobileMenu.classList.add('translate-y-0', 'opacity-100', 'visible');
+            
+            // Hamburger Animation
+            spans[0].classList.add('rotate-45', 'translate-y-2');
+            spans[1].classList.add('opacity-0');
+            spans[2].classList.add('-rotate-45', '-translate-y-2');
+        } else {
+            // Menu Closing
+            mobileMenu.classList.remove('translate-y-0', 'opacity-100', 'visible');
+            mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'invisible');
+            
+            // Hamburger Animation
+            spans[0].classList.remove('rotate-45', 'translate-y-2');
+            spans[1].classList.remove('opacity-0');
+            spans[2].classList.remove('-rotate-45', '-translate-y-2');
+        }
+    }
+    </script>
 </body>
 </html>
