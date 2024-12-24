@@ -179,7 +179,7 @@ class FormController extends Controller
         ],
         'attendees' => [
             ['email' => $dokter->email],
-            // ['email' => 'email_pasien@example.com'],
+            ['email' => 'svmentalhealthacc@gmail.com'],
         ],
         'end' => [
             'dateTime' => $carbonWaktu->copy()->addHour()->toIso8601String(),

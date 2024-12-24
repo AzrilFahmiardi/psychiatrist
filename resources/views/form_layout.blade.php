@@ -19,8 +19,8 @@
     <title>Psychiatrist</title>
 </head>
 <body>
-    <div class="flex justify-center items-center w-full h-[100vh] bg-login-gradient font-poppins px-10">
-        <div class="relative flex flex-col w-[80vw] h-fit min-h-[85vh] pb-[10rem] bg-white rounded-[3rem] shadow-3xl">
+    <div class="flex justify-center items-center w-full min-h-[100vh] bg-login-gradient font-poppins px-10">
+        <div class="relative flex flex-col w-[90vw] md:w-[80vw] h-fit pb-[10rem] my-[100px] 2xl:my-0 bg-white rounded-xl md:rounded-[3rem] shadow-3xl">
             {{-- FORM KONTEN --}}
             @yield('konten')
 

@@ -2,25 +2,26 @@
 
 @section('konten')
 {{-- PROGRESS BAR --}}
-<div class="w-[70%] item mx-auto my-6 flex items-center gap-x-5">
-    <div class="w-full flex flex-col gap-3">
-        <label>Persetujuan</label>
+<div class="w-[70%] item mx-auto my-6  md:flex gap-x-5 ">
+    <div class="w-full md:w-[16em] flex flex-col gap-3 justify-between ">
+        <label class="text-xs md:text-xs lg:text-base">Persetujuan</label>
         <div class="w-full h-[0.5rem] flex flex-col justify-center rounded-md overflow-hidden bg-[#155458] text-xs text-white text-center whitespace-nowrap transition duration-500" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <div class="w-full flex flex-col gap-3">
-        <label>Data diri</label>
+    <div class="w-full md:w-[16em] flex flex-col gap-3 justify-between">
+        <label class="text-xs md:text-xs lg:text-base">Data diri</label>
+        <div class="w-full h-[0.5rem] flex flex-col justify-center rounded-md overflow-hidden bg-[#155458] text-xs text-white text-center whitespace-nowrap transition duration-500 " role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="w-full md:w-[16em] flex flex-col gap-3 justify-between">
+        <label class="text-xs md:text-xs lg:text-base">Pilih jadwal</label>
+
         <div class="w-full h-[0.5rem] flex flex-col justify-center rounded-md overflow-hidden bg-[#155458] text-xs text-white text-center whitespace-nowrap transition duration-500" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <div class="w-full flex flex-col gap-3">
-        <label>Pilih jadwal</label>
-        <div class="w-full h-[0.5rem] flex flex-col justify-center rounded-md overflow-hidden bg-[#155458] text-xs text-white text-center whitespace-nowrap transition duration-500" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-    <div class="w-full flex flex-col gap-3">
-        <label>Ketentuan & submit</label>
+    <div class="w-full md:w-[16em] flex flex-col gap-3 justify-between">
+        <label class="text-xs md:text-xs lg:text-base">Ketentuan & submit</label>
         <div class="w-full h-[0.5rem] flex flex-col justify-center rounded-md overflow-hidden bg-[#155458] text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-[#CDCDCD]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <div class="w-full flex flex-col gap-3">
-        <label>Pembayaran</label>
+    <div class="w-full md:w-[16em] flex flex-col gap-3 justify-between">
+        <label class="text-xs md:text-xs lg:text-base">Pembayaran</label>
         <div class="w-full h-[0.5rem] flex flex-col justify-center rounded-md overflow-hidden bg-[#155458] text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-[#CDCDCD]" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
 </div>
@@ -69,17 +70,17 @@
         }
     }
 }" class="w-full">
-    <h1 class="text-center text-[#155458] text-xl font-bold my-10">Pilih jadwal konseling</h1>
+    <h1 class="text-center text-[#155458] text-base md:text-xl font-bold my-10">Pilih jadwal konseling</h1>
     
     <div class="col-span-2 py-3 px-5 rounded-xl">
-        <div class="min-w-[500px] w-[80%] mx-auto">
-            <div>
-                <form action="{{ route('form.pilih_jadwal.update') }}" method="GET" class="w-full grid grid-cols-5 gap-5 mb-5">
+        <div class="w-[80%] mx-auto ">
+            
+                <form action="{{ route('form.pilih_jadwal.update') }}" method="GET" class="w-[80%]  md:w-full grid grid-cols-1 md:grid-cols-5 gap-5 mb-5 mx-auto">
                     @csrf
                     <select 
                         id="psikolog" 
                         name="psikolog" 
-                        class="col-span-2 w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4"
+                        class="col-span-2 w-[4/5] text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4"
                     >
                         @foreach ($psikologs as $psikolog)
                             <option value="{{ $psikolog->id }}" {{ request('psikolog') == $psikolog->id ? 'selected' : '' }}>
@@ -97,7 +98,7 @@
                         type="date" 
                         id="tanggal" 
                         name="tanggal" 
-                        class="col-span-2 w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4" 
+                        class="col-span-2 w-[4/5] text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4" 
                         value="{{ request('tanggal', $today) }}"
                         min="{{ $today }}"
                     >
@@ -106,9 +107,9 @@
                         Cari
                     </button>
                 </form>
-            </div>
             
-            <div class="grid grid-cols-2 gap-3">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 w-fit md:w-full mx-auto ">
                 @if ($jadwals && $jadwals->count() > 0)
                     @foreach ($jadwals as $jad)
                         @if ($jad->psikolog)
@@ -126,7 +127,7 @@
                                     'bg-[#155458] text-white border-[#155458]': activeCard === {{ $jad->id }} && {{ json_encode($isAvailable) }},
                                     'bg-gray-200 text-gray-500 border-gray-300 opacity-60': !{{ json_encode($isAvailable) }}
                                 }"
-                                class="jadwal-card border-2 w-full py-2 px-2 rounded-md transition duration-300 ease-in-out 
+                                class="jadwal-card border-2 w-[80%] mx-auto md:w-full py-2 px-2 rounded-md transition duration-300 ease-in-out 
                                     {{ !$isAvailable ? 'cursor-not-allowed' : 'hover:scale-[1.02] cursor-pointer' }}"
                             >
                                 <p class="text-[1.1rem] font-bold">{{ $jad->psikolog->name }}</p>
@@ -157,8 +158,8 @@
     <div class="absolute w-full flex justify-between px-10 bottom-16">
         <div class="flex h-[1.5rem] items-center gap-4">
             <a href="{{ route('form.data_diri') }}" class="flex items-center gap-4">
-                <img src="{{ asset('images/back.png') }}" alt="Back">
-                <span class="text-[1.5rem] text-[#155458] font-bold">Back</span>
+                <img src="{{ asset('images/back.png') }}" alt="Back" class="h-[0.8rem] sm:h-[1.2rem] md:h-[1.5rem] w-auto">
+                <span class="text-[0.8rem] sm:text-[1.2rem] md:text-[1.5rem] text-[#155458] font-bold">Back</span>
             </a>
         </div>
         <div class="flex h-[1.5rem] items-center gap-4">
@@ -167,8 +168,8 @@
                     :href="'{{ route('form.ketentuan_submit') }}?jadwal_id=' + selectedScheduleId + '&psikolog_id=' + selectedPsychologId"
                     class="flex items-center gap-4"
                 >
-                    <span class="text-[1.5rem] text-[#155458] font-bold">Next</span>
-                    <img src="{{ asset('images/next.png') }}" alt="Next">
+                    <span class="text-[0.8rem] sm:text-[1.2rem] md:text-[1.5rem] text-[#155458] font-bold">Next</span>
+                    <img src="{{ asset('images/next.png') }}" alt="Next" class="h-[0.8rem] sm:h-[1.2rem] md:h-[1.5rem] w-auto">
                 </a>
             </template>
         </div>

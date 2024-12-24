@@ -24,9 +24,9 @@
 @endphp
 
     {{-- Flash Message Container --}}
-  <div id="flash-message-container" class="absolute top-5 left-0 right-0">
+  <div id="flash-message-container" class="absolute top-5 left-0 right-0 z-50">
     @if(session('error'))
-    <div id="error-message" class="bg-red-500 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500">
+    <div id="error-message" class="bg-red-500 text-white py-3 px-4 rounded-xl w-fit mx-auto transition-all duration-500 z-50">
         <p class="text-sm">{{ session('error') }}</p>
     </div>
     @endif
@@ -55,14 +55,24 @@
     </div>
     @endif
 </div>
-    <div class="bg-login-gradient font-poppins px-10">
-        <div class="min-h-screen w-full flex flex-col items-center">
-            <x-navbar></x-navbar>
+<img src="images/elips.png" class="absolute top-0 right-0 " alt="">
+<img src="images/elips2.png" class="absolute bottom-0 left-0 " alt="">
 
-            <div class="flex flex-col gap-16 items-center justify-center w-[85vw] md:h-[400px] border-2 border-white rounded-[2rem] bg-[#fafafa99] mt-5 mb-10">
-                <h1 class="text-[3rem] text-center font-bold bg-title-gradient text-transparent bg-clip-text">Fasilitas Konseling<br>Sekolah Vokasi UGM</h1>
+    <div class="bg-login-gradient font-poppins px-10 z-10">
+        <div class="min-h-screen w-full flex flex-col items-center">
+            <div class="w-full z-40">
+                <x-navbar></x-navbar>
+
+            </div>
+
+            <div class="flex flex-col gap-5 sm:gap-7 md:gap-10 lg:gap-16 items-center justify-center w-[85vw] h-[200px] sm:h-[300px] md:h-[400px] border-2 border-white rounded-[2rem] z-10 bg-[#fafafa99] mt-5 mb-10">
+                <div>
+                    <h1 class="text-[2rem] sm:text-[3rem]  md:text-[5.5rem] text-center font-bold bg-title-gradient text-transparent bg-clip-text">SIKOLOV</h1>
+                    <h2 class="text-[0.5rem] sm:text-[0.8rem]  md:text-[1.2rem] text-center font-bold bg-title-gradient text-transparent bg-clip-text">Fasilitas Konseling Sekolah Vokasi UGM</h2>
+                </div>
+                
                 @if(Auth::check())
-                <a href="/form/persetujuan" class="text-[#51B2B8] font-semibold bg-[#FAFAFA] py-3 px-4 rounded-xl hover:scale-110 transition duration-300 ease-in-out">Daftar sekarang</a>
+                <a href="/form/persetujuan" class="text-[0.5rem] sm:text-[0.8rem]  md:text-[1.2rem] text-[#51B2B8] font-semibold bg-[#FAFAFA] py-3 px-4 rounded-xl hover:scale-110 transition duration-300 ease-in-out">Daftar sekarang</a>
                 @else 
                 <button id="loginPopupButton" class="text-[#51B2B8] font-semibold bg-[#FAFAFA] py-3 px-4 rounded-xl hover:scale-110 transition duration-300 ease-in-out">
                     Daftar sekarang
@@ -88,44 +98,50 @@
                     @endif    
             </div>
             
-            <div class="w-[85vw] h-[300px] grid grid-cols-3 gap-4">
-                <div class="col-span-1 space-y-4">
+            <div class="w-[85vw] h-[300px] grid grid-cols-3 gap-2 z-10">
+                <div class="col-span-1 space-y-2">
                     
-                    <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[140px]">
-                        <h2 class="mb-1 font-bold text-[1.2rem] text-[#155458]">Jadwal anda</h2>
+                    <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[100px] ">
+                        <h2 class="mb-1 font-bold text-[0.5rem] md:text-[1.2rem] text-[#155458]">Jadwal anda</h2>
                             @if(Auth::check())
                                 @if(isset($bookingLastest))
-                                    <p class="text-[#4F4F4F] font-semibold">{{ $bookingLastest->psikolog->name }}</p>
-                                    <p class="text-[#4F4F4F] text-[0.8rem]">{{ $formattedDate }}</p>
-                                    <div class="flex justify-between">
-                                        <p class="text-[#4F4F4F] text-[0.8rem]">{{ $formattedTime }}</p>
-                                        <a href="{{ route('riwayat.booking') }}" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Jadwal lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
+                                    <p class="text-[#4F4F4F] text-[0.5rem] md:text-base font-semibold">{{ $bookingLastest->psikolog->name }}</p>
+                                    <p class="text-[#4F4F4F] text-[0.45rem] md:text-[0.6rem] lg:text-[0.8rem]">{{ $formattedDate }}</p>
+                                    <div class="flex justify-between items-center">
+                                        <p class="text-[#4F4F4F] text-[0.45rem] md:text-[0.6rem] lg:text-[0.8rem]">{{ $formattedTime }}</p>
+                                        <a href="{{ route('riwayat.booking') }}" 
+                                        class="hidden flex text-[#155458] text-[0.5rem] lg:text-[0.8rem] items-center gap-2 hover:underline">
+                                            Jadwal lainnya 
+                                            <span>
+                                                <img src="images/right_arrow.png" alt="">
+                                            </span>
+                                        </a>
                                     </div>
                                 @else
-                                    <p class="text-[#4F4F4F] text-[0.8rem]">Belum ada jadwal yang dibooking</p>
+                                    <p class="text-[#4F4F4F] text-[0.6rem] lg:text-[0.8rem]">Belum ada jadwal yang dibooking</p>
                                 @endif
                             @else
-                                <p class="text-[#4F4F4F] text-[0.8rem]">Silahkan login untuk melihat jadwal anda</p>
+                                <p class="text-[#4F4F4F] text-[0.6rem] lg:text-[0.8rem]">Silahkan login untuk melihat jadwal anda</p>
                             @endif
                     </div>
                     
                     
-                    <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[180px]">
-                        <h2 class="mb-1 font-bold text-[1.2rem] text-[#155458]">Hasil Konseling</h2>
+                    <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[120px]">
+                        <h2 class="mb-1 font-bold text-[0.5rem] md:text-[1.2rem] text-[#155458]">Hasil Konseling</h2>
                         @if(Auth::check())
                             @if(isset($konsultasi))
-                                <p class="text-[#4F4F4F] font-semibold">{{ $konsultasi->booking->psikolog->name }}</p>
-                                <p class="text-[#4F4F4F] text-[0.8rem]">
+                                <p class="text-[#4F4F4F] font-semibold text-[0.5rem] md:text-base">{{ $konsultasi->booking->psikolog->name }}</p>
+                                <p class="text-[#4F4F4F] text-[0.45rem] md:text-[0.6rem] lg:text-[0.8rem]">
                                     {{ \Carbon\Carbon::parse($konsultasi->booking->waktu)->isoFormat('dddd, D MMMM YYYY') }}
                                 </p>
-                                <p class="text-[#4F4F4F] text-[0.8rem] mt-2 truncate">Hasil : {{ $konsultasi->hasil_konsultasi }}</p>
+                                <p class="text-[#4F4F4F] text-[0.45rem] md:text-[0.6rem] lg:text-[0.8rem] lg:mt-2 truncate">Hasil : {{ $konsultasi->hasil_konsultasi }}</p>
                                 <hr class="my-3">
-                                <a href="{{ route('riwayat.booking') }}" class="text-[#155458] text-[0.8rem] flex items-center gap-2 hover:underline">Hasil lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
+                                <a href="{{ route('riwayat.booking') }}" class="text-[#155458] text-[0.45rem] md:text-[0.6rem] lg:text-[0.8rem] flex items-center gap-2 hover:underline">Hasil lainnya <span><img src="images/right_arrow.png" alt=""></span></a>
                             @else
-                                <p class="text-[#4F4F4F] text-[0.8rem]">Belum ada hasil konsultasi</p>
+                                <p class="text-[#4F4F4F] text-[0.45rem] md:text-[0.6rem] lg:text-[0.8rem]">Belum ada hasil konsultasi</p>
                             @endif
                         @else
-                            <p class="text-[#4F4F4F] text-[0.8rem]">Silahkan login untuk melihat hasil konseling</p>
+                            <p class="text-[#4F4F4F] text-[0.45rem] md:text-[0.6rem] lg:text-[0.8rem]">Silahkan login untuk melihat hasil konseling</p>
                         @endif
 
 
@@ -137,12 +153,12 @@
                 {{-- JADWAL --}}
                 <div class="col-span-2 py-3 px-5 bg-[#FAFAFA] rounded-xl">
                     <div class="relative flex justify-between">
-                        <h2 class="mb-3 font-bold text-[1.8rem] text-[#4F4F4F] mx-auto">Jadwal Konseling dan Dokter yang Tersedia</h2>
+                        <h2 class="mb-3 font-bold text-[0.6rem] md:text-[1rem] lg:text-[1.3rem]  text-[#4F4F4F] mx-auto">Jadwal Konseling dan Dokter yang Tersedia</h2>
                     </div>
                     <div >
-                        <form action="{{ route('jadwal.filter') }}" method="GET" class="w-full grid grid-cols-5 gap-5 mb-5">
+                        <form action="{{ route('jadwal.filter') }}" method="GET" class="w-full grid grid-cols-5 gap-2 md:gap-5 mb-2 md:mb-5">
                             @csrf
-                            <select id="psikolog" name="psikolog" class="col-span-2 w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4">
+                            <select id="psikolog" name="psikolog" class="col-span-2 w-full text-[0.5rem] md:text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-1 sm:px-2 md:px-3 lg:px-4">
                                 {{-- <option value="none">Pilih Psikolog</option> --}}
                                 @foreach ($psikologs as $psikolog)
                                     <option value="{{ $psikolog->id }}">
@@ -159,12 +175,12 @@
                             <input type="date" 
                                 id="tanggal" 
                                 name="tanggal" 
-                                class="col-span-2 w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4" 
+                                class="col-span-2 w-full text-[0.5rem] md:text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-1 sm:px-2 md:px-3 lg:px-4" 
                                 value="{{ request('tanggal', $today) }}">                            
-                                <button type="submit" class="col-span-1 font-bold text-white bg-[#155458] px-3 py-1 rounded-md">Cari</button>
+                                <button type="submit" class="col-span-1 font-bold text-white bg-[#155458] text-[0.5rem] md:text-xs px-1 md:px-3 md:py-1 rounded-md">Cari</button>
                         </form>
                     </div>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-2 gap-1 md:gap-2 lg:gap-3">
                         @if ($jadwals && $jadwals->count() > 0)
                             @foreach ($jadwals as $jad)
                                 @if ($jad->psikolog)
