@@ -25,6 +25,16 @@ Route::get('/register', function () {
     return view('register');
 });
 
+Route::get('/privacy-policy', function () {
+    return view('components.privacyPolicy');
+});
+
+Route::get('/term-of-service', function () {
+    return view('components.termOfService');
+});
+
+
+
 // RIWAYAT
 Route::get('/riwayat', [RiwayatController::class, 'getBooking'])->name('riwayat.booking');
 
@@ -57,8 +67,10 @@ Route::middleware(['auth'])->group(function () {
 
 
 // BAGIAN PSIKOLOG
-Route::get('/login2', [SocialiteController::class, 'nonPasienLoginPage'])->name('nonPasien.loginpage');
-Route::post('/login2', [SocialiteController::class, 'nonPasienLogin'])->name('auth.nonPasien');
+Route::get('/login-psikolog', [SocialiteController::class, 'nonPasienLoginPage'])->name('nonPasien.loginpage');
+Route::get('/login-admin', [SocialiteController::class, 'nonPasienLoginPage'])->name('nonPasien.loginpage');
+Route::post('/login-psikolog', [SocialiteController::class, 'nonPasienLogin'])->name('auth.nonPasien');
+Route::post('/login-admin', [SocialiteController::class, 'nonPasienLogin'])->name('auth.nonPasien');
 Route::get('/home-psikolog', [AgendaController::class, 'homePsikolog'])->name('home.psikolog');
 Route::get('/agenda-psikolog', [AgendaController::class, 'agendaPsikolog'])->name('agenda.psikolog');
 Route::get('/agenda-psikolog/filter', [AgendaController::class, 'agendaPsikologFilterJadwal'])->name('agenda.psikolog.filter');

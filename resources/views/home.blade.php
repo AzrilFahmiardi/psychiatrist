@@ -58,7 +58,7 @@
 <img src="images/elips.png" class="absolute top-0 right-0 " alt="">
 <img src="images/elips2.png" class="absolute bottom-0 left-0 " alt="">
 
-    <div class="bg-login-gradient h-[900px] font-poppins px-10 z-10">
+    <div class="bg-login-gradient h-[900px] min-h-screen font-poppins px-10 z-10">
         <div class="w-full flex flex-col items-center">
             <div class="w-full z-40">
                 <x-navbar></x-navbar>
@@ -203,6 +203,11 @@
 
                 </div>
             </div>
+            
+        </div>
+        <div class="mt-[50px] mx-20 px-10 text-[#FAFAFA] flex gap-5 justify-end">
+            <a class=" hover:underline" href="/term-of-service">Term of Service</a>
+            <a class=" hover:underline" href="/privacy-policy">Privacy Policy</a>
         </div>
       </div>
       <script>

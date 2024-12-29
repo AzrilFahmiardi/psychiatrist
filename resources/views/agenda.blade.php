@@ -125,14 +125,14 @@
                     @foreach ($jad->pasien as $pasien)
                         <x-agendaCard 
                             :name="$pasien->name"
-                            :time="(Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB')"
+                            :time="'' . Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') . '-' . Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->addHour()->format('H:i') . ' WIB'"
                             :status="$jad->status"
                         />
                     @endforeach
                 @else
                     <x-agendaCard 
                         :name="'-'"
-                        :time="(Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB')"
+                        :time="'' . Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->format('H:i') . '-' . Carbon::parse($jad->waktu)->setTimezone('Asia/Jakarta')->addHour()->format('H:i') . ' WIB'"
                         :status="$jad->status"
                     />
                 @endif
@@ -177,8 +177,8 @@
     <div class="mt-10 flex flex-col gap-20">
         <div>
             {{-- AGENDA YANG AKAN DATANG --}}
-            <p class=" text-[#155458] text-base sm:text-lg font-bold mb-2">AGENDA YANG AKAN DATANG</p>
-            <div class="grid grid-cols-3 gap-5">
+            <p class=" text-[#155458] text-base sm:text-lg font-bold mb-2">AGENDA ANDA</p>
+            <div class="flex  gap-5  overflow-x-auto py-10">
             @if ($bookings && $bookings->isNotEmpty())                
                 @foreach ($bookings as $book)
                 @php
@@ -205,7 +205,7 @@
                     }
                 
                 @endphp
-                <div class="text-[#4F4F4F] py-5 px-5 border-2 border-[#155458] rounded-lg hover:bg-gray-100">
+                <div class="text-[#4F4F4F] md:min-w-[400px] py-5 px-5 border-2 border-[#155458] rounded-lg hover:bg-gray-100">
                     <p class="font-semibold text-[1.1rem]">{{ $book->pasien->name }}</p>
                     <p class="text-[0.9rem]">{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}</p>
                     <p class="text-[0.9rem]">
@@ -235,6 +235,10 @@
                     </div>
                     
                 </div>
+                
+                
+               
+                
                 @endforeach
             @else
                 <p  class="text-gray-700 text-xs sm:text-sm">tidak ada agenda</p>
@@ -247,7 +251,7 @@
             <div class="flex gap-5 overflow-x-auto">
                 @if ($completes && $completes->isNotEmpty())
                     @foreach ($completes as $kons)
-                    <div class="flex  flex-col text-[#4F4F4F] py-5 px-5 border-2 border-[#155458] rounded-lg hover:bg-gray-100 min-w-[200px] h-[250px] max-h-[300px]">
+                    <div class="flex  flex-col text-[#4F4F4F] py-5 px-5 border-2 border-[#155458] rounded-lg hover:bg-gray-100 min-w-[200px] md:min-w-[400px] h-[250px] max-h-[300px]">
                         <p class="font-semibold text-[1.1rem]">{{ $kons->pasien->name }}</p>
                         <p class="text-[0.7rem] sm:text-[0.8rem]  md:text-[0.9rem]">{{ \Carbon\Carbon::parse($kons->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}</p>
                         <div class="flex lg:flex-row flex-col gap-2 justify-between">

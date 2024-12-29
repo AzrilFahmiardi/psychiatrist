@@ -48,7 +48,7 @@
         <div class="container mx-auto">
             {{-- NAVBAR --}}
 @if (Auth::check())
-<nav class="w-full py-7 font-poppins text-[#FAFAFA] text-xl md:px-20 relative z-30">
+<nav class="w-full py-7 font-poppins text-[#FAFAFA] text-xl relative z-30">
     <div class="flex justify-between items-center z-30">
         <a href="/" class="text-shadow-lg font-bold z-50">SV UGM</a>
 
@@ -101,7 +101,7 @@
             <a href="#" onclick="showLoginModal(event)">Riwayat</a>
         </div>
 
-        <a href="/login2" class="hidden md:block font-bold bg-[#155458] px-4 py-1 rounded-md">Login</a>
+        <a href="/login-psikolog" class="hidden md:block font-bold bg-[#155458] px-4 py-1 rounded-md">Login</a>
     </div>
 
     <!-- Mobile Menu -->
@@ -109,7 +109,7 @@
         <div class="py-4 px-6 space-y-4">
             <a href="/" class="block font-bold hover:text-gray-300 transition-colors">Home</a>
             <a href="#" onclick="showLoginModal(event)" class="block hover:text-gray-300 transition-colors">Riwayat</a>
-            <a href="/login2" class="block font-bold bg-white text-[#155458] px-4 py-2 rounded-md hover:bg-gray-100 w-fit">
+            <a href="/login-psikolog" class="block font-bold bg-white text-[#155458] px-4 py-2 rounded-md hover:bg-gray-100 w-fit">
                 Login
             </a>
         </div>
@@ -162,7 +162,7 @@
 {{-- END NAVBAR --}}
 
             {{-- HERO --}}
-            <div class="flex flex-col items-center justify-center w-full max-w-7xl mx-auto ">
+            <div class="flex flex-col items-center justify-center w-full  mx-auto ">
                 <div class="w-full px-4 py-8 md:py-12 border-2 border-white rounded-[2rem] bg-[#fafafa99] backdrop-blur-sm">
                     <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center font-bold bg-title-gradient text-transparent bg-clip-text transition-all duration-300">SIKOLOV</h1>
                     <h2 class="text-sm sm:text-base md:text-lg lg:text-xl text-center font-bold bg-title-gradient text-transparent bg-clip-text mt-2 transition-all duration-300">Fasilitas Konseling Sekolah Vokasi UGM</h2>

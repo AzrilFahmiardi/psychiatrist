@@ -142,7 +142,7 @@ class SocialiteController extends Controller
 
     function nonPasienLogout(){
         Auth::logout(); 
-        return redirect('/login2'); 
+        return redirect('/login-psikolog'); 
     }
 
 }

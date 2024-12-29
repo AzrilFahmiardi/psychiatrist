@@ -170,7 +170,7 @@ class FormController extends Controller
     $carbonWaktu = Carbon::parse($waktu->waktu);
     
     $event = new Calendar\Event([
-        'summary' => "Konsultasi dengan {$dokter->name}",
+        'summary' => "Konsultasi a.n. {$user->name} dengan {$dokter->name}",
         'description' => "SIKOLOV - Konseling Sekolah Vokasi",
         'location' => 'TILC Sekolah Vokasi',
         'start' => [
