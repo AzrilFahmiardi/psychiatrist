@@ -55,8 +55,9 @@
     </div>
     @endif
 </div>
-<img src="images/elips.png" class="absolute top-0 right-0 " alt="">
-<img src="images/elips2.png" class="absolute bottom-0 left-0 " alt="">
+
+<img src="images/elips.png" class="fixed top-0 right-0 w-1/3 md:w-1/4 lg:w-1/5 z-0" alt="">
+    <img src="images/elips2.png" class="fixed bottom-0 left-0 w-1/3 md:w-1/4 lg:w-1/5 z-0" alt="">
 
     <div class="bg-login-gradient h-[900px] min-h-screen font-poppins px-10 z-10">
         <div class="w-full flex flex-col items-center">
@@ -99,7 +100,7 @@
             </div>
             
             {{-- KONTEN --}}
-            <div class="w-[85vw] h-[300px] grid grid-cols-1 md:grid-cols-3 gap-2 z-10">
+            <div class="w-[85vw] h-[300px] grid grid-cols-1 md:grid-cols-3 gap-2 ">
                 <div class="md:col-span-1 space-y-2">
                     
                     <div class="bg-[#FAFAFA] py-5 px-4 rounded-xl min-h-[100px] ">
@@ -160,15 +161,20 @@
                     <div >
                         <form action="{{ route('jadwal.filter') }}" method="GET" class="w-full grid grid-cols-5 gap-2 md:gap-5 mb-2 md:mb-5">
                             @csrf
-                            <select id="psikolog" name="psikolog" class="col-span-2 w-full text-[0.5rem] md:text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-1 sm:px-2 md:px-3 lg:px-4">
-                                {{-- <option value="none">Pilih Psikolog</option> --}}
-                                @foreach ($psikologs as $psikolog)
-                                    <option value="{{ $psikolog->id }}">
-                                        {{ $psikolog->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <div class="relative col-span-2">
+                                <select id="psikolog" name="psikolog" class=" w-full text-[0.5rem] md:text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-1 sm:px-2 md:px-3 lg:px-4 appearance-none">
+                                    {{-- <option value="none">Pilih Psikolog</option> --}}
+                                    @foreach ($psikologs as $psikolog)
+                                        <option value="{{ $psikolog->id }}">
+                                            {{ $psikolog->name }}
+                                        </option>
+                                    @endforeach
+    
+                                </select>
+                                <img src="{{ asset('images/down-arrow.png') }}" alt="" class="absolute bottom-2 right-4">
 
+                            </div>
+                           
                             @php
                             // Ambil tanggal hari ini dalam format yyyy-mm-dd
                             $today = \Carbon\Carbon::now('Asia/Jakarta')->format('Y-m-d');
@@ -204,12 +210,15 @@
                 </div>
             </div>
             
+            
         </div>
-        <div class="mt-[50px] mx-20 px-10 text-[#FAFAFA] flex gap-5 justify-end">
+        <div class="bg-login-gradient fixed bottom-0 left-0 w-full text-[#FAFAFA] flex gap-5 justify-end text-xs md:text-sm bg-red-500">
             <a class=" hover:underline" href="/term-of-service">Term of Service</a>
             <a class=" hover:underline" href="/privacy-policy">Privacy Policy</a>
         </div>
       </div>
+      
+      
       <script>
         document.addEventListener('DOMContentLoaded', function() {
         // Auto-dismiss messages after 5 seconds

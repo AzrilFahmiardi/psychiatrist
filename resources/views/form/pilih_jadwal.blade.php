@@ -77,10 +77,11 @@
             
                 <form action="{{ route('form.pilih_jadwal.update') }}" method="GET" class="w-[80%]  md:w-full grid grid-cols-1 md:grid-cols-5 gap-5 mb-5 mx-auto">
                     @csrf
-                    <select 
+                    <div class="relative col-span-2">
+                        <select 
                         id="psikolog" 
                         name="psikolog" 
-                        class="col-span-2 w-[4/5] text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4"
+                        class="w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4 appearance-none"
                     >
                         @foreach ($psikologs as $psikolog)
                             <option value="{{ $psikolog->id }}" {{ request('psikolog') == $psikolog->id ? 'selected' : '' }}>
@@ -88,6 +89,10 @@
                             </option>
                         @endforeach
                     </select>
+                    <img src="{{ asset('images/down-arrow.png') }}" alt="" class="absolute bottom-[0.4rem] md:bottom-[0.6rem] right-4">
+
+                    </div>
+                    
     
                     @php
                         $jakartaTz = new DateTimeZone('Asia/Jakarta');
