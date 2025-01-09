@@ -81,6 +81,18 @@
                     </select>
                 </div>
 
+                <!-- Penjelasan Pengertian Status -->
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-black">Penjelasan Pengertian Status</label>
+                    <p class="text-sm text-black">
+                        <strong>Scheduled:</strong> Menunggu verifikasi pembayaran.<br>
+                        <strong>Submitted:</strong> Jadwal terkonfirmasi.<br>
+                        <strong>Completed:</strong> Sesi selesai.<br>
+                        <strong>Cancel:</strong> Jadwal dibatalkan.<br>
+                        <strong>Rescheduled:</strong> Jadwal akan di reschedule.
+                    </p>
+                </div>
+
                 <!-- Tombol Submit dan Kembali -->
                 <div class="flex items-center space-x-4">
                     <button type="submit"
