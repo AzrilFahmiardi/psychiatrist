@@ -57,7 +57,7 @@
 </div>
 
 <img src="images/elips.png" class="fixed top-0 right-0 w-1/3 md:w-1/4 lg:w-1/5 z-0" alt="">
-    <img src="images/elips2.png" class="fixed bottom-0 left-0 w-1/3 md:w-1/4 lg:w-1/5 z-0" alt="">
+    {{-- <img src="images/elips2.png" class="fixed bottom-0 left-0 w-1/3 md:w-1/4 lg:w-1/5 z-0" alt=""> --}}
 
     <div class="bg-login-gradient h-[900px] min-h-screen font-poppins px-10 z-10">
         <div class="w-full flex flex-col items-center">
