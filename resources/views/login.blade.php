@@ -43,8 +43,11 @@
     <div class="bg-login-gradient font-poppins px-10">
         <div class="min-h-screen w-full flex flex-col items-center py-10">
             <div class="font-poppins text-white my-10">
-                <h1 class="text-white font-bold text-[2rem] md:text-[4.5rem]">SIKOLOV</h1>
-                <p>Fasilitas konseling Sekolah Vokasi UGM</p>
+              <div class="flex flex-col items-center gap-2 md:gap-0">
+                <img src="{{ asset('images/logo_sikolov_2.png') }}" alt="BANK BRI" class="w-3/5 md:w-full">
+                <p class="md:text-base text-xs">Fasilitas konseling Sekolah Vokasi UGM</p>
+              </div>  
+              
             </div> 
             <div class=" lg:w-[50vw] md:w-[90vw]  flex justify-center items-center">  
             <div class="flex flex-col item-center md:w-[70%] md:h-fit px-10 md:px-16 py-10 rounded-3xl bg-white shadow ">
