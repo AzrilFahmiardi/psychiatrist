@@ -52,8 +52,8 @@
         </div>
 
         <!-- Kalender Mingguan -->
-        <div class="overflow-auto">
-            <div class="grid grid-cols-6 bg-gray-100 text-gray-600">
+        <div class="overflow-auto w-full">
+            <div class="grid grid-cols-6 w-full bg-gray-100 text-gray-600">
                 <!-- Time Column -->
                 <div class="p-4 border-r border-gray-200">
                     <p class="text-sm font-medium">Jam</p>
