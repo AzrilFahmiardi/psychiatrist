@@ -49,8 +49,8 @@
 <nav class="w-full pt-7 pb-5 font-poppins text-[#155458] text-xl md:px-20 px-6 relative">
     <div class="flex justify-between items-center">
         {{-- <a href="/" class="font-bold">SV UGM</a> --}}
-        <div class="bg-[#155458] p-2 rounded-xl">
-            <img src="{{ asset('images/logo_sikolov_2.png') }}" alt="logo sikolov" class="w-[150px]">
+        <div class="bg-[#155458] rounded-full p-2">
+            <img src="{{ asset('images/logo_sikolov_3.png') }}" alt="logo sikolov" class="w-[50px]">
 
         </div>
 
