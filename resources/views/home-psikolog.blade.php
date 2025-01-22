@@ -50,7 +50,9 @@
 @if (Auth::check())
 <nav class="w-full py-7 font-poppins text-[#FAFAFA] text-xl relative z-30">
     <div class="flex justify-between items-center z-30">
-        <a href="/" class="text-shadow-lg font-bold z-50">SV UGM</a>
+        {{-- <a href="/" class="text-shadow-lg font-bold z-50">SV UGM</a> --}}
+        <img src="{{ asset('images/logo_sikolov_2.png') }}" alt="logo sikolov" class="w-[150px]">
+
 
         <!-- Hamburger Button -->
         <button type="button" onclick="toggleMenu()" class="md:hidden z-50 relative w-8 h-8 flex justify-center items-center">
@@ -85,7 +87,8 @@
 @else
 <nav class="w-full py-7 font-poppins text-[#FAFAFA] text-xl md:px-20 relative z-30">
     <div class="flex justify-between items-center z-30">
-        <a href="/" class="text-shadow-lg font-bold z-50">SV UGM</a>
+        {{-- <a href="/" class="text-shadow-lg font-bold z-50">SV UGM</a> --}}
+        <img src="{{ asset('images/logo_sikolov_2.png') }}" alt="logo sikolov" class="w-[150px]">
 
         <!-- Hamburger Button -->
         <button type="button" onclick="toggleMenu()" class="md:hidden z-50 relative w-8 h-8 flex justify-center items-center">

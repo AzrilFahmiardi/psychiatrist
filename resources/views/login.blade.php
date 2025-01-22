@@ -44,7 +44,7 @@
         <div class="min-h-screen w-full flex flex-col items-center py-10">
             <div class="font-poppins text-white my-10">
               <div class="flex flex-col items-center gap-2 md:gap-0">
-                <img src="{{ asset('images/logo_sikolov_2.png') }}" alt="BANK BRI" class="w-3/5 md:w-full">
+                <img src="{{ asset('images/logo_sikolov_2.png') }}" alt="logo sikolov" class="w-3/5 md:w-full">
                 <p class="md:text-base text-xs">Fasilitas konseling Sekolah Vokasi UGM</p>
               </div>  
               
