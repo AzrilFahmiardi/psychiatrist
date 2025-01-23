@@ -70,6 +70,8 @@
                 <div>
                     <h1 class="text-[2rem] sm:text-[3rem]  md:text-[5.5rem] text-center font-bold bg-title-gradient text-transparent bg-clip-text">SIKOLOV</h1>
                     <h2 class="text-[0.5rem] sm:text-[0.8rem]  md:text-[1.2rem] text-center font-bold bg-title-gradient text-transparent bg-clip-text">Fasilitas Konseling Sekolah Vokasi UGM</h2>
+                    <p class="text-[0.5rem] md:text-[0.9rem] text-gray-700  text-center  mt-2 transition-all duration-300">Aplikasi ini digunakan untuk membantu mahasiswa DTEDI yang membutuhkan layanan konseling dengan menggunakan Google Calendar sebagai pengatur jadwal</p>
+                    
                 </div>
                 
                 @if(Auth::check())
