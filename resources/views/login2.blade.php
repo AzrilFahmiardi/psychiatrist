@@ -74,14 +74,14 @@
               </div>
             </div>
 
-            <div class="flex flex-wrap items-center justify-between gap-4">
+            {{-- <div class="flex flex-wrap items-center justify-between gap-4">
               <div class="flex items-center">
                 <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
                 <label for="remember-me" class="ml-3 block text-sm text-gray-800">
                   Remember me
                 </label>
               </div>
-            </div>
+            </div> --}}
 
             <div class="!mt-16">
               <button type="submit" class="w-full py-5 px-4 font-bold text-sm tracking-wide rounded-2xl text-white bg-[#155458] hover:bg-[#155458da] focus:outline-none">

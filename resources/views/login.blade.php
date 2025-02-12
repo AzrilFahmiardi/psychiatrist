@@ -53,7 +53,7 @@
             <div class="flex flex-col item-center md:w-[70%] md:h-fit px-10 md:px-16 py-10 rounded-3xl bg-white shadow ">
               <h2 class="text-[#155458] text-center text-[2.5rem] font-bold">Login</h2>
               <p class="text-xs my-5 text-center">Login untuk mulai melakukan pendaftaran konseling</p>
-              <a href="{{ route('auth.google') }}" class="flex items-center gap-3 w-fit my-5 mx-auto py-3 px-10 text-center font-bold  text-lg tracking-wide rounded-2xl text-[#155458] border border-[#155458]  hover:bg-[#15545813] focus:outline-none">
+              <a href="{{ route('auth.google') }}" class="text-xs md:text-sm flex items-center gap-3 w-fit my-5 mx-auto py-2 px-6 text-center font-bold tracking-wide rounded-2xl text-[#155458] border border-[#155458] hover:bg-[#15545813] focus:outline-none">
                 <span><img src="images/googleLogo.png" alt="googleLogo"></span>
                 Login with Google
               </a>

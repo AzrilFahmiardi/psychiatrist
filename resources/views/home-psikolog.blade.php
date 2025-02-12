@@ -48,7 +48,7 @@
         <div class="container mx-auto">
             {{-- NAVBAR --}}
 @if (Auth::check())
-<nav class="w-full py-7 font-poppins text-[#FAFAFA] text-xl relative z-30">
+<nav class="w-full py-7 font-poppins text-[#FAFAFA] text-[0.8rem] sm:text-[1rem] md:text-[1.2rem] lg:text-[1.5rem] relative z-30">
     <div class="flex justify-between items-center z-30">
         {{-- <a href="/" class="text-shadow-lg font-bold z-50">SV UGM</a> --}}
         {{-- <img src="{{ asset('images/logo_sikolov_3.png') }}" alt="logo sikolov" class="w-[150px]"> --}}
@@ -88,7 +88,7 @@
     </div>
 </nav>
 @else
-<nav class="w-full py-7 font-poppins text-[#FAFAFA] text-xl md:px-20 relative z-30">
+<nav class="w-full py-7 font-poppins text-[#FAFAFA] text-[0.8rem] sm:text-[1rem] md:text-[1.2rem] lg:text-[1.5rem] md:px-20 relative z-30">
     <div class="flex justify-between items-center z-30">
         {{-- <a href="/" class="text-shadow-lg font-bold z-50">SV UGM</a> --}}
         {{-- <img src="{{ asset('images/logo_sikolov_3.png') }}" alt="logo sikolov" class="w-[150px]"> --}}

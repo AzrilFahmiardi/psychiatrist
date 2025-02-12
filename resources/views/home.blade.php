@@ -62,8 +62,7 @@
     <div class="bg-login-gradient h-[900px] min-h-screen font-poppins px-10 z-10">
         <div class="w-full flex flex-col items-center">
             <div class="w-full z-40">
-                <x-navbar></x-navbar>
-
+                <x-navbar class="text-[0.8rem] sm:text-[1rem] md:text-[1.2rem] lg:text-[1.5rem]"></x-navbar>
             </div>
 
             <div class="flex flex-col gap-5 sm:gap-7 md:gap-10 lg:gap-16 items-center justify-center w-[85vw] h-[200px] sm:h-[300px] md:h-[400px] border-2 border-white rounded-[2rem] z-10 bg-[#fafafa99] mt-5 mb-10">
@@ -200,11 +199,11 @@
                                         :status="$jad->status"
                                     />
                                 @else
-                                    <p>No psychologist assigned</p>
+                                    <p class="text-[0.5rem] md:text-[0.6rem] lg:text-[0.8rem]">No psychologist assigned</p>
                                 @endif
                             @endforeach
                         @else
-                            <p>No schedules available</p>
+                            <p class="text-[0.5rem] md:text-[0.6rem] lg:text-[0.8rem]">No schedules available</p>
                         @endif
 
                     </div>

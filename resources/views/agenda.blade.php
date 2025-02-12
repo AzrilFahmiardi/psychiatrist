@@ -47,7 +47,7 @@
 
              {{-- NAVBAR --}}
 @if (Auth::check())
-<nav class="w-full pt-7 pb-5 font-poppins text-[#155458] text-xl md:px-20 px-6 relative">
+<nav class="w-full pt-7 pb-5 font-poppins text-[#155458] text-[0.8rem] sm:text-[1rem] md:text-[1.2rem] lg:text-[1.5rem] md:px-20 px-6 relative">
     <div class="flex justify-between items-center">
         {{-- <a href="/" class="font-bold">SV UGM</a> --}}
         <div class="bg-[#155458] rounded-full p-2">
