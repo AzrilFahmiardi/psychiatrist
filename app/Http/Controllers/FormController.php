@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Google\Client;
 use Google\Service\Calendar;
+use Google\Service\Exception as GoogleServiceException;
 
 class FormController extends Controller
 {
@@ -142,64 +143,65 @@ class FormController extends Controller
 
             // ADD TO GOOGLE CALENDAR
             $client = new Client();
-    $client->setClientId(config('services.google.client_id'));
-    $client->setClientSecret(config('services.google.client_secret'));
-    $client->setAccessType('offline');        
+            $client->setClientId(config('services.google.client_id'));
+            $client->setClientSecret(config('services.google.client_secret'));
+            $client->setAccessType('offline');
+            $client->setScopes([Calendar::CALENDAR]); // Add the required scope
 
-    // Set token yang tersimpan
-    $token = json_decode($user->google_token, true);
-    $client->setAccessToken($token);
+            // Set token yang tersimpan
+            $token = json_decode($user->google_token, true);
+            $client->setAccessToken($token);
 
-    // Cek jika token expired
-    if ($client->isAccessTokenExpired()) {
-        if (isset($token['refresh_token'])) {
-            $newToken = $client->fetchAccessTokenWithRefreshToken($token['refresh_token']);
+            // Cek jika token expired
+            if ($client->isAccessTokenExpired()) {
+                if (isset($token['refresh_token'])) {
+                    $newToken = $client->fetchAccessTokenWithRefreshToken($token['refresh_token']);
+                    
+                    // Simpan token baru
+                    $user->google_token = json_encode($newToken);
+                    $user->save();
+                } else {
+                    throw new \Exception('Refresh token tidak tersedia. Silakan login ulang.');
+                }
+            }
+
+            $service = new Calendar($client);
+            $dokter = Psikolog::where('id', $psikologId)->first();
+            $waktu = Jadwal::where('id', $jadwalId)->first();
             
-            // Simpan token baru
-            $user->google_token = json_encode($newToken);
-            $user->save();
-        } else {
-            throw new \Exception('Refresh token tidak tersedia. Silakan login ulang.');
-        }
-    }
+            $carbonWaktu = Carbon::parse($waktu->waktu);
+            
+            $event = new Calendar\Event([
+                'summary' => "Konsultasi a.n. {$user->name} dengan {$dokter->name}",
+                'description' => "SIKOLOV - Konseling Sekolah Vokasi",
+                'location' => 'TILC Sekolah Vokasi',
+                'start' => [
+                    'dateTime' => $carbonWaktu->toIso8601String(),
+                    'timeZone' => 'Asia/Jakarta',
+                ],
+                'attendees' => [
+                    ['email' => $dokter->email],
+                    ['email' => 'svmentalhealthacc@gmail.com'],
+                ],
+                'end' => [
+                    'dateTime' => $carbonWaktu->copy()->addHour()->toIso8601String(),
+                    'timeZone' => 'Asia/Jakarta',
+                ],
+                'reminders' => [
+                    'useDefault' => false,
+                    'overrides' => [
+                        ['method' => 'email', 'minutes' => 24 * 60], // reminder 1 hari sebelumnya
+                        ['method' => 'popup', 'minutes' => 30], // reminder 30 menit sebelumnya
+                    ],
+                ],
+            ]);
 
-    $service = new Calendar($client);
-    $dokter = Psikolog::where('id', $psikologId)->first();
-    $waktu = Jadwal::where('id', $jadwalId)->first();
-    
-    $carbonWaktu = Carbon::parse($waktu->waktu);
-    
-    $event = new Calendar\Event([
-        'summary' => "Konsultasi a.n. {$user->name} dengan {$dokter->name}",
-        'description' => "SIKOLOV - Konseling Sekolah Vokasi",
-        'location' => 'TILC Sekolah Vokasi',
-        'start' => [
-            'dateTime' => $carbonWaktu->toIso8601String(),
-            'timeZone' => 'Asia/Jakarta',
-        ],
-        'attendees' => [
-            ['email' => $dokter->email],
-            ['email' => 'svmentalhealthacc@gmail.com'],
-        ],
-        'end' => [
-            'dateTime' => $carbonWaktu->copy()->addHour()->toIso8601String(),
-            'timeZone' => 'Asia/Jakarta',
-        ],
-        'reminders' => [
-            'useDefault' => false,
-            'overrides' => [
-                ['method' => 'email', 'minutes' => 24 * 60], // reminder 1 hari sebelumnya
-                ['method' => 'popup', 'minutes' => 30], // reminder 30 menit sebelumnya
-            ],
-        ],
-    ]);
-
-    // Tambahkan event ke kalender
-    $createdEvent = $service->events->insert('primary', $event);
-    
-    // Simpan ID event Google Calendar ke database (opsional)
-    $booking->google_calendar_event_id = $createdEvent->id;
-    $booking->save();
+            // Tambahkan event ke kalender
+            $createdEvent = $service->events->insert('primary', $event);
+            
+            // Simpan ID event Google Calendar ke database (opsional)
+            $booking->google_calendar_event_id = $createdEvent->id;
+            $booking->save();
 
 
             
@@ -216,9 +218,10 @@ class FormController extends Controller
     session()->forget(['selected_jadwal_id', 'selected_psikolog_id']);
 
         return redirect()->route('home')->with('success', 'Jadwal berhasil terboking.');
+    } catch (GoogleServiceException $e) {
+        return redirect()->back()->withErrors(['error' => 'Gagal membuat booking. Pastikan anda sudah menyetujui semua persyaratan ketika login. Silakan login ulang.']);
     } catch (\Exception $e) {
-        dd($e);
-        return redirect()->back()->with('error', 'Gagal membuat booking. Silakan coba lagi.');
+        return redirect()->back()->withErrors(['error' => 'Gagal membuat booking. Pastikan anda sudah menyetujui semua persyaratan ketika login. Silakan login ulang.']);
     }
     }
 

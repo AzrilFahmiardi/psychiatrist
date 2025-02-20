@@ -77,8 +77,19 @@
         </div>
     </div>
 </form>
-<span id="file-error" class="text-red-500 text-sm"></span>
 
+{{-- Display error message --}}
+@if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4 w-[80%] md:w-[580px] mx-auto" role="alert">
+        <strong class="font-bold">Error!</strong>
+        <span class="block sm:inline">{{ $errors->first() }}</span>
+        <div class="mt-2">
+            <a href="{{ route('login') }}" class="inline-block bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">Login</a>
+        </div>
+    </div>
+@endif
+
+<span id="file-error" class="text-red-500 text-sm"></span>
 
 <script>
     document.getElementById('bukti_pembayaran').addEventListener('change', function(event) {
@@ -97,16 +108,16 @@
     });
 
     document.getElementById('copy-button').addEventListener('click', function() {
-            // Ambil teks yang akan disalin
-            const textToCopy = document.getElementById('account-number').innerText;
+        // Ambil teks yang akan disalin
+        const textToCopy = document.getElementById('account-number').innerText;
 
-            // Gunakan API Clipboard untuk menyalin teks
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                alert('Teks berhasil disalin ke clipboard!');
-            }).catch(err => {
-                console.error('Gagal menyalin teks:', err);
-            });
+        // Gunakan API Clipboard untuk menyalin teks
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert('Teks berhasil disalin ke clipboard!');
+        }).catch(err => {
+            console.error('Gagal menyalin teks:', err);
         });
+    });
 </script>
     
 @endsection
