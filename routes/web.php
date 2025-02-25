@@ -20,7 +20,7 @@ Route::get('/jadwal', [JadwalController::class, 'filterJadwal'])->name('jadwal.f
 
 Route::get('/login', function () {
     return view('login');
-})->name('login');
+})->name('login'); 
 
 Route::get('/register', function () {
     return view('register');

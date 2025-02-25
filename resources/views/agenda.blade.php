@@ -69,7 +69,7 @@
             <a href="{{ route('agenda.psikolog') }}" class="font-bold">Agenda</a>
         </div>
 
-        <a href="{{ route('nonPasien.logout') }}" class="hidden md:block font-bold bg-transparent border-2 border-[#155458be] hover:bg-[#15545870] px-4 py-1 rounded-md">
+        <a href="#" onclick="confirmLogout(event)" class="hidden md:block font-bold bg-transparent border-2 border-[#155458be] hover:bg-[#15545870] px-4 py-1 rounded-md">
             {{ Auth::user()->name }}
         </a>
     </div>
@@ -79,7 +79,7 @@
         <div class="py-4 px-6 space-y-4">
             <a href="{{ route('home.psikolog') }}" class="block hover:text-gray-600 transition-colors">Home</a>
             <a href="{{ route('agenda.psikolog') }}" class="block font-bold hover:text-gray-600 transition-colors">Agenda</a>
-            <a href="{{ route('nonPasien.logout') }}" class="block font-bold bg-[#155458] text-white px-4 py-2 rounded-md hover:bg-[#15545870] w-fit">
+            <a href="#" onclick="confirmLogout(event)" class="block font-bold bg-[#155458] text-white px-4 py-2 rounded-md hover:bg-[#15545870] w-fit">
                 {{ Auth::user()->name }}
             </a>
         </div>
@@ -524,6 +524,13 @@
             spans[2].classList.remove('-rotate-45', '-translate-y-2');
         }
     }
-    </script>
+
+    function confirmLogout(event) {
+        event.preventDefault();
+        if (confirm('Apakah Anda yakin ingin logout?')) {
+            window.location.href = "{{ route('nonPasien.logout') }}";
+        }
+    }
+</script>
 </body>
 </html>
