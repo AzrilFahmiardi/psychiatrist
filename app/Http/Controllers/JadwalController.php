@@ -77,8 +77,9 @@ public function filterJadwal(Request $request)
 
     // Membuat query untuk filter jadwal
     $query = Jadwal::with('psikolog');
+    // dd($request->psikolog);
     
-    if ($request->filled('psikolog')) {
+    if ($request->filled('psikolog') && $request->psikolog != 'none' ) {
         $query->where('psikolog_id', $request->psikolog);
     }
     
@@ -91,8 +92,9 @@ public function filterJadwal(Request $request)
     
     // Mengambil semua psikolog
     $psikologs = Psikolog::all();
+    $selectedPsikolog = $request->psikolog;
 
     // Mengembalikan tampilan dengan data yang diperlukan
-    return view('home', compact('jadwals', 'psikologs', 'bookingLastest', 'konsultasi'));
+    return view('home', compact('jadwals', 'psikologs', 'bookingLastest', 'konsultasi', 'selectedPsikolog'));
 }
 }

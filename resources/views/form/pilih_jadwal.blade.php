@@ -83,6 +83,8 @@
                         name="psikolog" 
                         class="w-full text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-4 appearance-none"
                     >
+                    <option value="none">Pilih Psikolog</option>
+                        
                         @foreach ($psikologs as $psikolog)
                             <option value="{{ $psikolog->id }}" {{ request('psikolog') == $psikolog->id ? 'selected' : '' }}>
                                 {{ $psikolog->name }}

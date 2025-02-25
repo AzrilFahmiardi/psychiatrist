@@ -50,7 +50,7 @@ class FormController extends Controller
     {
         $query = Jadwal::with('psikolog');
     
-        if ($request->filled('psikolog')) {
+        if ($request->filled('psikolog') && $request->psikolog != 'none') {
             $query->where('psikolog_id', $request->psikolog);
         }
     

@@ -164,9 +164,9 @@
                             @csrf
                             <div class="relative col-span-2">
                                 <select id="psikolog" name="psikolog" class=" w-full text-[0.5rem] md:text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-1 sm:px-2 md:px-3 lg:px-4 appearance-none">
-                                    {{-- <option value="none">Pilih Psikolog</option> --}}
+                                    <option value="none">Pilih Psikolog</option>
                                     @foreach ($psikologs as $psikolog)
-                                        <option value="{{ $psikolog->id }}">
+                                        <option value="{{ $psikolog->id }}" {{ isset($selectedPsikolog) && $selectedPsikolog == $psikolog->id ? 'selected' : '' }}>
                                             {{ $psikolog->name }}
                                         </option>
                                     @endforeach
@@ -185,7 +185,8 @@
                                 id="tanggal" 
                                 name="tanggal" 
                                 class="col-span-2 w-full text-[0.5rem] md:text-xs h-7 border-[1px] border-[#4F4F4F] text-[#4F4F4F] rounded-2xl px-1 sm:px-2 md:px-3 lg:px-4" 
-                                value="{{ request('tanggal', $today) }}">                            
+                                value="{{ request('tanggal', $today) }}">      
+                                {{-- value="Pilih tanggal konseling">                                      --}}
                                 <button type="submit" class="col-span-1 font-bold text-white bg-[#155458] text-[0.5rem] md:text-xs px-1 md:px-3 md:py-1 rounded-md">Cari</button>
                         </form>
                     </div>

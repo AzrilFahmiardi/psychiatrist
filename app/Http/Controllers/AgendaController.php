@@ -24,24 +24,24 @@ class AgendaController extends Controller
     }
 
     function agendaPsikolog(){
-        $today = Carbon::now('Asia/Jakarta'); // Mendapatkan tanggal hari ini
-        $endDate = $today->copy()->addDays(7); // Mendapatkan tanggal 7 hari ke depan
-        
+        $today = Carbon::now('Asia/Jakarta'); // Tanggal sekarang
+        $startOfWeek = $today->copy()->startOfWeek(Carbon::MONDAY); // Mulai dari Senin minggu ini
+        $endOfWeek = $today->copy()->endOfWeek(Carbon::SUNDAY); // Berakhir di Minggu minggu ini
+    
         $bookings = Booking::where('psikolog_id', Auth::id())
                            ->where('status', '!=', 'completed')
                            ->get();
-
-        // Mengambil jadwal antara tanggal hari ini dan 7 hari ke depan
+    
+        // Mengambil jadwal antara Senin minggu ini hingga Minggu minggu ini
         $jadwals = Jadwal::where('psikolog_id', Auth::id())
-                         ->whereBetween('waktu', [$today->toDateString(), $endDate->toDateString()])
+                         ->whereBetween('waktu', [$startOfWeek->toDateString(), $endOfWeek->toDateString()])
                          ->get();
         
         $completes = Booking::where('psikolog_id', Auth::id())
                            ->where('status', 'completed') 
                            ->get();
-       
-    
-        return view('agenda', compact('jadwals', 'bookings','completes'));
+        
+        return view('agenda', compact('jadwals', 'bookings', 'completes'));
     }
     
     function agendaPsikologFilterJadwal(Request $request){
@@ -56,12 +56,13 @@ class AgendaController extends Controller
         $endDate = $startDate->copy()->addDays(6);
 
         // Fetch schedules for the week
-        $jadwals = Jadwal::whereBetween('waktu', [
-            $startDate->copy()->startOfDay(),
-            $endDate->copy()->endOfDay()
-        ])
-        ->with('pasien')
-        ->get();
+        $jadwals = Jadwal::where('psikolog_id', Auth::id()) // Filter berdasarkan psikolog yang sedang login
+                    ->whereBetween('waktu', [
+                        $startDate->copy()->startOfDay(),
+                        $endDate->copy()->endOfDay()
+                    ])
+                    ->with('pasien') // Memuat relasi pasien
+                    ->get();
 
         $bookings = Booking::where('psikolog_id', Auth::id())
         ->where('status', '!=', 'completed')
@@ -70,6 +71,9 @@ class AgendaController extends Controller
         $completes = Booking::where('psikolog_id', Auth::id())
                            ->where('status', 'completed') 
                            ->get();
+
+        // dd($jadwals);
+
 
         return view('agenda', compact('jadwals', 'bookings','completes'));
     }
