@@ -132,10 +132,12 @@
                         </div>
                     </div>
                     <div class="flex flex-col md:flex-row justify-between mt-10 md:mt-20 gap-5">
-                        <a href="/" class="flex items-center gap-4">
-                            <img src="{{ asset('images/back.png') }}" alt="Back" class="w-5 md:w-7">
-                            <span class="text-sm md:text-[1.1rem] text-[#155458] font-bold">Back to home</span>
-                        </a>
+                        @if($user && $user->nama_lengkap)
+                            <a href="/" class="flex items-center gap-4">
+                                <img src="{{ asset('images/back.png') }}" alt="Back" class="w-5 md:w-7">
+                                <span class="text-sm md:text-[1.1rem] text-[#155458] font-bold">Back to home</span>
+                            </a>
+                        @endif
                         <div class="flex flex-col md:flex-row gap-3 md:gap-4">
                             <button type="submit" class="font-bold text-white bg-[#155458] px-4 md:px-6 py-2 md:py-3 rounded-md text-sm md:text-base">Update</button>
                             <a href="{{ route('google.logout') }}" class="font-bold text-white bg-[#155458] px-4 md:px-6 py-2 md:py-3 rounded-md text-sm md:text-base text-center">Logout</a>

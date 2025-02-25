@@ -12,6 +12,7 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CheckProfileCompletion;
 
 // PAGES
 Route::get('/', [JadwalController::class, 'index'])->name('home');
@@ -51,14 +52,16 @@ Route::post('/profile/update', [PasienController::class, 'updateDataPasien'])->n
 
 
 // FORM BOOKING
-Route::get('/form/persetujuan', [FormController::class, 'persetujuan'])->name('form.persetujuan');
-Route::get('/form/data-diri', [FormController::class, 'data_diri'])->name('form.data_diri');
-Route::get('/form/pilih-jadwal', [FormController::class, 'pilih_jadwal'])->name('form.pilih_jadwal');
-Route::get('/form/pilih-jadwal/update', [FormController::class, 'filterJadwal'])->name('form.pilih_jadwal.update');
-Route::get('/form/ketentuan-submit', [FormController::class, 'ketentuan_submit'])->name('form.ketentuan_submit');
-Route::get('/form/pembayaran', [FormController::class, 'pembayaran'])->name('form.pembayaran');
-Route::post('/submit-booking', [FormController::class, 'simpan_booking'])->name('submit.booking');
-Route::post('/booking/{booking}/cancel', [FormController::class, 'cancel_booking'])->name('booking.cancel');
+Route::middleware([CheckProfileCompletion::class, 'auth'])->group(function () {
+    Route::get('/form/persetujuan', [FormController::class, 'persetujuan'])->name('form.persetujuan');
+    Route::get('/form/data-diri', [FormController::class, 'data_diri'])->name('form.data_diri');
+    Route::get('/form/pilih-jadwal', [FormController::class, 'pilih_jadwal'])->name('form.pilih_jadwal');
+    Route::get('/form/pilih-jadwal/update', [FormController::class, 'filterJadwal'])->name('form.pilih_jadwal.update');
+    Route::get('/form/ketentuan-submit', [FormController::class, 'ketentuan_submit'])->name('form.ketentuan_submit');
+    Route::get('/form/pembayaran', [FormController::class, 'pembayaran'])->name('form.pembayaran');
+    Route::post('/submit-booking', [FormController::class, 'simpan_booking'])->name('submit.booking');
+    Route::post('/booking/{booking}/cancel', [FormController::class, 'cancel_booking'])->name('booking.cancel');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/my-calendar', [CalendarController::class, 'show'])->name('calendar.show');
