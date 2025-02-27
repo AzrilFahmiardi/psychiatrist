@@ -146,40 +146,10 @@
                 </iframe>
             </div>
             
-            <div class="w-full px-0 lg:px-20 mt-[100px]">
-                <p class="font-bold text-gray-800 my-5 text-xs sm:text-sm  md:text-base">status</p>
-                <table class="text-[0.6rem] sm:text-[0.8rem] md:text-sm">
-                    <tbody class="divide-y-8 divide-transparent">
-                        <tr>
-                            <td class="w-8">
-                                <div class="w-4 h-4 rounded-full bg-yellow-600"></div>
-                            </td>
-                            <td class="text-gray-1000">scheduled</td>
-                            <td class="px-2">:</td>
-                            <td class="text-gray-700">menunggu konfirmasi admin terkait bukti pembayaran</td>
-                        </tr>
-                        <tr>
-                            <td class="w-8">
-                                <div class="w-4 h-4 rounded-full bg-green-700"></div>
-                            </td>
-                            <td class="text-gray-1000">submitted</td>
-                            <td class="px-2">:</td>
-                            <td class="text-gray-700">siap untuk pertemuan</td>
-                        </tr>
-                        <tr>
-                            <td class="w-8">
-                                <div class="w-4 h-4 rounded-full bg-[#155458]"></div>
-                            </td>
-                            <td class="text-gray-1000">completed</td>
-                            <td class="px-2">:</td>
-                            <td class="text-gray-700">konseling selesai dengan hasil konsultasi</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
             
             
-            <div class="w-full md:px-10 py-16 mt-[10px]">
+            
+            <div class="w-full md:px-10 py-16 mt-[100px]">
                 
                 <div class=" h-[250px]">
                     <p class=" text-[#155458] text-xs sm:text-sm  md:text-base font-bold">Jadwal yang dibooking</p>
@@ -232,6 +202,37 @@
                         
                     </div>
                     
+                </div>
+                <div class="w-full px-">
+                    <p class="font-bold text-gray-800 my-5 text-xs sm:text-sm  md:text-base">status</p>
+                    <table class="text-[0.6rem] sm:text-[0.8rem] md:text-sm">
+                        <tbody class="divide-y-8 divide-transparent">
+                            <tr>
+                                <td class="w-8">
+                                    <div class="w-4 h-4 rounded-full bg-yellow-600"></div>
+                                </td>
+                                <td class="text-gray-1000">scheduled</td>
+                                <td class="px-2">:</td>
+                                <td class="text-gray-700">menunggu konfirmasi admin terkait bukti pembayaran</td>
+                            </tr>
+                            <tr>
+                                <td class="w-8">
+                                    <div class="w-4 h-4 rounded-full bg-green-700"></div>
+                                </td>
+                                <td class="text-gray-1000">submitted</td>
+                                <td class="px-2">:</td>
+                                <td class="text-gray-700">siap untuk pertemuan</td>
+                            </tr>
+                            <tr>
+                                <td class="w-8">
+                                    <div class="w-4 h-4 rounded-full bg-[#155458]"></div>
+                                </td>
+                                <td class="text-gray-1000">completed</td>
+                                <td class="px-2">:</td>
+                                <td class="text-gray-700">konseling selesai dengan hasil konsultasi</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 
             </div>

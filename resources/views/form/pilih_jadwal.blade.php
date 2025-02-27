@@ -144,7 +144,7 @@
                                         Pukul {{ $scheduleDateTime->format('H:i') }} WIB
                                     </p>
                                     @if($jad->status === 'booked')
-                                        <p class="text-[0.8rem] text-red-500">Sudah Dibooking</p>
+                                        <p class="text-[0.8rem] text-red-500">Telah Dibooking</p>
                                     @elseif($isExpired)
                                         <p class="text-[0.8rem] text-red-500">Jadwal Kadaluarsa</p>
                                     @endif
