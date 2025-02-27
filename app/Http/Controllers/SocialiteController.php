@@ -38,9 +38,9 @@ class SocialiteController extends Controller
     
             // Check email domain
             $emailDomain = substr(strrchr($googleUser->email, "@"), 1);
-            // if ($emailDomain !== 'mail.ugm.ac.id') {
-            //     return redirect('/login')->with('error', 'Hanya email kampus @mail.ugm.ac.id yang dapat digunakan untuk login.');
-            // }
+            if ($emailDomain !== 'mail.ugm.ac.id') {
+                return redirect('/login')->with('error', 'Hanya email kampus @mail.ugm.ac.id yang dapat digunakan untuk login.');
+            }
     
             // Format token dengan benar
             $token = [
