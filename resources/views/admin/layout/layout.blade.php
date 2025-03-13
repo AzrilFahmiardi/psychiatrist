@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
         integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
         crossorigin="anonymous" />
-    <title>Psychiatrist</title>
+    <title>SIKOLOV</title>
 </head>
 
 <body class="relative">
@@ -28,7 +28,7 @@
             <div class="mb-2 flex items-center gap-4 p-4">
                 {{-- <img src="https://www.material-tailwind.com/logos/mt-logo.png" alt="brand" class="h-9 w-9" /> --}}
                 <p class="block antialiased font-sans leading-relaxed text-teal-900 text-lg font-bold">
-                   Admin Sokolov
+                   Admin SiKOLOV
                 </p>
             </div>
             

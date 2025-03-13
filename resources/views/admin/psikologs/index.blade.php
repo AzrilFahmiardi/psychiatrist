@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="p-6 ">
-        <h1 class="text-2xl font-bold mb-2">Admin - Psikologs</h1>
+        <h1 class="text-2xl font-bold mb-2">Admin - Psikolog</h1>
 
         @if (session('success'))
             <div role="alert" class="mb-5 relative flex w-full p-3 text-sm text-white bg-green-500 rounded-md">

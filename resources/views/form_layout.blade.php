@@ -16,7 +16,7 @@
 
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <title>Psychiatrist</title>
+    <title>SIKOLOV</title>
 </head>
 <body>
     <div class="flex justify-center items-center w-full min-h-[100vh] bg-login-gradient font-poppins px-10">

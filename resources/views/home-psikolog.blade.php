@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
-    <title>Psychiatrist</title>
+    <title>SIKOLOV</title>
 </head>
 <body>
     {{-- Flash Message Container --}}
@@ -182,7 +182,7 @@
                 <div class="w-full px-4 py-8 md:py-12 border-2 border-white rounded-[2rem] bg-[#fafafa99] backdrop-blur-sm">
                     <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center font-bold bg-title-gradient text-transparent bg-clip-text transition-all duration-300">SIKOLOV</h1>
                     <h2 class="text-sm sm:text-base md:text-lg lg:text-xl text-center font-bold bg-title-gradient text-transparent bg-clip-text mt-2 transition-all duration-300">Fasilitas Konseling Sekolah Vokasi UGM</h2>
-                    <p class="text-[0.5rem] md:text-[0.9rem] text-gray-700  text-center  mt-2 transition-all duration-300">Aplikasi ini digunakan untuk membantu mahasiswa DTEDI yang membutuhkan layanan konseling dengan menggunakan Google Calendar sebagai pengatur jadwal</p>
+                    <p class="text-[0.5rem] md:text-[0.9rem] text-gray-700  text-center  mt-2 transition-all duration-300">Aplikasi ini digunakan untuk membantu mahasiswa Sekolah Vokasi yang membutuhkan layanan konseling dengan menggunakan Google Calendar sebagai pengatur jadwal</p>
                 </div>
             </div>
             

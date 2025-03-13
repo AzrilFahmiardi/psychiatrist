@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
-    <title>Psychiatrist</title>
+    <title>SIKOLOV</title>
 </head>
 <body>
     {{-- Flash Message Container --}}
@@ -139,7 +139,7 @@
                             </a>
                         @endif
                         <div class="flex flex-col md:flex-row gap-3 md:gap-4">
-                            <button type="submit" class="font-bold text-white bg-[#155458] px-4 md:px-6 py-2 md:py-3 rounded-md text-sm md:text-base">Update</button>
+                            <button type="submit" class="font-bold text-white bg-[#155458] px-4 md:px-6 py-2 md:py-3 rounded-md text-sm md:text-base">Submit</button>
                             <a href="{{ route('google.logout') }}" class="font-bold text-white bg-[#155458] px-4 md:px-6 py-2 md:py-3 rounded-md text-sm md:text-base text-center">Logout</a>
                         </div>
                     </div>

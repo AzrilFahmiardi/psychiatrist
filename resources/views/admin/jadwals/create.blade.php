@@ -140,7 +140,7 @@
             <!-- Pilih Sesi -->
             <div class="mt-4">
                 <label class="block mb-2 text-sm font-medium text-gray-700">Pilih Sesi</label>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                <div class="flex flex-col h-32 flex-wrap gap-2">
                     @foreach ($sessions as $timeKey => $timeValue)
                         <div class="flex items-center">
                             <input type="checkbox" id="session_{{ $timeKey }}___INDEX___" name="sessions[__INDEX__][]"
