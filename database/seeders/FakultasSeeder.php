@@ -16,7 +16,7 @@ class FakultasSeeder extends Seeder
     {
         $departemenData = [
             [
-                'name' => 'DTEDI',
+                'name' => 'Departemen Teknik Elektro dan Informatika',
                 'program_studis' => [
                     'Teknologi Rekayasa Perangkat Lunak',
                     'Teknologi Rekayasa Elektro',
@@ -25,19 +25,56 @@ class FakultasSeeder extends Seeder
                 ],
             ],
             [
-                'name' => 'DTM',
+                'name' => 'Departemen Teknik Mesin',
                 'program_studis' => [
                     'Teknologi Rekayasa Mesin',
                     'Teknik Pengelolaan dan Perawatan Alat Berat',
                 ],
             ],
             [
-                'name' => 'DEB',
+                'name' => 'Departemen Layanan dan Informasi Kesehatan',
+                'program_studis' => [
+                    'Manajemen Informasi Kesehatan',
+                ],
+            ],
+            [
+                'name' => 'Departemen Teknologi Kebumian',
+                'program_studis' => [
+                    'Teknologi Survei dan Pemetaan Dasar',
+                    'Sistem Informasi Geografis',
+                ],
+            ],
+            [
+                'name' => 'Departemen Teknologi Hayati dan Veteriner',
+                'program_studis' => [
+                    'Pengelolaan Hutan',
+                    'Teknologi Veteriner',
+                    'Pengembangan Produk Agroindustri',
+                ],
+            ],
+            [
+                'name' => 'Departemen Teknik Sipil',
+                'program_studis' => [
+                    'Teknik Pengelolaan dan Pemeliharaan Infrastruktur Sipil',
+                    'Teknologi Rekayasa Pelaksanaan Bangunan Sipil',
+                ],
+            ],
+            [
+                'name' => 'Departemen Ekonomika dan Bisnis',
                 'program_studis' => [
                     'Manajemen dan Penilaian Properti',
                     'Perbankan',
                     'Akuntansi Sektor Publik',
                     'Pembangunan Ekonomi Kewilayahan',
+                ],
+            ],
+            [
+                'name' => 'Departemen Bahasa, Seni dan Manajemen Budaya',
+                'program_studis' => [
+                    'Pengelolaan Arsip dan Rekaman Informasi',
+                    'Bahasa Inggris',
+                    'Bisnis Perjalanan Wisata',
+                    'Bahasa Jepang untuk Komunikasi Bisnis dan Profesional',
                 ],
             ],
         ];

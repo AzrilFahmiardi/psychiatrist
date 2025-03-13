@@ -55,7 +55,7 @@
                             <label for="program_studi" class="block mb-2 text-xs md:text-sm font-semibold text-[#155458]">Program studi</label>
                             <select id="program_studi" name="program_studi" class="select2 border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-xs md:text-sm rounded-lg md:rounded-2xl block w-full py-2 md:py-[1rem] px-4 appearance-none bg-[url('{{ asset('images/down-arrow.svg') }}')] bg-no-repeat bg-right-[10px] bg-center">
                                 @foreach ($prodi as $prod)
-                                    <option value="{{ $prod->name }}" {{ $user->program_studi == $prod->name ? 'selected' : '' }}>
+                                    <option value="{{ $prod->id }}" data-departemen="{{ $prod->departemen_id }}" {{ $user->program_studi == $prod->id ? 'selected' : '' }}>
                                         {{ $prod->name }}
                                     </option>
                                 @endforeach
@@ -97,7 +97,7 @@
                             <label for="departemen" class="block mb-2 text-xs md:text-sm font-semibold text-[#155458]">Asal departemen</label>
                             <select id="departemen" name="departemen" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-xs md:text-sm rounded-lg md:rounded-2xl block w-full py-2 md:py-[1rem] px-4 appearance-none bg-[url('{{ asset('images/down-arrow.svg') }}')] bg-no-repeat bg-right-[10px] bg-center">
                                 @foreach ($departemen as $dep)
-                                    <option value="{{ $dep->name }}" {{ $user->departemen == $dep->name ? 'selected' : '' }}>
+                                    <option value="{{ $dep->id }}" {{ $user->departemen == $dep->id ? 'selected' : '' }}>
                                         {{ $dep->name }}
                                     </option>
                                 @endforeach
@@ -166,6 +166,21 @@
             }, 5000);  // <-- This is slightly after the fade-out to complete the animation
             });
         });
+
+        const departemenSelect = document.getElementById('departemen');
+        const programStudiSelect = document.getElementById('program_studi');
+        const programStudiOptions = programStudiSelect.querySelectorAll('option');
+
+        function filterProgramStudi() {
+            const selectedDepartemen = departemenSelect.value;
+            programStudiOptions.forEach(option => {
+                option.style.display = option.getAttribute('data-departemen') === selectedDepartemen ? 'block' : 'none';
+            });
+            programStudiSelect.value = '';
+        }
+
+        departemenSelect.addEventListener('change', filterProgramStudi);
+        filterProgramStudi(); // Initial filter on page load
       </script>
 </body>
 </html>
