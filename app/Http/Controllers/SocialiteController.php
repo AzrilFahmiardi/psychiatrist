@@ -57,6 +57,34 @@ class SocialiteController extends Controller
                 'token_type' => 'Bearer',
                 'created' => time()
             ];
+
+            try {
+                // Inisialisasi Google Client
+                $client = new \Google_Client();
+                $client->setAccessToken($googleUser->token);
+                
+                // Inisialisasi Google Calendar Service
+                $service = new \Google_Service_Calendar($client);
+                
+                // Coba mengambil 1 calendar saja untuk tes izin
+                // Jika berhasil, berarti izin calendar sudah diberikan
+                $calendarList = $service->calendarList->listCalendarList(['maxResults' => 1]);
+                
+                // Log info kalau berhasil
+                Log::info('Calendar permission test successful', [
+                    'user_email' => $googleUser->email,
+                    'calendars_count' => count($calendarList->getItems())
+                ]);
+                
+            } catch (\Exception $e) {
+                // Jika gagal mengakses Calendar API, berarti izin belum diberikan
+                Log::error('Calendar API test failed:', [
+                    'message' => $e->getMessage()
+                ]);
+                
+                // Redirect kembali ke login page dengan pesan error
+                return redirect('/login')->with('error', 'Anda harus menyetujui semua izin akses yang diperlukan untuk melanjutkan.');
+            }
     
             // Debug: Log token sebelum disimpan
             Log::info('Token to be saved:', [
