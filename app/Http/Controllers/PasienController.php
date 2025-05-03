@@ -18,6 +18,7 @@ class PasienController extends Controller
         $departemen = Departemen::all();
         
         $prodi = ProgramStudi::all();
+        // dd($user->programStudi->name);
 
         return view('components.profile', compact('user', 'departemen', 'prodi'));
 

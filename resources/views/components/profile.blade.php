@@ -54,14 +54,27 @@
                         <div class="relative">
                             <label for="program_studi" class="block mb-2 text-xs md:text-sm font-semibold text-[#155458]">Program studi</label>
                             <select id="program_studi" name="program_studi" class="select2 border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-xs md:text-sm rounded-lg md:rounded-2xl block w-full py-2 md:py-[1rem] px-4 appearance-none bg-[url('{{ asset('images/down-arrow.svg') }}')] bg-no-repeat bg-right-[10px] bg-center">
+                            @if ($user && $user->program_studi)
+                                <option value="" disable selected>
+                                    {{ $user->programStudi->name }}
+                                </option>
+                                <p>tes 1</p>
+                            @else
+                                <option value="" disabled selected>
+                                    Pilih program studi
+                                </option>
+                                <p>tes 2</p>
+                            @endif
+                            
                                 @foreach ($prodi as $prod)
-                                    <option value="{{ $prod->id }}" data-departemen="{{ $prod->departemen_id }}" {{ $user->program_studi == $prod->id ? 'selected' : '' }}>
+                                    <option value="{{ $prod->id }}" data-departemen="{{ $prod->departemen_id }}" {{ ($user && $user->programStudi && $user->programStudi->id == $prod->id) ? 'selected' : '' }}>
                                         {{ $prod->name }}
                                     </option>
                                 @endforeach
                             </select>
                             <img src="{{ asset('images/down-arrow.png') }}" alt="" class="absolute bottom-3 md:bottom-[1.1rem] right-7">
                         </div>
+
                         <div>
                             <label for="semester" class="block mb-2 text-xs md:text-sm font-semibold text-[#155458]">semester</label>
                             <input type="number" id="company" name="semester" min="1" max="14" class="border-[1px] border-[#4F4F4F] text-[#4F4F4F] text-xs md:text-sm rounded-lg md:rounded-2xl block w-full py-2 md:py-[1rem] px-4" value="{{ $user ? $user->semester : '' }}" placeholder="contoh : 6" required />

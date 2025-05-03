@@ -157,7 +157,7 @@
                 <div class="md:col-span-2 py-3 px-5 bg-[#FAFAFA] rounded-xl">
                     
                     <div class="relative flex justify-between">
-                        <h2 class="mb-3 font-bold text-[0.6rem] md:text-[1rem] lg:text-[1.3rem]  text-[#4F4F4F] mx-auto">Jadwal Konseling dan Dokter yang Tersedia</h2>
+                        <h2 class="mb-3 font-bold text-[0.6rem] md:text-[1rem] lg:text-[1.3rem]  text-[#4F4F4F] mx-auto">Jadwal Konseling dan Psikolog yang Tersedia</h2>
                     </div>
                     <div >
                         <form action="{{ route('jadwal.filter') }}" method="GET" class="w-full grid grid-cols-5 gap-2 md:gap-5 mb-2 md:mb-5">

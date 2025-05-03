@@ -62,4 +62,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(Psikolog::class, 'user_id', 'id');
     }
+
+    public function programStudi()
+    {
+        return $this->belongsTo(ProgramStudi::class, 'program_studi', 'id');
+    }
+    public function getDepartemen()
+    {
+        return $this->belongsTo(Departemen::class, 'departemen', 'id');
+    }
 }
