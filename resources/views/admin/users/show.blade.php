@@ -100,14 +100,26 @@
                         @if($user->departemen)
                         <div>
                             <span class="text-sm font-medium text-gray-500">Departemen:</span>
-                            <p class="mt-1">{{ $user->getDepartemen->nama_departemen ?? $user->departemen }}</p>
+                            <p class="mt-1">
+                                @if(is_numeric($user->departemen) && $user->getDepartemen)
+                                    {{ $user->getDepartemen->name }}
+                                @else
+                                    {{ $user->departemen }}
+                                @endif
+                            </p>
                         </div>
                         @endif
 
                         @if($user->program_studi)
                         <div>
                             <span class="text-sm font-medium text-gray-500">Program Studi:</span>
-                            <p class="mt-1">{{ $user->programStudi->nama_program ?? $user->program_studi }}</p>
+                            <p class="mt-1">
+                                @if(is_numeric($user->program_studi) && $user->programStudi)
+                                    {{ $user->programStudi->name }}
+                                @else
+                                    {{ $user->program_studi }}
+                                @endif
+                            </p>
                         </div>
                         @endif
 
