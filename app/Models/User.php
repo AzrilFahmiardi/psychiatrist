@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Departemen::class, 'departemen', 'id');
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'pasien_id');
+    }
 }

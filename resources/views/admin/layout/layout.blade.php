@@ -112,6 +112,13 @@
                     </div>
                     Booking
                 </a>
+                <a href="{{ route('admin.users.index') }}" role="button" data-ripple-dark="true" tabindex="0"
+                    class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-opacity-80 focus:bg-opacity-80 active:bg-opacity-80 outline-none select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900 cursor-pointer {{ Request::is('admin/users*') ? 'text-teal-600' : '' }}">
+                    <div class="grid place-items-center mr-5">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    Pengguna
+                </a>
                 <a href="{{ route('google.logout') }}" role="button" data-ripple-dark="true" tabindex="0"
                     class="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-opacity-80 focus:bg-opacity-80 active:bg-opacity-80 outline-none select-none hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 hover:text-gray-900 focus:text-gray-900 active:text-gray-900">
                     <div class="grid place-items-center mr-4">

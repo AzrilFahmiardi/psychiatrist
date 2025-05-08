@@ -26,7 +26,11 @@
             <div class="mb-6 grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Pasien</label>
-                    <p class="mt-1 text-sm text-gray-900">{{ $booking->pasien->name }}</p>
+                    <p class="mt-1 text-sm text-gray-900">
+                        <a href="{{ route('admin.users.show', $booking->pasien->id) }}" class="text-teal-600 hover:text-teal-900">
+                            {{ $booking->pasien->name }}
+                        </a>
+                    </p>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Psikolog</label>
@@ -97,7 +101,7 @@
                 <div class="flex items-center space-x-4">
                     <button type="submit"
                         class="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 transition">
-                        Update Status
+                        Perbarui Status
                     </button>
                     <a href="{{ route('admin.bookings.index') }}"
                         class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">

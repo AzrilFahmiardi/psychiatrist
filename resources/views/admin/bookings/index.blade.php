@@ -34,7 +34,19 @@
                             class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm">
                         @foreach(['submitted', 'scheduled', 'completed', 'rescheduled', 'cancel'] as $status)
                             <option value="{{ $status }}" {{ $selectedStatus == $status ? 'selected' : '' }}>
-                                {{ ucfirst($status) }}
+                                @if($status == 'submitted')
+                                    Diajukan
+                                @elseif($status == 'scheduled')
+                                    Terjadwal
+                                @elseif($status == 'completed')
+                                    Selesai
+                                @elseif($status == 'rescheduled')
+                                    Dijadwalkan Ulang
+                                @elseif($status == 'cancel')
+                                    Dibatalkan
+                                @else
+                                    {{ ucfirst($status) }}
+                                @endif
                             </option>
                         @endforeach
                     </select>
@@ -64,7 +76,11 @@
                     @forelse ($bookings as $booking)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $booking->pasien->name }}</div>
+                                <div class="text-sm text-gray-900">
+                                    <a href="{{ route('admin.users.show', $booking->pasien->id) }}" class="text-teal-600 hover:text-teal-900">
+                                        {{ $booking->pasien->name }}
+                                    </a>
+                                </div>
                                 <div class="text-sm text-gray-500">{{ $booking->pasien->email }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -85,7 +101,19 @@
                                     {{ $booking->status === 'submitted' ? 'bg-blue-100 text-blue-800' : '' }}
                                     {{ $booking->status === 'rescheduled' ? 'bg-orange-100 text-orange-800' : '' }}
                                     {{ $booking->status === 'cancel' ? 'bg-red-100 text-red-800' : '' }}">
-                                    {{ ucfirst($booking->status) }}
+                                    @if($booking->status == 'completed')
+                                        Selesai
+                                    @elseif($booking->status == 'scheduled')
+                                        Terjadwal
+                                    @elseif($booking->status == 'submitted')
+                                        Diajukan
+                                    @elseif($booking->status == 'rescheduled')
+                                        Dijadwalkan Ulang
+                                    @elseif($booking->status == 'cancel')
+                                        Dibatalkan
+                                    @else
+                                        {{ ucfirst($booking->status) }}
+                                    @endif
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

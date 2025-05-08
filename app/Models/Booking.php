@@ -25,7 +25,7 @@ class Booking extends Model
     }
     public function pasien()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'pasien_id');
     }
     public function konsultasi()
     {

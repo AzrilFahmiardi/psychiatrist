@@ -13,6 +13,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\CheckProfileCompletion;
+use App\Http\Controllers\AdminUserController;
 
 // PAGES
 Route::get('/', [JadwalController::class, 'index'])->name('home');
@@ -87,5 +88,6 @@ Route::middleware([AdminMiddleware::class, 'auth'])->group(function () {
         Route::resource('psikologs', AdminPsikologController::class);
         Route::resource('jadwals', AdminJadwalController::class)->only(['index', 'create', 'store', 'destroy']);
         Route::resource('bookings', AdminBookingController::class)->only(['index', 'edit', 'update']);
+        Route::resource('users', AdminUserController::class);
     });
 });
