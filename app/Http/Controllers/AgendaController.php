@@ -28,18 +28,20 @@ class AgendaController extends Controller
         $startOfWeek = $today->copy()->startOfWeek(Carbon::MONDAY); // Mulai dari Senin minggu ini
         $endOfWeek = $today->copy()->endOfWeek(Carbon::SUNDAY); // Berakhir di Minggu minggu ini
     
-        $bookings = Booking::where('psikolog_id', Auth::id())
+        $bookings = Booking::where('psikolog_id', Auth::user()->psikolog->id)
                            ->where('status', '!=', 'completed')
                            ->get();
     
         // Mengambil jadwal antara Senin minggu ini hingga Minggu minggu ini
-        $jadwals = Jadwal::where('psikolog_id', Auth::id())
+        $jadwals = Jadwal::where('psikolog_id', Auth::user()->psikolog->id)
                          ->whereBetween('waktu', [$startOfWeek->toDateString(), $endOfWeek->toDateString()])
                          ->get();
         
-        $completes = Booking::where('psikolog_id', Auth::id())
+        $completes = Booking::where('psikolog_id', Auth::user()->psikolog->id)
                            ->where('status', 'completed') 
                            ->get();
+
+        // dd(Auth::user()->psikolog->id);
         
         return view('agenda', compact('jadwals', 'bookings', 'completes'));
     }
