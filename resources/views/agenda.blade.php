@@ -256,27 +256,33 @@
                 @if ($completes && $completes->isNotEmpty())
                     @foreach ($completes as $kons)
                     <div class="flex  flex-col text-[#4F4F4F] py-5 px-5 border-2 border-[#155458] rounded-lg hover:bg-gray-100 min-w-[200px] md:min-w-[400px] h-[250px] max-h-[300px]">
-                        <p class="font-semibold text-[1.1rem]">{{ $kons->pasien->name }}</p>
-                        <p class="text-[0.7rem] sm:text-[0.8rem]  md:text-[0.9rem]">{{ \Carbon\Carbon::parse($kons->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}</p>
+                        <p class="font-semibold text-[1.1rem]">{{ $kons->pasien?->name ?? '' }}</p>
+                        <p class="text-[0.7rem] sm:text-[0.8rem]  md:text-[0.9rem]">
+                            {{ $kons->jadwal && $kons->jadwal->waktu ? \Carbon\Carbon::parse($kons->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') : '' }}
+                        </p>
                         <div class="flex lg:flex-row flex-col gap-2 justify-between">
                             <p class="text-[0.7rem] sm:text-[0.8rem]  md:text-[0.9rem]">
-                                {{ \Carbon\Carbon::parse($kons->jadwal->waktu)->addHours(7)->format('H:i') }} - 
-                                {{ \Carbon\Carbon::parse($kons->jadwal->waktu)->addHours(8)->format('H:i') }} WIB
+                                {{ $kons->jadwal && $kons->jadwal->waktu 
+                                    ? \Carbon\Carbon::parse($kons->jadwal->waktu)->addHours(7)->format('H:i') . ' - ' . \Carbon\Carbon::parse($kons->jadwal->waktu)->addHours(8)->format('H:i') . ' WIB'
+                                    : '' 
+                                }}
                             </p>
                             <button 
                                 class="consultation-btn text-[#155458] border border-[#155458] text-sm  md:text-base hover:bg-[#15545828] rounded py-2 md:py-0 px-2"
-                                data-konsultasi-id="{{ $kons->konsultasi->id }}"
-                                data-patient-name="{{ $kons->pasien->name }}"
-                                data-date="{{ \Carbon\Carbon::parse($kons->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}"
-                                data-time="{{ \Carbon\Carbon::parse($kons->jadwal->waktu)->addHours(7)->format('H:i') }} - {{ \Carbon\Carbon::parse($kons->jadwal->waktu)->addHours(8)->format('H:i') }} WIB"
-                                data-hasil-konsultasi="{{ $kons->konsultasi->hasil_konsultasi }}"
+                                data-konsultasi-id="{{ $kons->konsultasi?->id ?? '' }}"
+                                data-patient-name="{{ $kons->pasien?->name ?? '' }}"
+                                data-date="{{ $kons->jadwal && $kons->jadwal->waktu ? \Carbon\Carbon::parse($kons->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') : '' }}"
+                                data-time="{{ $kons->jadwal && $kons->jadwal->waktu 
+                                    ? \Carbon\Carbon::parse($kons->jadwal->waktu)->addHours(7)->format('H:i') . ' - ' . \Carbon\Carbon::parse($kons->jadwal->waktu)->addHours(8)->format('H:i') . ' WIB'
+                                    : '' 
+                                }}"
+                                data-hasil-konsultasi="{{ $kons->konsultasi?->hasil_konsultasi ?? '' }}"
                             >
                                 edit hasil konsultasi
                             </button>                    
-                                                    
                         </div>
                         <p class="w-full flex-grow bg-gray-200 text-gray-900 text-sm rounded mt-4 p-2 break-words overflow-auto">
-                            {{ $kons->konsultasi->hasil_konsultasi }}
+                            {{ $kons->konsultasi?->hasil_konsultasi ?? '' }}
                         </p>                     
                     </div>
                     @endforeach
