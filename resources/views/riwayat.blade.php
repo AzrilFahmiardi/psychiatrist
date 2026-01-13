@@ -181,11 +181,15 @@
                                     </p>
                     
                                     <div class="flex items-center gap-4">
-                                        @if($book->status === 'completed')
+                                        @if($book->status === 'completed' && $book->konsultasi && $book->konsultasi->hasil_konsultasi)
                                             <p class="text-[#155458] text-[0.4rem] sm:text-[0.6rem]  md:text-[0.8rem] flex items-center gap-2 cursor-pointer hover:underline"
-                                            onclick="showConsultationResult('{{ $book->psikolog->name }}', '{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}', '{{ $book->konsultasi->hasil_konsultasi }}')">
+                                            onclick="showConsultationResult('{{ $book->psikolog->name }}', '{{ \Carbon\Carbon::parse($book->jadwal->waktu)->isoFormat('dddd, D MMMM YYYY') }}', '{{ addslashes($book->konsultasi->hasil_konsultasi) }}')">
                                                 Lihat hasil konsultasi
                                                 <span><img src="../images/right_arrow.png" alt="tes"></span>
+                                            </p>
+                                        @elseif($book->status === 'completed' && (!$book->konsultasi || !$book->konsultasi->hasil_konsultasi))
+                                            <p class="text-gray-500 text-[0.4rem] sm:text-[0.6rem]  md:text-[0.8rem] italic">
+                                                Hasil konsultasi belum tersedia
                                             </p>
                                         @elseif($book->status !== 'completed')
                                             <form action="{{ route('booking.cancel', $book->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this booking?');">

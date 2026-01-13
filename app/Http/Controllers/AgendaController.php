@@ -8,6 +8,8 @@ use App\Models\Booking;
 use App\Models\Konsultasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AgendaController extends Controller
 {
@@ -87,13 +89,31 @@ class AgendaController extends Controller
             'hasil_konsultasi' => 'required|string'
         ]);
 
-        // Update booking status to completed
-        $booking = Booking::findOrFail($validated['booking_id']);
-        $booking->update(['status' => 'completed']);
-
-        Konsultasi::create($validated);
-
-        return redirect()->back()->with('success', 'Hasil konsultasi berhasil disimpan');
+        try {
+            DB::beginTransaction();
+            
+            $booking = Booking::findOrFail($validated['booking_id']);
+            
+            // Create konsultasi
+            $konsultasi = Konsultasi::create($validated);
+            
+            // update booking status
+            $booking->update(['status' => 'completed']);
+            
+            DB::commit();
+            
+            return redirect()->back()->with('success', 'Hasil konsultasi berhasil disimpan');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            Log::error('Failed to add konsultasi', [
+                'booking_id' => $validated['booking_id'],
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return redirect()->back()->with('error', 'Gagal menyimpan hasil konsultasi. Silakan coba lagi.');
+        }
     }
 
     public function updateKonsultasi(Request $request)
