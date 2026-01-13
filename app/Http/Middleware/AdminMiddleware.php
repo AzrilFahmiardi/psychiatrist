@@ -12,12 +12,30 @@ class AdminMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Ensure the authenticated user has the 'admin' role.
+     * Redirects other user types to their appropriate dashboards.
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role !== 'admin') {
-            abort(403, 'Unauthorized action.');
+        if (!Auth::check()) {
+            return redirect()->route('nonPasien.loginpage')
+                ->with('error', 'Silakan login sebagai admin terlebih dahulu.');
+        }
+
+        $user = Auth::user();
+
+        if ($user->role === 'psikolog') {
+            return redirect()->route('home.psikolog')
+                ->with('error', 'Akses ditolak. Anda login sebagai psikolog.');
+        }
+
+        if ($user->role === 'user' || $user->role === 'pasien') {
+            return redirect()->route('home')
+                ->with('error', 'Akses ditolak. Halaman ini hanya untuk admin.');
+        }
+
+        if ($user->role !== 'admin') {
+            abort(403, 'Akses ditolak. Hanya admin yang dapat mengakses halaman ini.');
         }
 
         return $next($request);

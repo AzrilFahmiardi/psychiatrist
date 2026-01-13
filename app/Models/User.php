@@ -58,6 +58,9 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Relationships
+     */
     public function psikolog()
     {
         return $this->hasOne(Psikolog::class, 'user_id', 'id');
@@ -67,6 +70,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(ProgramStudi::class, 'program_studi', 'id');
     }
+
     public function getDepartemen()
     {
         return $this->belongsTo(Departemen::class, 'departemen', 'id');
@@ -75,5 +79,28 @@ class User extends Authenticatable
     public function bookings()
     {
         return $this->hasMany(Booking::class, 'pasien_id');
+    }
+
+    /**
+     * Helper methods for role checking
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isPsikolog(): bool
+    {
+        return $this->role === 'psikolog';
+    }
+
+    public function isPasien(): bool
+    {
+        return $this->role === 'user' || $this->role === 'pasien';
+    }
+
+    public function hasCompletedProfile(): bool
+    {
+        return !empty($this->nama_lengkap);
     }
 }

@@ -11,16 +11,20 @@ class CheckProfileCompletion
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * Ensure the authenticated user has completed their profile before accessing booking forms.
      */
     public function handle(Request $request, Closure $next)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')
+                ->with('error', 'Silakan login terlebih dahulu.');
+        }
+
         $user = Auth::user();
 
-        if (!$user || !$user->nama_lengkap) {
-            return redirect()->route('pasien.profile')->with('error', 'Mohon lengkapi profil Anda terlebih dahulu.');
+        if (!$user->nama_lengkap) {
+            return redirect()->route('pasien.profile')
+                ->with('error', 'Mohon lengkapi profil Anda terlebih dahulu.');
         }
 
         return $next($request);
