@@ -95,6 +95,12 @@ class SocialiteController extends Controller
     
             if($user){
                 $user->google_token = json_encode($token);
+                
+                // Pastikan user yang sudah ada memiliki role (untuk data lama yang mungkin NULL)
+                if (empty($user->role)) {
+                    $user->role = 'pasien';
+                }
+                
                 $user->save();
                 
                 Auth::login($user);
@@ -108,6 +114,7 @@ class SocialiteController extends Controller
                     'email' => $googleUser->email,
                     'google_id' => $googleUser->id,
                     'google_token' => json_encode($token),
+                    'role' => 'pasien', // Set role pasien secara otomatis untuk user baru
                 ]);
     
                 if($userData){
@@ -164,7 +171,9 @@ class SocialiteController extends Controller
         } elseif ($user->role === 'admin') {
             return redirect()->route('admin.psikologs.index');
         } else {
-            return redirect()->route('user.dashboard');
+            // User dengan role pasien atau role lain tidak seharusnya login via form ini
+            Auth::logout();
+            return back()->with('error', 'Halaman ini hanya untuk psikolog dan admin. Silakan gunakan login Google untuk pasien.');
         }
     }
 

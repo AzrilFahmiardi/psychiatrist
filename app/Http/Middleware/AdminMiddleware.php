@@ -29,7 +29,8 @@ class AdminMiddleware
                 ->with('error', 'Akses ditolak. Anda login sebagai psikolog.');
         }
 
-        if ($user->role === 'user' || $user->role === 'pasien') {
+        // User dengan role pasien, user, atau NULL dianggap sebagai pasien
+        if ($user->role === 'user' || $user->role === 'pasien' || empty($user->role)) {
             return redirect()->route('home')
                 ->with('error', 'Akses ditolak. Halaman ini hanya untuk admin.');
         }

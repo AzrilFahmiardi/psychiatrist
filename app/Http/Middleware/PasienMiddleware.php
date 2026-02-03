@@ -33,6 +33,14 @@ class PasienMiddleware
                 ->with('error', 'Anda login sebagai psikolog. Silakan akses dashboard psikolog.');
         }
 
+        // Jika role NULL atau kosong, anggap sebagai pasien (untuk kompatibilitas data lama)
+        // dan update role mereka
+        if (empty($user->role)) {
+            $user->role = 'pasien';
+            $user->save();
+        }
+
+        // Pastikan role adalah 'pasien' (atau 'user' untuk backward compatibility)
         if ($user->role !== 'user' && $user->role !== 'pasien') {
             abort(403, 'Akses ditolak. Halaman ini hanya untuk pasien.');
         }
