@@ -11,6 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Di belakang reverse proxy (nginx/Traefik server univ) biar scheme https & IP client kebaca benar
+        $middleware->trustProxies(at: env('TRUSTED_PROXIES'));
+
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'psikolog' => \App\Http\Middleware\PsikologMiddleware::class,

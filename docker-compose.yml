@@ -1,0 +1,42 @@
+name: sikolov
+
+# Semua konfigurasi diambil dari file .env (copy dari .env.example).
+services:
+  app:
+    build: .
+    image: sikolov-app:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+    ports:
+      - "${APP_BIND:-127.0.0.1}:${APP_PORT:-8013}:8080"
+    volumes:
+      - storage:/app/storage
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:?set DB_DATABASE di .env}
+      MYSQL_USER: ${DB_USERNAME:?set DB_USERNAME di .env}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD di .env}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?set DB_ROOT_PASSWORD di .env}
+      TZ: Asia/Jakarta
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  storage:
+  db-data:

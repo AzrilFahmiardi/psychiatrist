@@ -1,3 +1,123 @@
+# Sikolov
+
+Sistem layanan konseling Sekolah Vokasi UGM (Laravel 11 + Vite/Tailwind, MySQL 8).
+
+## Run with Docker
+
+Stack di `docker-compose.yml`:
+
+| Service | Image | Isi |
+|---------|-------|-----|
+| `app` | dibangun dari `Dockerfile` | PHP 8.4 + web server [FrankenPHP](https://frankenphp.dev) (Caddy), asset Vite sudah di-build. Listen HTTP di port 8080 dalam container. |
+| `db` | `mysql:8.0` | Database. Data disimpan di volume `db-data`. |
+
+Volume `storage` menyimpan `storage/` Laravel (termasuk upload bukti pembayaran di `storage/app/public`).
+Aplikasi ini tidak memakai queue worker maupun scheduler, jadi tidak ada container untuk itu.
+
+Kebutuhan: Docker Engine + Docker Compose v2.
+
+### 1. Konfigurasi
+
+```bash
+cp .env.example .env
+```
+
+Isi minimal di `.env`:
+
+- `APP_KEY` — kalau migrasi dari server lama, **pakai APP_KEY lama**. Kalau instalasi baru, generate dengan
+  `docker compose run --rm --no-deps app php artisan key:generate --show` lalu tempel hasilnya.
+- `APP_URL` — URL publik, mis. `https://sikolov.ugm.ac.id`.
+- `DB_DATABASE`, `DB_USERNAME` (jangan `root`), `DB_PASSWORD`, `DB_ROOT_PASSWORD`.
+- `CLIENT_ID`, `CLIENT_SECRET`, `CALLBACK_REDIRECT` — Google OAuth. Kalau domain berubah, tambahkan
+  `CALLBACK_REDIRECT` yang baru (`<APP_URL>/auth/google-callback`) ke *Authorized redirect URIs* di Google Cloud Console.
+- `APP_BIND` / `APP_PORT` — alamat & port host yang dibuka (default `127.0.0.1:8013`).
+- `TRUSTED_PROXIES` — IP reverse proxy di depan app (default `*`), supaya URL yang di-generate memakai `https`.
+
+`DB_CONNECTION`, `DB_HOST`, dan `DB_PORT` otomatis di-override oleh compose ke container `db`.
+
+### 2. Build & jalankan
+
+```bash
+docker compose build
+docker compose up -d
+docker compose exec app php artisan migrate --force
+```
+
+Cek: `curl http://127.0.0.1:8013/up` harus `200`. Symlink `public/storage` sudah dibuat di image
+(setara `php artisan storage:link`), jadi tidak perlu dijalankan manual.
+
+Set `RUN_MIGRATIONS=true` di `.env` kalau ingin migrasi otomatis setiap container `app` start.
+Setiap start, container juga menjalankan `php artisan optimize` (cache config/route/view), jadi setelah mengubah
+`.env` cukup `docker compose up -d` lagi (container dibuat ulang).
+
+### 3. Reverse proxy & HTTPS
+
+Container hanya melayani HTTP. Arahkan nginx/Apache/Traefik server ke `http://127.0.0.1:8013` dan teruskan
+header `Host` serta `X-Forwarded-Proto`. Contoh nginx:
+
+```nginx
+location / {
+    proxy_pass http://127.0.0.1:8013;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    client_max_body_size 12m;
+}
+```
+
+### 4. Pindah data dari server lama
+
+Di **server lama** (app di `/var/www/html/sikolov`, MySQL 8.0 lokal, database `sikolov`):
+
+```bash
+# dump database
+sudo mysqldump --single-transaction --no-tablespaces sikolov > sikolov.sql
+# file upload (bukti pembayaran)
+sudo tar czf sikolov-storage.tar.gz -C /var/www/html/sikolov/storage/app public
+# catat APP_KEY, CLIENT_ID, CLIENT_SECRET dari /var/www/html/sikolov/.env
+```
+
+Salin `sikolov.sql` dan `sikolov-storage.tar.gz` ke server baru, lalu di folder repo ini:
+
+```bash
+docker compose up -d
+# import database (sebelum menjalankan migrate)
+docker compose exec -T db sh -c 'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE"' < sikolov.sql
+# restore file upload
+docker compose exec -T app tar xzf - -C storage/app < sikolov-storage.tar.gz
+# jalankan migrasi yang mungkin belum ada di dump
+docker compose exec app php artisan migrate --force
+```
+
+Kalau import dilakukan ke database yang sudah terisi (mis. sudah sempat `migrate`), kosongkan dulu:
+
+```bash
+docker compose exec db sh -c 'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -e "DROP DATABASE \`$MYSQL_DATABASE\`; CREATE DATABASE \`$MYSQL_DATABASE\`"'
+```
+
+### 5. Data demo (opsional, jangan di production)
+
+`database/seeders` hanya berisi akun & jadwal demo dengan password lemah, dan butuh Faker (dependency dev):
+
+```bash
+docker compose build --build-arg INSTALL_DEV_DEPS=true
+docker compose up -d
+docker compose exec app php artisan migrate --seed --force
+```
+
+### Operasional
+
+```bash
+docker compose logs -f app                      # log aplikasi (juga di storage/logs/laravel.log)
+docker compose exec app php artisan <command>   # artisan
+git pull && docker compose up -d --build        # update ke versi terbaru
+# backup database
+docker compose exec -T db sh -c 'mysqldump --single-transaction --no-tablespaces -uroot -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE"' > backup.sql
+```
+
+---
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
